@@ -10,6 +10,8 @@ import NewPortfolioPage from './views/NewPortfolioPage.vue'
 import Main from './views/Main.vue'
 import UserProfile from './views/UserProfile.vue'
 
+import AdminPage from './views/AdminPage.vue'
+
 
 
 Vue.use(VueRouter);
@@ -48,7 +50,11 @@ export const router = new VueRouter({
     path: '/portfolio',
     name: 'Portfolio',
     component: PortfolioPage,
-
+  },
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: AdminPage,
   },
  
   ]

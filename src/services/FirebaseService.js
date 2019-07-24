@@ -22,21 +22,21 @@ var firebaseConfig = {
   
   
 firebase.auth().onAuthStateChanged(user => {
-	// if (user != null) {
-	// 	email = user.email;
-	// 	store.commit('setUser', user)
-	//   } else {
-	// 	email = "undefine";
-	// 	store.commit('setUser', user)
-	//   }
-	//   log=email+" "+irebase.firestore.FieldValue.serverTimestamp()+" 현재 페이지 위치";
-	//   console.log(log);
-	if (user)	{
-		user.getIdTokenResult().then(idTokenResult => {
-			console.log(idTokenResult.claims.admin);
-			console.log(idTokenResult, '입니다.');
-		})
-	}
+	if (user != null) {
+		email = user.email;
+		store.commit('setUser', user)
+	  } else {
+		email = "undefine";
+		store.commit('setUser', user)
+	  }
+	  log=email+" "+firebase.firestore.FieldValue.serverTimestamp()+" 현재 페이지 위치";
+	  console.log(log);
+	// if (user)	{
+	// 	user.getIdTokenResult().then(idTokenResult => {
+	// 		console.log(idTokenResult.claims.admin);
+	// 		console.log(idTokenResult, '입니다.');
+	// 	})
+	// }
 
 })
 	
@@ -63,9 +63,11 @@ export default {
 			postsCollection = firestore.collection("Bigdata")
 		}else if(item == "Blockchain"){
 			postsCollection = firestore.collection("Blockchain")
-		}else if(item=="Webmobile"){
+		}else if(item == "Webmobile"){
 			postsCollection = firestore.collection("Webmobile")
-		}
+		}else if(item == "member"){
+			postsCollection = firestore.collection("member")
+		} 
 		return postsCollection
 				.orderBy('created_at', 'desc')
 				.get()
