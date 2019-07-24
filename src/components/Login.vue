@@ -22,7 +22,7 @@
 
         <v-card>
           <v-card-title
-
+            
             class="headline grey lighten-2"
             primary-title
           >
@@ -137,6 +137,8 @@ v-if="$store.state.user === null"
 
 <script>
   import firebase from 'firebase'
+  import FirebaseService from '@/services/FirebaseService'
+
   var firebaseDatabase = firebase.database();
 
 export default ({
@@ -158,6 +160,7 @@ export default ({
         alert('Sign Up')
       },
     signUp(){
+    FirebaseService.signup_database(this.singup_email,'visitor','0');
       firebase.auth().createUserWithEmailAndPassword(this.singup_email, this.singup_password)
         .then(() => alert('회원가입 성공.'))
         .catch(err => console.log(err.message))
@@ -186,6 +189,7 @@ export default ({
 
       firebase.auth().signInWithPopup(provider).then((result)=>{
         var token = result.credential.accessToken;
+
         var user = result.user;
         alert('페이스북 로긴 성공')
       }).catch(err => console.log(err.message))
@@ -193,7 +197,7 @@ export default ({
     async signOut(){
       const r = await this.$firebase.auth().signOut()
       alert('로그아웃 성공')
-    }
+    },
    }
 })
 
