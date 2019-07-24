@@ -8,17 +8,18 @@
     <v-toolbar-title>{{$store.state.user ? $store.state.user.email + '님 반갑습니다.' : '1,2,3의 홈페이지 입니다.'}}</v-toolbar-title>
     <v-spacer></v-spacer>
     <v-toolbar-items class="hidden-sm-and-down">
-      <v-menu offset-y>
-      <template v-slot:activator="{ on }">
         <v-btn
+          router to="/admin"
           flat
           color="pink"
           dark
           v-on="on"
-          class="{notAdmin: !isAdmin}"
+          :class="{notAdmin: !isAdmin}"
         >
           Admin Page
         </v-btn>
+      <v-menu offset-y>
+      <template v-slot:activator="{ on }">
         <v-btn
           flat
           color="white"
@@ -64,7 +65,7 @@ export default {
       }
     },
     created() {
-
+      
     },
     components: {
         ssafy,
