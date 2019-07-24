@@ -128,6 +128,38 @@ export default {
 		}).catch(function(error) {
 			console.error('[Google Login Error]', error)
 		})
+	},
+	signup_database(email,user_authority,level) {
+		console.log('new member in')
+		return firestore.collection("member").add({
+			email,
+			user_authority,
+			level,
+			created_at: firebase.firestore.FieldValue.serverTimestamp()
+		})
+	},
+	
+	update_database_member(email,user_authority) {
+		console.log('new member in')
+		return firestore.collection("member").update({
+			email,
+			user_authority,
+			created_at: firebase.firestore.FieldValue.serverTimestamp()
+		})
+	},
+
+	get_user_authority() {
+		const postsCollection = firestore.collection("member")
+		return postsCollection
+				.orderBy('email', 'user_authority')
+				.get()
+				.then((docSnapshots) => {
+					return docSnapshots.docs.map((doc) => {
+						let data = doc.data()
+						data.created_at = new Date(data.created_at.toDate())
+						return data
+					})
+				})
 	}
 }
      
