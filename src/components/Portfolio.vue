@@ -1,12 +1,13 @@
 <template>
 <div>
   <v-layout py-4 h-100>
-    
+
     <v-flex row>
       <v-img :src="imgSrc" height="200px"></v-img>
       <div class="caption ">{{formatedDate}}</div>
       <h2 class="color-333 headline font-weight-light cutoneline">{{title}}</h2>
       <p class="mb-1 color-666 font-weight-light subheading cutfourline">{{content}}</p>
+ 
     </v-flex>
   </v-layout>
 </div>
@@ -23,7 +24,7 @@ export default {
         content: {type: String},
         imgSrc: {type: String},
   },
-  
+
   computed: {
 		formatedDate() {
 			return `${this.date.getFullYear()}년 ${this.date.getMonth()}월 ${this.date.getDate()}일`
@@ -55,4 +56,3 @@ export default {
     -webkit-line-clamp: 1;
   }
 </style>
-

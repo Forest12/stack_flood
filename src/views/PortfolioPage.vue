@@ -11,7 +11,7 @@
             <h2>{{item}}</h2>
         </v-flex>
       </v-layout>
-      
+
     </v-container>
   </div>
 </template>
@@ -27,10 +27,10 @@ export default {
         return{
             item:""
         }
-    },  
+    },
 	components: {
     PortfolioList,
-    
+
     ImgBanner
 
   },
