@@ -5,7 +5,49 @@
     {{$store.state.user.email}}
 
     <div :class="{notAdmin : !isAdmin}">
-      보이게 안보이게?
+      <div class="user-list">
+        <div class="user-list-title">
+          <div>유저 목록</div>
+        </div>
+        <div class="user-list-content">
+          <input type="radio" id="user-1" name="username" value="유저1" v-model="username">
+          <label for="user-1">유저1</label>
+          <input type="radio" id="user-2" name="username" value="유저2" v-model="username">
+          <label for="user-2">유저2</label>
+          <input type="radio" id="user-3" name="username" value="유저3" v-model="username">
+          <label for="user-3">유저3</label>
+          {{ username }}
+
+        </div>
+      </div>
+
+      <div class="authority-list">
+        <div class="authority-list-title">
+          <div>권한 변경</div>
+        </div>
+        <div class="authority-list-content">
+          <input class="rdo" type="radio" id="auth-manager" name="auth" value="manager" v-model="auth">
+          <label class="lbl" for="auth-manager">관리자</label>
+          <input class="rdo" type="radio" id="auth-team" name="auth" value="team" v-model="auth">
+          <label class="lbl" for="auth-team">팀원</label>
+          <input class="rdo" type="radio" id="auth-visitor" name="auth" value="visitor" v-model="auth">
+          <label class="lbl" for="auth-visitor">방문자</label>
+          
+          {{ auth }}
+        </div>
+      </div>
+
+      <button>변경하기</button>
+
+      <div class="post-list">
+        <div class="post-list-total">
+          <div>블록체인 게시글 수 : 00</div>
+          <div>빅데이터 게시글 수 : 00</div>
+          <div>웹모바일 게시글 수 : 00</div>
+          <div>AI 게시글 수 : 00</div>
+          <div>Total : 00</div>
+        </div>
+      </div>
     </div>
 
   </div>
@@ -17,6 +59,8 @@ export default {
   data(){
     return {
       isAdmin : true,
+      username : '',
+      auth: '',
     }
   },
   created() {
@@ -27,6 +71,7 @@ export default {
         console.log(res[0].user_authority))
       // this.isAdmin = false
     } else {
+
     }
     
   }
@@ -52,4 +97,16 @@ export default {
 .notAdmin{
   display: none;
 }
+
+.rdo {
+  display:none;
+}
+
+.rdo:checked + .lbl{
+  background:red;
+}
+
+
+
+
 </style>
