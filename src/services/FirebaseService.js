@@ -138,7 +138,7 @@ export default {
 			created_at: firebase.firestore.FieldValue.serverTimestamp()
 		})
 	},
-	
+
 	update_database_member(email,user_authority) {
 		console.log('new member in')
 		return firestore.collection("member").update({
@@ -148,10 +148,10 @@ export default {
 		})
 	},
 
-	get_user_authority() {
-		const postsCollection = firestore.collection("member")
-		return postsCollection
-				.orderBy('email', 'user_authority')
+	get_user_authority(email) {
+		const user_info = firestore.collection("member").isEqual(email);
+		return user_info
+				.orderBy('email', 'user_authority', 'level')
 				.get()
 				.then((docSnapshots) => {
 					return docSnapshots.docs.map((doc) => {

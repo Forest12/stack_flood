@@ -19,8 +19,7 @@ import Portfolio from './Portfolio'
 export default {
 	name: 'PortfolioList',
 	  created:function(){
-	FirebaseService.logging('portfolio');
-	token=FirebaseService.logging('12');
+    FirebaseService.logging('portfolio');
   },
 	props: {
         item:{type:String},

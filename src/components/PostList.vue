@@ -13,13 +13,19 @@
 <script>
 
 import FirebaseService from '@/services/FirebaseService'
+import firebase from 'firebase/app'
 import Post from './Post'
 
 export default {
 	name: 'PostList',
 	 created:function(){
     this.item = this.$route.params.item;
-    FirebaseService.logging(this.item);
+	FirebaseService.logging(this.item);
+
+	console.log('uid check');
+	if (firebase.auth().currentUser !== null) {
+		console.log("user id: " + firebase.auth().currentUser.uid);
+	 }
   },
 	props: {
         item:{type:String},
