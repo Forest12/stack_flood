@@ -161,7 +161,6 @@ export default ({
       },
     signUp(){
     FirebaseService.signup_database(this.singup_email,'visitor','0');
-    
       firebase.auth().createUserWithEmailAndPassword(this.singup_email, this.singup_password)
         .then(() => alert('회원가입 성공.'))
         .catch(err => console.log(err.message))
