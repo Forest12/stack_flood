@@ -19,6 +19,7 @@ var firebaseConfig = {
   firebase.initializeApp(firebaseConfig);
   var email;
   var user = firebase.auth().currentUser;
+  var created_time=""
   
   
 firebase.auth().onAuthStateChanged(user => {
@@ -81,13 +82,14 @@ export default {
 				})
 	},
 	postPost(item ,title, content,img) {
-		return firestore.collection(item).add({
+		created_time = firebase.firestore.Timestamp.now().toDate()+" "
+		created_time = created_time.substring(0,24)
+		return firestore.collection(item).doc(title+" "+created_time).set({
 			email,
 			img,
 			title,
 			content,
-			created_at: firebase.firestore.FieldValue.serverTimestamp()
-
+			created_at: created_time
 		})
 	},
 	getPortfolios() {
@@ -104,7 +106,7 @@ export default {
 				})
 	},
 	postPortfolio(title, content, img) {
-		return firestore.collection("Portfolios").add({
+		return firestore.collection("Portfolios").doc(title+"_"+firebase.firestore.FieldValue.serverTimestamp()).set({
 			title,
 			content,
 			img,
@@ -119,6 +121,7 @@ export default {
 			time: firebase.firestore.FieldValue.serverTimestamp() 
 		})
 	},
+
 	loginWithGoogle() {
 		let provider = new firebase.auth.GoogleAuthProvider()
 		return firebase.auth().signInWithPopup(provider).then(function(result) {
@@ -129,9 +132,10 @@ export default {
 			console.error('[Google Login Error]', error)
 		})
 	},
-	signup_database(email,user_authority,level) {
+
+	signup_database(email,user_authority,level) {//가입시 데이터베이스에 데이터 저장. login.vue에 함수 호출 있음
 		console.log('new member in')
-		return firestore.collection("member").add({
+		return firestore.collection("member").doc(email).set({
 			email,
 			user_authority,
 			level,
@@ -139,7 +143,7 @@ export default {
 		})
 	},
 
-	update_database_member(email,user_authority) {
+	update_database_member(email,user_authority) { //데이터베이스 업데이트 부분, 미완. 수정 필요
 		console.log('new member in')
 		return firestore.collection("member").update({
 			email,
@@ -148,10 +152,24 @@ export default {
 		})
 	},
 
-	get_user_authority(email) {
-		const user_info = firestore.collection("member").isEqual(email);
+	get_user_info(email) {
+		const user_info = firestore.collection("member").where("email","==",email);
 		return user_info
-				.orderBy('email', 'user_authority', 'level')
+				.orderBy('user_authority', 'level')
+				.get()
+				.then((docSnapshots) => {
+					return docSnapshots.docs.map((doc) => {
+						let data = doc.data()
+						data.created_at = new Date(data.created_at.toDate())
+						return data
+					})
+				})
+	},
+
+	get_user_allPost(email) {
+		const user_info = firestore.collection("post").where("email","==",email);
+		return user_info
+				.orderBy('user_authority', 'level')
 				.get()
 				.then((docSnapshots) => {
 					return docSnapshots.docs.map((doc) => {
