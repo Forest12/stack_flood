@@ -106,19 +106,23 @@ export default {
 				})
 	},
 	postPortfolio(title, content, img) {
-		return firestore.collection("Portfolios").doc(title+"_"+firebase.firestore.FieldValue.serverTimestamp()).set({
+		created_time = firebase.firestore.Timestamp.now().toDate()+" "
+		created_time = created_time.substring(0,24)
+		return firestore.collection("Portfolios").doc(title+" "+created_time).set({
 			title,
 			content,
 			img,
-			created_at: firebase.firestore.FieldValue.serverTimestamp()
+			created_at: created_time
 		})
 	},
 	logging(item) {
+		created_time = firebase.firestore.Timestamp.now().toDate()+" "
+		created_time = created_time.substring(0,24)
 		console.log('logging start')
-		return firestore.collection('LOG').add({
+		return firestore.collection('LOG').doc(email+" "+created_time).set({
 			email,
 			item,
-			time: firebase.firestore.FieldValue.serverTimestamp() 
+			time: created_time 
 		})
 	},
 
