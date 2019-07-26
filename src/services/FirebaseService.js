@@ -66,9 +66,7 @@ export default {
 			postsCollection = firestore.collection("Blockchain")
 		}else if(item == "Webmobile"){
 			postsCollection = firestore.collection("Webmobile")
-		}else if(item == "member"){
-			postsCollection = firestore.collection("member")
-		} 
+		}
 		return postsCollection
 				.orderBy('created_at', 'desc')
 				.get()
@@ -89,7 +87,7 @@ export default {
 			img,
 			title,
 			content,
-			created_at: created_time
+			created_at: firebase.firestore.FieldValue.serverTimestamp()
 		})
 	},
 	getPortfolios() {
@@ -112,7 +110,7 @@ export default {
 			title,
 			content,
 			img,
-			created_at: created_time
+			created_at: firebase.firestore.FieldValue.serverTimestamp()
 		})
 	},
 	logging(item) {
@@ -122,7 +120,7 @@ export default {
 		return firestore.collection('LOG').doc(email+" "+created_time).set({
 			email,
 			item,
-			time: created_time 
+			time: firebase.firestore.FieldValue.serverTimestamp() 
 		})
 	},
 
