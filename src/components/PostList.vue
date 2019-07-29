@@ -42,7 +42,6 @@ export default {
 		Post
 	},
 	mounted() {
-		console.log(props.item)
 		this.getPosts(this.item)
 	},
 	methods: {
