@@ -126,17 +126,8 @@ export default {
       posts:[],
     }
   },
-  created() {
-    if (this.$store.state.user.email !== 'admin'){
-      alert("Admin 계정만 접근 가능합니다.");
-      console.log('ggjgjgj')
-      FirebaseService.getPosts('member').then(res => 
-        console.log(res[0].user_authority))
-      // this.isAdmin = false
 
-      FirebaseService.getPosts('Bigdata').then(res => console.log(res[0]));
 
-    
   }
 
   // created() {
