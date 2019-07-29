@@ -129,7 +129,7 @@ v-if="$store.state.user === null"
       </v-card-actions>
     </v-card>
   </v-dialog>
-
+<v-btn v-if="$store.state.user !== null">my page</v-btn>
 <v-btn v-on:click="signOut" v-if="$store.state.user !== null">logout</v-btn>
   </div>
 </template>
