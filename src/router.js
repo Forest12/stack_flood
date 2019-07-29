@@ -1,11 +1,15 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
+import Mypage from './views/Mypage.vue'
+
 import PostPage from './views/PostPage.vue'
 import NewPostPage from './views/NewPostPage.vue'
-
+import PostDetailPage from './views/PostDetailPage.vue'
 import PortfolioPage from './views/PortfolioPage.vue'
 import NewPortfolioPage from './views/NewPortfolioPage.vue'
+
+
 
 import Main from './views/Main.vue'
 import UserProfile from './views/UserProfile.vue'
@@ -24,6 +28,11 @@ export const router = new VueRouter({
     name: 'Main',
     component: Main,
   },
+  {
+    path: '/Mypage',
+    name: 'Mypage',
+    component: Mypage,
+  },
 
   {
     path: '/post/:item',
@@ -34,6 +43,11 @@ export const router = new VueRouter({
     path: '/post/:item/new',
     name: 'Newpost',
     component: NewPostPage,
+  },
+  {
+    path: "Post/:token",
+    name: 'Detailpost',
+    component: PostDetailPage,
   },
   {
     path: '/userProfile',
