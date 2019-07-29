@@ -136,11 +136,6 @@ export default {
 
       FirebaseService.getPosts('Bigdata').then(res => console.log(res[0]));
 
-
-
-    } else {
-
-    }
     
   }
 
