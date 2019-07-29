@@ -1,6 +1,6 @@
 <template>
   <v-layout py-4 h-100>
-    <v-flex row>
+    <v-flex row @click="moveDetail">
       <v-img :src="imgSrc" height="200px"></v-img>
       <div class="caption ">{{formatedDate}}</div>
       <h2 class="color-333 headline font-weight-light cutoneline">{{title}}</h2>
@@ -20,6 +20,7 @@ export default {
     this.item = this.$route.params.item;
   },
 	props: {
+    id:{type:String},
 		date: {type: Date},
 		title: {type: String},
     content: {type: String},
@@ -29,6 +30,11 @@ export default {
   computed: {
 		formatedDate() {
 			return `${this.date.getFullYear()}년 ${this.date.getMonth()+1}월 ${this.date.getDate()}일`
+    }
+  },
+  methods:{
+    moveDetail(){
+      this.$router.push(`/post/detail/${this.id}`);
     }
   }
 }
