@@ -73,6 +73,7 @@ export default {
 				.then((docSnapshots) => {
 					console.log("do post")
 					return docSnapshots.docs.map((doc) => {
+						console.log(doc.id)
 						let data = doc.data()
 						data.created_at = new Date(data.created_at.toDate())
 						return data
@@ -82,7 +83,7 @@ export default {
 	postPost(item ,title, content,img) {
 		created_time = firebase.firestore.Timestamp.now().toDate()+" "
 		created_time = created_time.substring(0,24)
-		return firestore.collection(item).doc(title+" "+created_time).set({
+		return firestore.collection(item).add({
 			email,
 			img,
 			title,
@@ -106,7 +107,7 @@ export default {
 	postPortfolio(title, content, img) {
 		created_time = firebase.firestore.Timestamp.now().toDate()+" "
 		created_time = created_time.substring(0,24)
-		return firestore.collection("Portfolios").doc(title+" "+created_time).set({
+		return firestore.collection("Portfolios").add({
 			title,
 			content,
 			img,
@@ -145,12 +146,11 @@ export default {
 		})
 	},
 
-	update_database_member(email,user_authority) { //데이터베이스 업데이트 부분, 미완. 수정 필요
+	update_database_member(email,user_authority,level) { //데이터베이스 업데이트 부분, 미완. 수정 필요
 		console.log('new member in')
-		return firestore.collection("member").update({
-			email,
+		return firestore.collection("member").doc(email).set({
 			user_authority,
-			created_at: firebase.firestore.FieldValue.serverTimestamp()
+			level
 		})
 	},
 
