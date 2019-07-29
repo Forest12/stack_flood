@@ -16,45 +16,32 @@ var firebaseConfig = {
     appId: "1:934123234328:web:0932bbb6042d5da3"
   };
 
-  firebase.initializeApp(firebaseConfig);
-  var email;
-  var user = firebase.auth().currentUser;
-  var created_time=""
+	firebase.initializeApp(firebaseConfig);
+	var email;
+	var user = firebase.auth().currentUser;	
+	var created_time=""
   
   
-firebase.auth().onAuthStateChanged(user => {
-	if (user != null) {
-		email = user.email;
-		store.commit('setUser', user)
-	  } else {
-		email = "undefine";
-		store.commit('setUser', user)
-	  }
-	  log=email+" "+firebase.firestore.FieldValue.serverTimestamp()+" 현재 페이지 위치";
-	  console.log(log);
-	// if (user)	{
-	// 	user.getIdTokenResult().then(idTokenResult => {
-	// 		console.log(idTokenResult.claims.admin);
-	// 		console.log(idTokenResult, '입니다.');
-	// 	})
-	// }
-
-})
+	firebase.auth().onAuthStateChanged(user => {
+		if (user != null) {
+			email = user.email;
+			store.commit('setUser', user)
+		}else {
+			email = "undefine";
+			store.commit('setUser', user)
+		}})
 	
-
-
 
 const firestore = firebase.firestore()
 
-//SM 0715
-
-
 Vue.prototype.$firebase = firebase
-
-//SM 0715
 
 
 export default {
+	getPost(post_token){
+		post_token
+
+	},
 
 	getPosts(item) {
 		let postsCollection
@@ -76,21 +63,54 @@ export default {
 					console.log("do post")
 					return docSnapshots.docs.map((doc) => {
 						console.log(doc.id)
+
 						let data = doc.data()
+						data.id = doc.id
 						data.created_at = new Date(data.created_at.toDate())
 						return data
 					})
 				})
 	},
+	getMyPosts(item) {
+		email='1234@gmail.com'
+		console.log("in js!!")
+		console.log(item)
+		console.log(email)
+		let postsCollection
+		if(item == "AI"){
+			postsCollection = firestore.collection("AI").where("email","==",email)
+		}else if(item == "Bigdata"){
+			postsCollection = firestore.collection("Bigdata").where("email","==",email)
+		}else if(item == "Blockchain"){
+			postsCollection = firestore.collection("Blockchain").where("email","==",email)
+		}else if(item == "Webmobile"){
+			postsCollection = firestore.collection("Webmobile").where("email","==",email)
+				.get()
+				.then((docSnapshots) => {
+					console.log("do post")
+					return docSnapshots.docs.map((doc) => {
+						console.log(doc.id)
+						let data = doc.data()
+						data.created_at = new Date(data.created_at.toDate())
+						return data
+					})
+				})
+		.catch(function(error) {
+			console.log("Error getting documents: ", error);
+		});
+			}
+		},
+
 	postPost(item ,title, content,img) {
 		created_time = firebase.firestore.Timestamp.now().toDate()+" "
 		created_time = created_time.substring(0,24)
+		
 		return firestore.collection(item).add({
 			email,
 			img,
 			title,
 			content,
-			created_at: firebase.firestore.FieldValue.serverTimestamp()
+			created_at: firebase.firestore.FieldValue.serverTimestamp(),
 		})
 	},
 	getPortfolios() {
@@ -101,6 +121,7 @@ export default {
 				.then((docSnapshots) => {
 					return docSnapshots.docs.map((doc) => {
 						let data = doc.data()
+						data.id = doc.id
 						data.created_at = new Date(data.created_at.toDate())
 						return data
 					})
@@ -126,6 +147,7 @@ export default {
 			time: firebase.firestore.FieldValue.serverTimestamp() 
 		})
 	},
+
 
 	loginWithGoogle() {
 		let provider = new firebase.auth.GoogleAuthProvider()
@@ -158,20 +180,6 @@ export default {
 
 	get_user_info(email) {
 		const user_info = firestore.collection("member").where("email","==",email);
-		return user_info
-				.orderBy('user_authority', 'level')
-				.get()
-				.then((docSnapshots) => {
-					return docSnapshots.docs.map((doc) => {
-						let data = doc.data()
-						data.created_at = new Date(data.created_at.toDate())
-						return data
-					})
-				})
-	},
-
-	get_user_allPost(email) {
-		const user_info = firestore.collection("post").where("email","==",email);
 		return user_info
 				.orderBy('user_authority', 'level')
 				.get()
