@@ -17,16 +17,7 @@ import firebase from 'firebase/app'
 import Post from './Post'
 
 export default {
-	name: 'PostList',
-	 created:function(){
-    this.item = this.$route.params.item;
-	FirebaseService.logging(this.item);
-
-	console.log('uid check');
-	if (firebase.auth().currentUser !== null) {
-		console.log("user id: " + firebase.auth().currentUser.uid);
-	 }
-  },
+	name: 'MyPostList',
 	props: {
         item:{type:String},
 		column: {type: Number, default: 1},
@@ -42,17 +33,21 @@ export default {
 		Post
 	},
 	mounted() {
-		console.log(props.item)
-		this.getPosts(this.item)
+		console.log()
+		console.log('mounted')
+		this.getMyPosts("Webmobile")
 	},
 	methods: {
-		async getPosts(item) {
-			this.posts = await FirebaseService.getPosts(item)
+		async getMyPosts(item) {
+			console.log(this.props)
+			console.log("start work")
+			this.posts = await FirebaseService.getMyPosts(item)
 		},
 	}
 }
 
 </script>
+
 <style>
   .mw-700 {
     max-width: 700px;

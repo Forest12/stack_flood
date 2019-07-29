@@ -30,8 +30,6 @@ firebase.auth().onAuthStateChanged(user => {
 		email = "undefine";
 		store.commit('setUser', user)
 	  }
-	  log=email+" "+firebase.firestore.FieldValue.serverTimestamp()+" 현재 페이지 위치";
-	  console.log(log);
 	// if (user)	{
 	// 	user.getIdTokenResult().then(idTokenResult => {
 	// 		console.log(idTokenResult.claims.admin);
@@ -80,6 +78,36 @@ export default {
 					})
 				})
 	},
+	getMyPosts(item) {
+		email='1234@gmail.com'
+		console.log("in js!!")
+		console.log(item)
+		console.log(email)
+		let postsCollection
+		if(item == "AI"){
+			postsCollection = firestore.collection("AI").where("email","==",email)
+		}else if(item == "Bigdata"){
+			postsCollection = firestore.collection("Bigdata").where("email","==",email)
+		}else if(item == "Blockchain"){
+			postsCollection = firestore.collection("Blockchain").where("email","==",email)
+		}else if(item == "Webmobile"){
+			postsCollection = firestore.collection("Webmobile").where("email","==",email)
+				.get()
+				.then((docSnapshots) => {
+					console.log("do post")
+					return docSnapshots.docs.map((doc) => {
+						console.log(doc.id)
+						let data = doc.data()
+						data.created_at = new Date(data.created_at.toDate())
+						return data
+					})
+				})
+		.catch(function(error) {
+			console.log("Error getting documents: ", error);
+		});
+			}
+		},
+
 	postPost(item ,title, content,img) {
 		created_time = firebase.firestore.Timestamp.now().toDate()+" "
 		created_time = created_time.substring(0,24)
@@ -156,20 +184,6 @@ export default {
 
 	get_user_info(email) {
 		const user_info = firestore.collection("member").where("email","==",email);
-		return user_info
-				.orderBy('user_authority', 'level')
-				.get()
-				.then((docSnapshots) => {
-					return docSnapshots.docs.map((doc) => {
-						let data = doc.data()
-						data.created_at = new Date(data.created_at.toDate())
-						return data
-					})
-				})
-	},
-
-	get_user_allPost(email) {
-		const user_info = firestore.collection("post").where("email","==",email);
 		return user_info
 				.orderBy('user_authority', 'level')
 				.get()

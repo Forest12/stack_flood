@@ -129,7 +129,7 @@ v-if="$store.state.user === null"
       </v-card-actions>
     </v-card>
   </v-dialog>
-<v-btn v-if="$store.state.user !== null">my page</v-btn>
+<v-btn router to="/Mypage" v-if="$store.state.user !== null">my page</v-btn>
 <v-btn v-on:click="signOut" v-if="$store.state.user !== null">logout</v-btn>
   </div>
 </template>
@@ -158,6 +158,9 @@ export default ({
   methods: {
        login() {
         alert('Sign Up')
+      },
+      go_Mypage(){
+        this.$router.push(Mypage);
       },
     signUp(){
     FirebaseService.signup_database(this.singup_email,'visitor','0');

@@ -17,6 +17,7 @@ import { functions } from 'firebase';
 export default {
   name: 'Post',
     created:function(){
+      console.log("in post")
     this.item = this.$route.params.item;
   },
 	props: {

@@ -126,34 +126,10 @@ export default {
       posts:[],
     }
   },
-  created() {
-    if (this.$store.state.user.email !== 'admin'){
-      alert("Admin 계정만 접근 가능합니다.");
-      console.log('ggjgjgj')
-      FirebaseService.getPosts('member').then(res => 
-        console.log(res[0].user_authority))
-      // this.isAdmin = false
 
-      FirebaseService.getPosts('Bigdata').then(res => console.log(res[0]));
 
-    
   }
 
-  // created() {
-  //   this.data_title.forEach(subject => {
-  //     FirebaseService.getPosts(subject).then(res => {
-  //       res.forEach(item => {
-  //         if (this.collection[subject].length < 3){
-  //         this.collection[subject].push({
-  //           title : item.title,
-  //           created_at : moment(item.created_at).format("YYYY-MM-DD"),
-  //         })
-  //         }
-  //       })
-  //     })
-  //   })
-  // },
-}
 </script>
 
 <style scoped>
