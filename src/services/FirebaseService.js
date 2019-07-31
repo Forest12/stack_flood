@@ -16,39 +16,50 @@ var firebaseConfig = {
     appId: "1:934123234328:web:0932bbb6042d5da3"
   };
 
-  firebase.initializeApp(firebaseConfig);
-  var email;
-  var user1="";
-  var user = firebase.auth().currentUser;
-  var created_time=""
+	firebase.initializeApp(firebaseConfig);
+	var email;
+	var user = firebase.auth().currentUser;	
+	var created_time=""
   
   
-firebase.auth().onAuthStateChanged(user => {
-	if (user != null) {
-		email = user.email;
-		store.commit('setUser', user)
-	  } else {
-		email = "undefine";
-		store.commit('setUser', user)
-	  }
-	  console.log("email check")
-	  console.log(email)
-})
+	firebase.auth().onAuthStateChanged(user => {
+		if (user != null) {
+			email = user.email;
+			store.commit('setUser', user)
+		}else {
+			email = "undefine";
+			store.commit('setUser', user)
+		}})
 	
-
-
 
 const firestore = firebase.firestore()
 
-//SM 0715
-
-
 Vue.prototype.$firebase = firebase
-
-//SM 0715
 
 
 export default {
+
+	getPost(post_token, item){
+		var docRef = firestore.collection(item).doc(post_token)
+	
+		return docRef.get().then(function(doc) {
+			if (doc.exists) {
+				let data = doc.data()
+				data.created_at = new Date(data.created_at.toDate())
+
+				return data
+				
+
+			} else {
+				// doc.data() will be undefined in this case
+				console.log("No such document!");
+			}
+		}).catch(function(error) {
+			console.log("Error getting document:", error);
+		});
+	
+
+	},
 
 	getPosts(item) {
 		let postsCollection
@@ -60,6 +71,8 @@ export default {
 			postsCollection = firestore.collection("Blockchain")
 		}else if(item == "Webmobile"){
 			postsCollection = firestore.collection("Webmobile")
+		}else if(item == "member"){
+			postsCollection = firestore.collection("member")
 		}
 		return postsCollection
 				.orderBy('created_at', 'desc')
@@ -68,13 +81,19 @@ export default {
 					console.log("do post")
 					return docSnapshots.docs.map((doc) => {
 						console.log(doc.id)
+
 						let data = doc.data()
+						data.id = doc.id
 						data.created_at = new Date(data.created_at.toDate())
 						return data
 					})
 				})
 	},
 	getMyPosts(item) {
+		email='1234@gmail.com'
+		console.log("in js!!")
+		console.log(item)
+		console.log(email)
 		let postsCollection
 		if(item == "AI"){
 			postsCollection = firestore.collection("AI").where("email","==",email)
@@ -84,8 +103,6 @@ export default {
 			postsCollection = firestore.collection("Blockchain").where("email","==",email)
 		}else if(item == "Webmobile"){
 			postsCollection = firestore.collection("Webmobile").where("email","==",email)
-			}
-			return postsCollection
 				.get()
 				.then((docSnapshots) => {
 					console.log("do post")
@@ -93,24 +110,40 @@ export default {
 						console.log(doc.id)
 						let data = doc.data()
 						data.created_at = new Date(data.created_at.toDate())
+						console.log(data)
 						return data
 					})
 				})
 		.catch(function(error) {
 			console.log("Error getting documents: ", error);
 		});
+			}
 		},
 
 	postPost(item ,title, content,img) {
 		created_time = firebase.firestore.Timestamp.now().toDate()+" "
 		created_time = created_time.substring(0,24)
+		
 		return firestore.collection(item).add({
 			email,
 			img,
 			title,
 			content,
-			created_at: firebase.firestore.FieldValue.serverTimestamp()
+			created_at: firebase.firestore.FieldValue.serverTimestamp(),
 		})
+	},
+
+	postAnswer(item, post_token,content){
+		created_time = firebase.firestore.Timestamp.now().toDate()+" "
+		created_time = created_time.substring(0,24)
+		return firestore.collection(item).doc(post_token).collection("Answer").add(
+			{
+				email,
+				content,
+				created_at: firebase.firestore.FieldValue.serverTimestamp(),
+
+			}
+		)
 	},
 	getPortfolios() {
 		const postsCollection = firestore.collection("Portfolios")
@@ -120,6 +153,7 @@ export default {
 				.then((docSnapshots) => {
 					return docSnapshots.docs.map((doc) => {
 						let data = doc.data()
+						data.id = doc.id
 						data.created_at = new Date(data.created_at.toDate())
 						return data
 					})
@@ -146,6 +180,7 @@ export default {
 		})
 	},
 
+
 	loginWithGoogle() {
 		let provider = new firebase.auth.GoogleAuthProvider()
 		return firebase.auth().signInWithPopup(provider).then(function(result) {
@@ -167,11 +202,11 @@ export default {
 		})
 	},
 
-	update_database_member(email,user_authority,level) { //데이터베이스 업데이트 부분, 미완. 수정 필요
-		console.log('new member in')
+	update_database_member(email,user_authority) { //데이터베이스 업데이트 부분, 미완. 수정 필요
+		console.log('유저권한 수정하기')
 		return firestore.collection("member").doc(email).set({
 			user_authority,
-			level
+
 		})
 	},
 
@@ -189,4 +224,3 @@ export default {
 				})
 	}
 }
-     
