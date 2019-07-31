@@ -38,8 +38,26 @@ Vue.prototype.$firebase = firebase
 
 
 export default {
-	getPost(post_token){
-		post_token
+
+	getPost(post_token, item){
+		var docRef = firestore.collection(item).doc(post_token)
+	
+		return docRef.get().then(function(doc) {
+			if (doc.exists) {
+				let data = doc.data()
+				data.created_at = new Date(data.created_at.toDate())
+
+				return data
+				
+
+			} else {
+				// doc.data() will be undefined in this case
+				console.log("No such document!");
+			}
+		}).catch(function(error) {
+			console.log("Error getting document:", error);
+		});
+	
 
 	},
 
@@ -92,6 +110,7 @@ export default {
 						console.log(doc.id)
 						let data = doc.data()
 						data.created_at = new Date(data.created_at.toDate())
+						console.log(data)
 						return data
 					})
 				})
@@ -112,6 +131,19 @@ export default {
 			content,
 			created_at: firebase.firestore.FieldValue.serverTimestamp(),
 		})
+	},
+
+	postAnswer(item, post_token,content){
+		created_time = firebase.firestore.Timestamp.now().toDate()+" "
+		created_time = created_time.substring(0,24)
+		return firestore.collection(item).doc(post_token).collection("Answer").add(
+			{
+				email,
+				content,
+				created_at: firebase.firestore.FieldValue.serverTimestamp(),
+
+			}
+		)
 	},
 	getPortfolios() {
 		const postsCollection = firestore.collection("Portfolios")
