@@ -81,7 +81,6 @@ export default {
 					console.log("do post")
 					return docSnapshots.docs.map((doc) => {
 						console.log(doc.id)
-
 						let data = doc.data()
 						data.id = doc.id
 						data.created_at = new Date(data.created_at.toDate())
