@@ -18,7 +18,7 @@ export default {
   name: 'Post',
     created:function(){
       console.log("in post")
-    this.item = this.$route.params.item;
+      this.item = this.$route.params.item;
   },
 	props: {
     id:{type:String},
@@ -35,7 +35,7 @@ export default {
   },
   methods:{
     moveDetail(){
-      this.$router.push(`/post/detail/${this.id}`);
+      this.$router.push(`/${this.item}/detail/${this.id}`);
     }
   }
 }
