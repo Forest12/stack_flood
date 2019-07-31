@@ -130,21 +130,6 @@ export default {
 
   }
 
-  // created() {
-  //   this.data_title.forEach(subject => {
-  //     FirebaseService.getPosts(subject).then(res => {
-  //       res.forEach(item => {
-  //         if (this.collection[subject].length < 3){
-  //         this.collection[subject].push({
-  //           title : item.title,
-  //           created_at : moment(item.created_at).format("YYYY-MM-DD"),
-  //         })
-  //         }
-  //       })
-  //     })
-  //   })
-  // },
-}}
 </script>
 
 <style scoped>
