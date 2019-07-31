@@ -89,10 +89,6 @@ export default {
 				})
 	},
 	getMyPosts(item) {
-		email='1234@gmail.com'
-		console.log("in js!!")
-		console.log(item)
-		console.log(email)
 		let postsCollection
 		if(item == "AI"){
 			postsCollection = firestore.collection("AI").where("email","==",email)
@@ -102,21 +98,22 @@ export default {
 			postsCollection = firestore.collection("Blockchain").where("email","==",email)
 		}else if(item == "Webmobile"){
 			postsCollection = firestore.collection("Webmobile").where("email","==",email)
-				.get()
-				.then((docSnapshots) => {
-					console.log("do post")
-					return docSnapshots.docs.map((doc) => {
-						console.log(doc.id)
-						let data = doc.data()
-						data.created_at = new Date(data.created_at.toDate())
-						console.log(data)
-						return data
-					})
-				})
-		.catch(function(error) {
-			console.log("Error getting documents: ", error);
-		});
 			}
+		return postsCollection
+			.get()
+			.then((docSnapshots) => {
+				console.log("do post")
+				return docSnapshots.docs.map((doc) => {
+					console.log(doc.id)
+					let data = doc.data()
+					data.created_at = new Date(data.created_at.toDate())
+					console.log(data)
+					return data
+				})
+			})
+	.catch(function(error) {
+		console.log("Error getting documents: ", error);
+	});
 		},
 
 	postPost(item ,title, content,img) {
