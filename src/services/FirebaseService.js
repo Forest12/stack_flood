@@ -18,6 +18,7 @@ var firebaseConfig = {
 
   firebase.initializeApp(firebaseConfig);
   var email;
+  var user1="";
   var user = firebase.auth().currentUser;
   var created_time=""
   
@@ -30,13 +31,8 @@ firebase.auth().onAuthStateChanged(user => {
 		email = "undefine";
 		store.commit('setUser', user)
 	  }
-	// if (user)	{
-	// 	user.getIdTokenResult().then(idTokenResult => {
-	// 		console.log(idTokenResult.claims.admin);
-	// 		console.log(idTokenResult, '입니다.');
-	// 	})
-	// }
-
+	  console.log("email check")
+	  console.log(email)
 })
 	
 
@@ -79,10 +75,6 @@ export default {
 				})
 	},
 	getMyPosts(item) {
-		email='1234@gmail.com'
-		console.log("in js!!")
-		console.log(item)
-		console.log(email)
 		let postsCollection
 		if(item == "AI"){
 			postsCollection = firestore.collection("AI").where("email","==",email)
@@ -92,6 +84,8 @@ export default {
 			postsCollection = firestore.collection("Blockchain").where("email","==",email)
 		}else if(item == "Webmobile"){
 			postsCollection = firestore.collection("Webmobile").where("email","==",email)
+			}
+			return postsCollection
 				.get()
 				.then((docSnapshots) => {
 					console.log("do post")
@@ -105,7 +99,6 @@ export default {
 		.catch(function(error) {
 			console.log("Error getting documents: ", error);
 		});
-			}
 		},
 
 	postPost(item ,title, content,img) {
