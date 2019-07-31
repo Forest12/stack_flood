@@ -3,9 +3,10 @@
     <v-flex v-for="i in portfolios.length > limits ? limits : portfolios.length" v-bind:key='i.title'  px-3>
 
       <Portfolio
+	  			:id="portfolios[i - 1].id"
             	:date="portfolios[i - 1].created_at"
             	:title="portfolios[i - 1].title"
-              :content="portfolios[i - 1].content"
+              	:content="portfolios[i - 1].content"
 				:imgSrc="portfolios[i - 1].img">
       </Portfolio>
       <v-divider></v-divider>
