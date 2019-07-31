@@ -45,11 +45,10 @@ export const router = new VueRouter({
     component: NewPostPage,
   },
   {
-    path: "/:item/detail/:post_token",
+    path: "Post/:token",
     name: 'Detailpost',
     component: PostDetailPage,
   },
-
   {
     path: '/userProfile',
     name: 'UserProfile',

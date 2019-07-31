@@ -33,14 +33,10 @@ export default {
 		Post
 	},
 	mounted() {
-		console.log()
-		console.log('mounted')
-		this.getMyPosts("Webmobile")
+		this.getMyPosts(this.item)
 	},
 	methods: {
 		async getMyPosts(item) {
-			console.log(this.props)
-			console.log("start work")
 			this.posts = await FirebaseService.getMyPosts(item)
 		},
 	}

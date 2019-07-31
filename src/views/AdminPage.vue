@@ -14,53 +14,47 @@
           <div class="list-title">권한</div>
         </v-flex>
         <v-flex md6 class="indigo lighten-3">
-           <div class="list-title">게시글 수 총 : {{posts[0]+posts[1]+posts[2]+posts[3]}} 개</div>
+           <div class="list-title">게시글 수 총 : nn 개</div>
         </v-flex>
       </v-layout>
       <v-layout row wrap>
         <v-flex md3 xs6 class="info lighten-3">
-          <!-- <div class="gogo">
-            <div class="user-l" v-for="user in userlist" :key="user" @click="authth">{{user.email}}</div>
-          </div> -->
-
           <div class="gogo">
-            <div class="user-l" v-for="user in userlist" :key="user.email">
-              <input class="user-chk" type="radio" name="userlist" :id="user.email" @click="authth(user.email)">
-              <label class="user-rdo" :for="user.email">{{user.email}}</label>
-            </div>
+            <input type="radio" id="user-1" name="username" value="유저1" v-model="username">
+            <label for="user-1">유저1</label>
+            <input type="radio" id="user-2" name="username" value="유저2" v-model="username">
+            <label for="user-2">유저2</label>
+            <input type="radio" id="user-3" name="username" value="유저3" v-model="username">
+            <label for="user-3">유저3</label>
+
           </div>
         </v-flex>
         <v-flex md3 xs6 class="info lighten-3">
-          <input class="rdo" type="radio" id="auth-manager" name="auth" value="manager" @click="auththth('manager')">
-          <label class="lbl" for="auth-manager">관리자</label><br>
-
-          <input class="rdo" type="radio" id="auth-team" name="auth" value="team" @click="auththth('team')">
-          <label class="lbl" for="auth-team">팀원</label><br>
-
-          <input class="rdo" type="radio" id="auth-visitor" name="auth" value="visitor" @click="auththth('visitor')">
-          <label class="lbl" for="auth-visitor">방문자</label><br>
-
-          <br>
-          <button @click="editUser">{{username}} {{auth}} 수정</button>
+          <input class="rdo" type="radio" id="auth-manager" name="auth" value="manager" v-model="auth">
+          <label class="lbl" for="auth-manager">관리자</label>
+          <input class="rdo" type="radio" id="auth-team" name="auth" value="team" v-model="auth">
+          <label class="lbl" for="auth-team">팀원</label>
+          <input class="rdo" type="radio" id="auth-visitor" name="auth" value="visitor" v-model="auth">
+          <label class="lbl" for="auth-visitor">방문자</label>
           
         </v-flex>
         <v-flex md6 class="info lighten-3">
 
           <div class="zz">
-            <div class="posts-count">{{posts[0]}} 개</div>
-            <div class="posts-subject">AI</div>
-          </div>
-          <div class="zz">
-            <div class="posts-count">{{posts[1]}} 개</div>
+            <div class="posts-count">nn개</div>
             <div class="posts-subject">빅데이터</div>
           </div>
           <div class="zz">
-            <div class="posts-count">{{posts[2]}} 개</div>
-            <div class="posts-subject">블록체인</div>
+            <div class="posts-count">nn개</div>
+            <div class="posts-subject">빅데이터</div>
           </div>
           <div class="zz">
-            <div class="posts-count">{{posts[3]}} 개</div>
-            <div class="posts-subject">웹/모바일</div>
+            <div class="posts-count">nn개</div>
+            <div class="posts-subject">빅데이터</div>
+          </div>
+          <div class="zz">
+            <div class="posts-count">nn개</div>
+            <div class="posts-subject">빅데이터</div>
           </div>
 
 
@@ -78,7 +72,14 @@
           <div>유저 목록</div>
         </div>
         <div class="user-list-content">
+          <!-- <input type="radio" id="user-1" name="username" value="유저1" v-model="username">
+          <label for="user-1">유저1</label>
+          <input type="radio" id="user-2" name="username" value="유저2" v-model="username">
+          <label for="user-2">유저2</label>
+          <input type="radio" id="user-3" name="username" value="유저3" v-model="username">
+          <label for="user-3">유저3</label> -->
           {{ username }}
+
         </div>
       </div>
 
@@ -87,6 +88,13 @@
           <div>권한 변경</div>
         </div>
         <div class="authority-list-content">
+          <!-- <input class="rdo" type="radio" id="auth-manager" name="auth" value="manager" v-model="auth">
+          <label class="lbl" for="auth-manager">관리자</label>
+          <input class="rdo" type="radio" id="auth-team" name="auth" value="team" v-model="auth">
+          <label class="lbl" for="auth-team">팀원</label>
+          <input class="rdo" type="radio" id="auth-visitor" name="auth" value="visitor" v-model="auth">
+          <label class="lbl" for="auth-visitor">방문자</label> -->
+          
           {{ auth }}
         </div>
       </div>
@@ -112,48 +120,16 @@ import FirebaseService from '@/services/FirebaseService'
 export default {
   data(){
     return {
-      isAdmin : false,
+      isAdmin : true,
       username : '',
       auth: '',
       posts:[],
-      userlist:[],
     }
   },
-  methods: {
-    authth(e){
-      this.username = e
-    },
-    auththth(e){
-      this.auth = e
-    },
-    editUser(){
-      FirebaseService.update_database_member(this.username,this.auth)
-    }
-  },
-  created() {
-    // if (this.$store.state.user.email !== 'admin'){
 
-    //   alert("Admin 계정만 접근 가능합니다.");
 
-      ['AI','Bigdata','Blockchain','Webmobile'].forEach(subject => {
-        FirebaseService.getPosts(subject).then(res => {
-          this.posts.push(res.length)
-          console.log(this.posts)
-        })
-      })
+  }
 
-      FirebaseService.getPosts('member').then(res => {
-        console.log(res)
-        console.log("ㅎㅁ나어히ㅏㅁㄴ어림ㄴ어리ㅏ")
-        res.forEach(item => {
-          console.log(item)
-          this.userlist.push({email:item.email,authority:item.user_authority})
-        })
-        console.log(this.userlist)
-        })
-
-}
-}
 </script>
 
 <style scoped>
@@ -169,31 +145,8 @@ export default {
   background:red;
 }
 
-.user-chk {
-  display: none;
-}
-
-.user-chk:checked + .user-rdo{
-  background: tomato;
-}
-
-.user-rdo {
-  width:100%;
-  height:100%;
-}
-
 .gogo {
   height:150px;
-  overflow:scroll;
-}
-
-/* .user-l:hover {
-  background:red;
-  cursor: pointer;
-} */
-
-.user-l:visited {
-  background: blue;
 }
 
 .zz {
@@ -208,6 +161,7 @@ export default {
   text-align:center;
   border: 1px solid black;
   box-sizing:border-box;
+  
 }
 
 .list-title {

@@ -5,7 +5,7 @@
       <Portfolio
             	:date="portfolios[i - 1].created_at"
             	:title="portfolios[i - 1].title"
-              	:content="portfolios[i - 1].content"
+              :content="portfolios[i - 1].content"
 				:imgSrc="portfolios[i - 1].img">
       </Portfolio>
       <v-divider></v-divider>
@@ -20,7 +20,9 @@ import Portfolio from './Portfolio'
 
 export default {
 	name: 'PortfolioList',
-	
+	  created:function(){
+    FirebaseService.logging('portfolio');
+  },
 	props: {
         item:{type:String},
 		column: {type: Number, default: 1},
@@ -37,9 +39,6 @@ export default {
 	},
 	mounted() {
 		this.getPortfolios()
-	},
-	created(){
-		FirebaseService.logging('portfolio');
 	},
 	methods: {
 		async getPortfolios() {

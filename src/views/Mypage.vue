@@ -30,9 +30,9 @@ import { METHODS } from 'http';
 
 export default {
     name: 'Mypage',
-
-      created:function(){
+    created:function(){
     this.item = this.$route.params.item;
+    FirebaseService.logging('mypage');
     console.log('created mypage')
   },
 	components: {
