@@ -201,11 +201,13 @@ export default {
 		})
 	},
 
-	update_database_member(email,user_authority) { //데이터베이스 업데이트 부분, 미완. 수정 필요
+	update_database_member(email,user_authority,level,created_at) { //데이터베이스 업데이트 부분, 미완. 수정 필요
 		console.log('유저권한 수정하기')
 		return firestore.collection("member").doc(email).set({
 			user_authority,
-
+			email,
+			level,
+			created_at
 		})
 	},
 
