@@ -14,7 +14,7 @@
           <div class="list-title">권한</div>
         </v-flex>
         <v-flex md6 class="indigo lighten-3">
-           <div class="list-title">게시글 수 총 : {{posts[0]+posts[1]+posts[2]+posts[3]}} 개</div>
+           <div class="list-title">게시글 수  총 : {{posts[0]+posts[1]+posts[2]+posts[3]}} 개</div>
         </v-flex>
       </v-layout>
       <v-layout row wrap>
