@@ -18,14 +18,19 @@ var firebaseConfig = {
 
 	firebase.initializeApp(firebaseConfig);
 	var email;
-	var user = firebase.auth().currentUser;	
 	var created_time=""
+  	var user;
   
-  
-	firebase.auth().onAuthStateChanged(user => {
+	firebase.auth().onAuthStateChanged(() => {
+		user = firebase.auth().currentUser;	
+	
+
 		if (user != null) {
-			email = user.email;
+			email = user.email
 			store.commit('setUser', user)
+			console.log("+++++++++++++++++++++++",user.displayName)
+			
+			
 		}else {
 			email = "undefine";
 			store.commit('setUser', user)
@@ -73,7 +78,7 @@ export default {
 	},
 
 	getMyPosts(item) {
-		let postsCollection = firestore.collection(item).where("email","==",email)
+		let postsCollection = firestore.collection(item).where("email","==",user.email)
 
 		return postsCollection
 			.get()
@@ -187,6 +192,8 @@ export default {
 
 	update_database_member(email,user_authority,level,created_at) { //데이터베이스 업데이트 부분, 미완. 수정 필요
 		console.log('유저권한 수정하기')
+		user.updateProfile({
+			displayName: user_authority,})
 		return firestore.collection("member").doc(email).set({
 			user_authority,
 			email,
