@@ -46,10 +46,7 @@ export default {
 			if (doc.exists) {
 				let data = doc.data()
 				data.created_at = new Date(data.created_at.toDate())
-
 				return data
-				
-
 			} else {
 				// doc.data() will be undefined in this case
 				console.log("No such document!");
@@ -57,30 +54,16 @@ export default {
 		}).catch(function(error) {
 			console.log("Error getting document:", error);
 		});
-	
-
 	},
 
 	getPosts(item) {
-		let postsCollection
-		if(item == "AI"){
-			postsCollection = firestore.collection("AI")
-		}else if(item == "Bigdata"){
-			postsCollection = firestore.collection("Bigdata")
-		}else if(item == "Blockchain"){
-			postsCollection = firestore.collection("Blockchain")
-		}else if(item == "Webmobile"){
-			postsCollection = firestore.collection("Webmobile")
-		}else if(item == "member"){
-			postsCollection = firestore.collection("member")
-		}
+		let postsCollection = firestore.collection(item)
+	
 		return postsCollection
 				.orderBy('created_at', 'desc')
 				.get()
 				.then((docSnapshots) => {
-					console.log("do post")
 					return docSnapshots.docs.map((doc) => {
-						console.log(doc.id)
 						let data = doc.data()
 						data.id = doc.id
 						data.created_at = new Date(data.created_at.toDate())
@@ -88,33 +71,23 @@ export default {
 					})
 				})
 	},
+
 	getMyPosts(item) {
-		let postsCollection
-		if(item == "AI"){
-			postsCollection = firestore.collection("AI").where("email","==",email)
-		}else if(item == "Bigdata"){
-			postsCollection = firestore.collection("Bigdata").where("email","==",email)
-		}else if(item == "Blockchain"){
-			postsCollection = firestore.collection("Blockchain").where("email","==",email)
-		}else if(item == "Webmobile"){
-			postsCollection = firestore.collection("Webmobile").where("email","==",email)
-			}
+		let postsCollection = firestore.collection(item).where("email","==",email)
+
 		return postsCollection
 			.get()
 			.then((docSnapshots) => {
-				console.log("do post")
 				return docSnapshots.docs.map((doc) => {
-					console.log(doc.id)
 					let data = doc.data()
 					data.created_at = new Date(data.created_at.toDate())
-					console.log(data)
 					return data
 				})
 			})
-	.catch(function(error) {
-		console.log("Error getting documents: ", error);
-	});
-		},
+			.catch(function(error) {
+				console.log("Error getting documents: ", error)
+			})
+	},
 
 	postPost(item ,title, content,img) {
 		created_time = firebase.firestore.Timestamp.now().toDate()+" "
@@ -140,6 +113,20 @@ export default {
 
 			}
 		)
+	},
+	getAnswers(item, post_token){
+		let AnswersCollection = firestore.collection(item).doc(post_token).collection("Answer")
+		
+		return AnswersCollection.get()
+				.then((docSnapshots) => {
+					return docSnapshots.docs.map((doc) => {
+						let data = doc.data()
+						data.id = doc.id
+						data.created_at = new Date(data.created_at.toDate())
+						return data
+					})
+				})
+
 	},
 	getPortfolios() {
 		const postsCollection = firestore.collection("Portfolios")
