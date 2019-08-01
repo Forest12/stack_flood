@@ -164,10 +164,20 @@ export default ({
       },
     signUp(){
     FirebaseService.signup_database(this.singup_email,'visitor','0');
-      firebase.auth().createUserWithEmailAndPassword(this.singup_email, this.singup_password)
-        .then(() => alert('회원가입 성공.'))
-        .catch(err => console.log(err.message))
+
+    firebase.auth().createUserWithEmailAndPassword(this.singup_email, this.singup_password)
+      .then((user) => {
+          user = firebase.auth().currentUser;	
+          console.log(user.email)
+          if(user){
+            console.log("왜안들아가져?")
+              user.updateProfile({
+              displayName: "visitor",
+            }).then(()=> alert('회원가입 성공!'))
+        }
+      })    
     },
+    
     singIn(){
       firebase.auth().signInWithEmailAndPassword(this.singin_email, this.singin_password)
         .then(() => {

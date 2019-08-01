@@ -14,7 +14,7 @@
           <div class="list-title">권한</div>
         </v-flex>
         <v-flex md6 class="indigo lighten-3">
-           <div class="list-title">게시글 수 총 : {{posts[0]+posts[1]+posts[2]+posts[3]}} 개</div>
+           <div class="list-title">게시글 수  총 : {{posts[0]+posts[1]+posts[2]+posts[3]}} 개</div>
         </v-flex>
       </v-layout>
       <v-layout row wrap>
@@ -65,7 +65,8 @@
         </v-flex>
       </v-layout>
     </v-container>
-
+    <div>웹 로그 확인하러 가기</div>
+    <a href="https://analytics.google.com/analytics/web/#/report-home/a144982861w206594667p199451962">클릭</a>
 
     <div :class="{notAdmin : !isAdmin}">
       <div class="user-list">
@@ -104,6 +105,8 @@
 
 <script>
 import FirebaseService from '@/services/FirebaseService'
+
+
 export default {
   data(){
     return {
@@ -128,24 +131,25 @@ export default {
     editUser(){
       FirebaseService.update_database_member(this.email,this.auth,this.level,this.created_at)
       alert('수정완료')
+    },
+    track () {
+      this.$ga.page('/')
     }
   },
   created() {
       ['AI','Bigdata','Blockchain','Webmobile'].forEach(subject => {
         FirebaseService.getPosts(subject).then(res => {
           this.posts.push(res.length)
-          console.log(this.posts)
+          // console.log(this.posts)
         })
       })
 
       FirebaseService.getPosts('member').then(res => {
-        console.log(res)
-        console.log("ㅎㅁ나어히ㅏㅁㄴ어림ㄴ어리ㅏ")
         res.forEach(item => {
-          console.log(item)
+          // console.log(item)
           this.userlist.push({email:item.email,authority:item.user_authority,created_at:item.created_at,level:item.level})
         })
-        console.log(this.userlist)
+        // console.log(this.userlist)
         })
 
 }
