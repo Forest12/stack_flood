@@ -3,7 +3,7 @@
     <v-flex xs12 v-for="i in answers.length" v-bind:key='i.email'>
       <Answer
             :id ="answers[i - 1].id"
-	  		:email="answers[i - 1].email"
+	  		    :email="answers[i - 1].email"
             :date="answers[i - 1].created_at"
             :content="answers[i - 1].content"></Answer>
       <v-divider></v-divider>

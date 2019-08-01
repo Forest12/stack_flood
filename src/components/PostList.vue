@@ -2,6 +2,7 @@
   <v-layout row wrap mw-700>
     <v-flex v-for="i in posts.length > limits ? limits : posts.length" v-bind:key='i.title' :class="'xs' + 12 / column" px-3>
       <Post
+	  			:email="posts[i-1].email"
 	  			:id="posts[i - 1].id"
             	:date="posts[i - 1].created_at"
             	:title="posts[i - 1].title"
