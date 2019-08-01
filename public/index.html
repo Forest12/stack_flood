@@ -42,6 +42,15 @@
         }else{
         alert("해당 사이트는 크롬에 최적화 되어 있습니다.")
         }
+              // CODELAB: Register service worker.
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/service-worker.js')
+              .then((reg) => {
+                console.log('Service worker registered.', reg);
+              });
+        });
+      }
 
     </script>
   
