@@ -1,12 +1,19 @@
 <template>
   <v-layout py-4 h-100>
-    <v-flex row @click="moveDetail">
-      <v-img :src="imgSrc" height="200px"></v-img>
-      <div class="caption ">{{formatedDate}}</div>
-      <h2 class="color-333 headline font-weight-light cutoneline">{{title}}</h2>
-      <p class="mb-1 color-666 font-weight-light subheading cutfourline">{{content}}</p>
+    <v-flex >
+      <div row @click="moveDetail">
+        <v-img :src="imgSrc" height="200px"></v-img>
+        <div class="caption ">{{formatedDate}}</div>
+        <h2 class="color-333 headline font-weight-light cutoneline">{{title}}</h2>
+        <p class="mb-1 color-666 font-weight-light subheading cutfourline">{{content}}</p>
+      </div>
+      <div v-if="user_email == email">
+        <v-btn outlined color="green" dark ><v-icon left small>fas fa-edit</v-icon>Edit</v-btn>
+        <v-btn outlined color="pink" dark ><v-icon left small>fas fa-trash-alt</v-icon>Delete</v-btn>
+      </div>
     </v-flex>
     
+
   </v-layout>
 </template>
 
@@ -14,21 +21,32 @@
 
 import FirebaseService from '@/services/FirebaseService'
 import { functions } from 'firebase';
+import { write } from 'fs';
 
 export default {
   name: 'Post',
-    created:function(){
-      console.log("in post")
-      this.item = this.$route.params.item;
-  },
+   data(){
+        return{
+          user_email:''
+        }
+    },
+    
 	props: {
     id:{type:String},
+    email:{type:String},
 		date: {type: Date},
 		title: {type: String},
     content: {type: String},
     imgSrc: {type: String},
   },
- 
+
+  created(){
+      console.log("in post")
+      this.item = this.$route.params.item
+      this.user_email = this.$store.state.user.email
+      console.log("_))))))))))))))))))))))))))))))))))))))))))))))0",user_email)
+  },
+
   computed: {
 		formatedDate() {
 			return `${this.date.getFullYear()}년 ${this.date.getMonth()+1}월 ${this.date.getDate()}일`
@@ -38,7 +56,7 @@ export default {
     moveDetail(){
       this.$router.push(`/${this.item}/detail/${this.id}`);
     }
-  }
+  },
 }
 </script>
 <style>

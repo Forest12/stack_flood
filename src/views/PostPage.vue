@@ -5,7 +5,7 @@
 
     <!-- Post list -->
     <v-container>
-        <v-btn v-if="user_check" @click="newPost"  color="#FFA500" dark ><v-icon dark left small>fas fa-edit</v-icon>New</v-btn>
+        <v-btn v-if="user_check" @click="newPost"  color="#FFA500" dark ><v-icon dark left small>fas fa-plus</v-icon>New</v-btn>
         <v-layout>
         <v-flex xs12>
             <PostList :item="item" :limits="10" :load-more="true"></PostList>
