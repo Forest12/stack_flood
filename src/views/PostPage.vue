@@ -5,7 +5,7 @@
 
     <!-- Post list -->
     <v-container>
-        <v-btn  @click="newPost"  color="#FFA500" dark ><v-icon dark left small>fas fa-edit</v-icon>New</v-btn>
+        <v-btn v-if="user_check" @click="newPost"  color="#FFA500" dark ><v-icon dark left small>fas fa-edit</v-icon>New</v-btn>
         <v-layout>
         <v-flex xs12>
             <PostList :item="item" :limits="10" :load-more="true"></PostList>
@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import FirebaseService from '@/services/FirebaseService'
 
 import PostList from '../components/PostList.vue'
 import { METHODS } from 'http';
@@ -26,12 +27,16 @@ export default {
     name: 'PostPage',
     data(){
         return{
-            item:""
+            item:"",
+            user_check: false
         }
     },
-      created:function(){
-    this.item = this.$route.params.item;
-    FirebaseService.logging(this.item+" new post");
+    created(){
+      this.item = this.$route.params.item;
+      FirebaseService.logging(this.item+" new post");
+      if(this.$store.state.user.displayName != "undefine"){
+          this.user_check = true
+      }
   },
 	components: {
 		PostList,
