@@ -15,6 +15,7 @@
     "firebase": "^6.2.4",
     "firebase-admin": "^8.2.0",
     "firebase-tools": "^7.0.2",
+    "katex": "^0.10.2",
     "marked": "^0.7.0",
     "moment": "^2.24.0",
     "momentjs": "^2.0.0",

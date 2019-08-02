@@ -1,23 +1,33 @@
 <template>
-<v-container >
-    <div>
-         <h1>{{post.title}}</h1>
-         <hr>
-    </div>
+<v-container>
+    <v-layout my-5>
+        <v-flex>
+            <h1>{{post.title}}</h1>
+            <div class="font-weight-light subheading cutfourline">ASKED {{formatedDate}}</div>
+            <hr>
+        </v-flex>
+    </v-layout>
 
-    <v-layout width="10%">
+    <v-layout xs1 my-5>
         <v-flex px-12 mx-3 >
             <v-btn icon ><v-icon dark>fas fa-chevron-up</v-icon></v-btn>
             <h1>123</h1>
             <v-btn icon><v-icon dark>fas fa-chevron-down</v-icon></v-btn>
         </v-flex>
 
-        <v-flex width="90%">
+        <v-flex xs11>
             <v-img :src="post.img" height="200px" width="200px"></v-img>
             <MarkdownViewer :content="post.content"></MarkdownViewer>
-            <div class="font-weight-light subheading cutfourline">ASKED {{formatedDate}}</div>
         </v-flex >  
     </v-layout>
+      
+      <v-flex mx-5 v-if="post.email == $store.state.user.email">
+        <v-btn outlined color="green" dark ><v-icon left small>fas fa-edit</v-icon>Edit</v-btn>
+        <v-btn outlined color="pink" dark ><v-icon left small>fas fa-trash-alt</v-icon>Delete</v-btn>
+      </v-flex>
+
+
+
     <div>
         <h1>Answers</h1>
         <hr>
@@ -30,10 +40,14 @@
             <AnswerList :item = this.item :post_token= this.post_token></AnswerList>
         </v-flex>
     </v-layout>
+
+    <div>
+        <h1>Your Answer</h1>
+    </div>
+    
     
 
     <div>
-        <h2 class="color-333 headline font-weight-light cutoneline">Your Answer</h2>
         <markdown-editor v-model="content" ref="markdownEditor"></markdown-editor>
         <div class="my-2">
         <v-btn @click="postAnswer" color="primary" >Post Your Answer</v-btn>
@@ -42,7 +56,7 @@
     </div>
     <div>
         <h1>TEST</h1>
-        <Editor ref="editor" :outline="true" mode="Rendered" :preview="true" v-model="text" />
+        <Editor ref="editor" :outline="true" mode="Rendered" v-model="text" />
         
     </div>
   </v-container>
@@ -76,9 +90,10 @@ export default {
 	created(){
         this.item = this.$route.params.item
         this.post_token = this.$route.params.post_token
+
     },
     mounted(){
-        this.getPost(this.post_token, this.item)
+        this.getPost(this.post_token,  this.item)
  
     },
     computed:{
