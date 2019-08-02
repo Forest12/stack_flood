@@ -23,14 +23,9 @@ var firebaseConfig = {
   
 	firebase.auth().onAuthStateChanged(() => {
 		user = firebase.auth().currentUser;	
-	
-
 		if (user != null) {
 			email = user.email
 			store.commit('setUser', user)
-			console.log("+++++++++++++++++++++++",user.displayName)
-			
-			
 		}else {
 			email = "undefine";
 			store.commit('setUser', user)
