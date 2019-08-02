@@ -7,8 +7,9 @@
         <hr>
         <div class="font-weight-light subheading cutfourline">ASKED {{formatedDate}}</div>
         <v-img :src="post.img" height="200px"></v-img>
-        <div class="caption ">{{post.created_at.getFullYear()}} ------------------------</div>
-        <p class="mb-1 color-666 font-weight-light subheading cutfourline">{{post.content}}</p>
+        <MarkdownViewer :content="post.content"></MarkdownViewer>
+
+
     </v-flex>       
     </v-layout>
 
@@ -26,18 +27,26 @@
         </div>
 
     </div>
+    <div>
+        <h1>TEST</h1>
+        <Editor ref="editor" :outline="true" :mode="Source" :preview="true" v-model="text" />
+    </div>
   </v-container>
 </template>
 
 <script>
 import FirebaseService from '@/services/FirebaseService'
 import AnswerList from '../components/AnswerList'
+import MarkdownViewer from '../components/MarkdownViewer'
 import { constants } from 'crypto';
+import { Editor } from 'vuetify-markdown-editor';
 
 export default {
     name: 'PostDetailPage',
     components:{
         AnswerList,
+        MarkdownViewer,
+        Editor,
     },
     data(){
         return{
@@ -45,6 +54,7 @@ export default {
             item: '',
             post:'',
             content:'',
+            text:'# hello',
         }
     },
 	created(){
@@ -53,6 +63,9 @@ export default {
     },
     mounted(){
         this.getPost(this.post_token, this.item)
+         this.$refs.editor.focus()
+         this.$vuetify.theme.dark = true
+ 
     },
     computed:{
         formatedDate(){
