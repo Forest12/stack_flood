@@ -112,3 +112,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+Editor {
+    display:none;
+}
+</style>
