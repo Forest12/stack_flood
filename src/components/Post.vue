@@ -2,7 +2,6 @@
   <v-layout py-4 h-100>
     <v-flex >
       <div row @click="moveDetail">
-        <v-img :src="imgSrc" height="200px"></v-img>
         <div class="caption ">{{formatedDate}}</div>
         <h2 class="color-333 headline font-weight-light cutoneline">{{title}}</h2>
         <p class="mb-1 color-666 font-weight-light subheading cutfourline">{{content}}</p>
@@ -13,7 +12,6 @@
       </div>
     </v-flex>
     
-
   </v-layout>
 </template>
 
@@ -44,7 +42,6 @@ export default {
       console.log("in post")
       this.item = this.$route.params.item
       this.user_email = this.$store.state.user.email
-      console.log("_))))))))))))))))))))))))))))))))))))))))))))))0",user_email)
   },
 
   computed: {

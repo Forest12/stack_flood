@@ -222,6 +222,5 @@ export default {
   position:relative;
   top:30%;
   left:35%;
-  
 }
 </style>

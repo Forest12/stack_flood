@@ -29,7 +29,8 @@
     </div>
     <div>
         <h1>TEST</h1>
-        <Editor ref="editor" :outline="true" :mode="Source" :preview="true" v-model="text" />
+        <Editor ref="editor" :outline="true" mode="Rendered" :preview="true" v-model="text" />
+        
     </div>
   </v-container>
 </template>
@@ -39,7 +40,8 @@ import FirebaseService from '@/services/FirebaseService'
 import AnswerList from '../components/AnswerList'
 import MarkdownViewer from '../components/MarkdownViewer'
 import { constants } from 'crypto';
-import { Editor } from 'vuetify-markdown-editor';
+import { Editor, Renderer } from 'vuetify-markdown-editor';
+import 'vuetify-markdown-editor/dist/vuetify-markdown-editor.css'
 
 export default {
     name: 'PostDetailPage',
@@ -47,6 +49,7 @@ export default {
         AnswerList,
         MarkdownViewer,
         Editor,
+        
     },
     data(){
         return{
@@ -54,7 +57,7 @@ export default {
             item: '',
             post:'',
             content:'',
-            text:'# hello',
+            text:'# hello \n ```html \n <div>hello</div> \n```',
         }
     },
 	created(){
@@ -63,8 +66,6 @@ export default {
     },
     mounted(){
         this.getPost(this.post_token, this.item)
-         this.$refs.editor.focus()
-         this.$vuetify.theme.dark = true
  
     },
     computed:{
