@@ -1,22 +1,35 @@
 <template>
-<v-container>
-  <v-layout py-4 h-100>
-
-    <v-flex>
-        <h1>{{post.title}}</h1>
-        <hr>
-        <div class="font-weight-light subheading cutfourline">ASKED {{formatedDate}}</div>
-        <v-img :src="post.img" height="200px"></v-img>
-        <MarkdownViewer :content="post.content"></MarkdownViewer>
-
-
-    </v-flex>       
-    </v-layout>
-
+<v-container >
     <div>
-        <AnswerList :item = this.item :post_token= this.post_token></AnswerList>
-
+         <h1>{{post.title}}</h1>
+         <hr>
     </div>
+
+    <v-layout width="10%">
+        <v-flex px-12 mx-3 >
+            <v-btn icon ><v-icon dark>fas fa-chevron-up</v-icon></v-btn>
+            <h1>123</h1>
+            <v-btn icon><v-icon dark>fas fa-chevron-down</v-icon></v-btn>
+        </v-flex>
+
+        <v-flex width="90%">
+            <v-img :src="post.img" height="200px" width="200px"></v-img>
+            <MarkdownViewer :content="post.content"></MarkdownViewer>
+            <div class="font-weight-light subheading cutfourline">ASKED {{formatedDate}}</div>
+        </v-flex >  
+    </v-layout>
+    <div>
+        <h1>Answers</h1>
+        <hr>
+    </div>
+    
+
+    <v-layout py-4 h-100>
+        
+        <v-flex>
+            <AnswerList :item = this.item :post_token= this.post_token></AnswerList>
+        </v-flex>
+    </v-layout>
     
 
     <div>

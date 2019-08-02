@@ -1,10 +1,18 @@
 <template>
-
-      <div>
-        <div class="caption ">{{formatedDate}}</div>
-        <h2 class="color-333 headline font-weight-light">{{email}}</h2>
-        <MarkdownViewer :content="content"></MarkdownViewer>
-      </div>
+      <v-layout>
+        <v-flex 12 mx-3 >
+            <v-btn icon ><v-icon dark>fas fa-chevron-up</v-icon></v-btn>
+            <h1>123</h1>
+            <v-btn icon><v-icon dark>fas fa-chevron-down</v-icon></v-btn>
+        </v-flex>
+        
+        <v-flex>
+          <div class="caption ">{{formatedDate}}</div>
+          <h2 class="color-333 headline font-weight-light">{{email}}</h2>
+          <MarkdownViewer :content="content"></MarkdownViewer>
+        </v-flex>
+        
+      </v-layout>
  
 </template>
 
