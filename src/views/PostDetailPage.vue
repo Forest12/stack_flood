@@ -29,7 +29,7 @@
     </div>
     <div>
         <h1>TEST</h1>
-        <Editor ref="editor" :outline="true" mode="Rendered" :preview="true" v-model="text" />
+        <Editor class="edit" ref="editor" :outline="true" mode="Rendered" :preview="true" v-model="text" />
         
     </div>
   </v-container>
@@ -66,6 +66,9 @@ export default {
     },
     mounted(){
         this.getPost(this.post_token, this.item)
+        // const editorw = this.$refs.editor
+        const editorw = document.querySelector('.edit');
+        console.log(editorw, '애딧')
  
     },
     computed:{
@@ -84,3 +87,9 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+Editor {
+    display:none;
+}
+</style>
