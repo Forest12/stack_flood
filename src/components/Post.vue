@@ -6,10 +6,7 @@
         <h2 class="color-333 headline font-weight-light cutoneline">{{title}}</h2>
         <p class="mb-1 color-666 font-weight-light subheading cutfourline">{{content}}</p>
       </div>
-      <div v-if="user_email == email">
-        <v-btn outlined color="green" dark ><v-icon left small>fas fa-edit</v-icon>Edit</v-btn>
-        <v-btn outlined color="pink" dark ><v-icon left small>fas fa-trash-alt</v-icon>Delete</v-btn>
-      </div>
+    
     </v-flex>
     
   </v-layout>
