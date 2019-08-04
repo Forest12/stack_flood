@@ -196,6 +196,7 @@ export default {
 			level,
 			created_at
 		})
+		
 	},
 
 	get_user_info(email) {

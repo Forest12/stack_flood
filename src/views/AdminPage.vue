@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container>
+    <v-container v-if="$store.state.isAdmin">
       <v-layout row wrap>
         <v-flex xs12 class="pink lighten-1">
           <div class="admin-header">

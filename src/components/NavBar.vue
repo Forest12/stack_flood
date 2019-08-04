@@ -65,10 +65,7 @@ export default {
       }
     },
     computed: {
-      checkerer(){
-        
-        
-        }
+      
       }, 
     components: {
       ssafy,

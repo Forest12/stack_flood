@@ -209,6 +209,7 @@ export default ({
     },
     async signOut(){
       const r = await this.$firebase.auth().signOut()
+      this.$store.commit('setLogOut')
       alert('로그아웃 성공')
     },
    }

@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import FirebaseService from './services/FirebaseService'
 
 Vue.use(Vuex)
 
@@ -20,9 +19,12 @@ export const store = new Vuex.Store({
     },
     setAdmin(state,user){
       console.log(user,'유저확인')
-      if (user.displayName == 'admin'){
+      if (user.displayName == 'admin' || user.displayName=='manager'){
         state.isAdmin = true
       }
+    },
+    setLogOut(state){
+      state.isAdmin = false
     }
   },
   actions: {
