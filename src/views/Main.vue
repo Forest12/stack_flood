@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="background-color: white">
       <ImgBanner></ImgBanner>
     <!-- <naverLogin></naverLogin> -->
       <div style="height:10vh"></div>

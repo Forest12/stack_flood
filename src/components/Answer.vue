@@ -1,19 +1,20 @@
 <template>
-      <v-layout>
-        <v-flex 12 mx-3 >
+<v-container>
+      <v-layout my-2>
+        <v-flex mx-3 xs1>
             <v-btn icon ><v-icon dark>fas fa-chevron-up</v-icon></v-btn>
             <h1>123</h1>
             <v-btn icon><v-icon dark>fas fa-chevron-down</v-icon></v-btn>
         </v-flex>
         
-        <v-flex>
+        <v-flex xs11>
           <div class="caption ">{{formatedDate}}</div>
           <h2 class="color-333 headline font-weight-light">{{email}}</h2>
           <MarkdownViewer :content="content"></MarkdownViewer>
         </v-flex>
         
       </v-layout>
- 
+ </v-container>
 </template>
 
 <script>
