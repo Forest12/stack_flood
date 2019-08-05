@@ -91,7 +91,7 @@ export default {
 	},
 
 	postPost(item ,title, content,img) {
-		created_time = firebase.firestore.Timestamp.now().toDate()+" "
+		created_time = firestore.Timestamp.now().toDate()+" "
 		created_time = created_time.substring(0,24)
 		
 		return firestore.collection(item).add({
@@ -99,18 +99,37 @@ export default {
 			img,
 			title,
 			content,
-			created_at: firebase.firestore.FieldValue.serverTimestamp(),
+			created_at: firestore.FieldValue.serverTimestamp(),
 		})
+	},
+	
+	editPost(item, post_token, editTitle, editImgURL ,editContent){
+		let postDoc = firestore.collection(item).doc(post_token)
+		postDoc.update(
+			{	
+				title: editTitle,
+				img:editImgURL,
+				content: editContent,
+
+			}
+		)
+
+	},
+	removePost(item, post_token){
+		let postDoc = firestore.collection(item).doc(post_token)
+		postDoc.delete();
+		
+
 	},
 
 	postAnswer(item, post_token,content){
-		created_time = firebase.firestore.Timestamp.now().toDate()+" "
+		created_time = firestore.Timestamp.now().toDate()+" "
 		created_time = created_time.substring(0,24)
 		return firestore.collection(item).doc(post_token).collection("Answer").add(
 			{
 				email,
 				content,
-				created_at: firebase.firestore.FieldValue.serverTimestamp(),
+				created_at: firestore.FieldValue.serverTimestamp(),
 
 			}
 		)

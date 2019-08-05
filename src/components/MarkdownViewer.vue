@@ -13,7 +13,6 @@ export default {
   },
   computed: {
     compiledMarkdown: function () {
-        console.log( marked(this.content))
       return marked(this.content)
     }
   },
