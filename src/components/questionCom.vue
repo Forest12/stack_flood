@@ -43,7 +43,9 @@
 
         <!-- user_info -->
         <div class="q-user">
-
+          <div class="q-user-date caption grey--text">{{ question.created_at}} 에 질문했습니다.</div>
+          <v-icon>perm_identity</v-icon>
+          {{ question.asked_user}}
         </div>
       </div>
 
@@ -77,8 +79,12 @@ export default {
             "instagram",
             "sharding",
             "id-generation"
-          ]
+          ],
+          created_at: '19.08.05 18:15',
+          asked_user: 'Kim W mak',
+          user_point: 5050
         },
+
         {
           voted: 6,
           answers: 2,
@@ -94,8 +100,12 @@ export default {
             "instagram",
             "sharding",
             "id-generation"
-          ]
+          ],
+          created_at: '19.08.05 18:15',
+          asked_user: 'Kim W mak',
+          user_point: 5050
         },
+
         {
           voted: 6,
           answers: 2,
@@ -111,7 +121,10 @@ export default {
             "instagram",
             "sharding",
             "id-generation"
-          ]
+          ],
+          created_at: '19.08.05 18:15',
+          asked_user: 'Kim W mak',
+          user_point: 5050
         }
       ]
     };
@@ -189,8 +202,16 @@ export default {
 }
 
 .q-content-content {
+  margin:3px 0px;
   overflow: hidden;
-  height:58px;
+  white-space: normal;
+  line-height: 1.5;
+  height: 3.6em;
+  text-align: left;
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
 }
 
 .q-content-reputation {
@@ -212,14 +233,15 @@ export default {
 .q-content-tag-item {
   display: inline-block;
   padding: 5px;
-  border-radius: 2px;
+  border-radius: 5px;
   color: #0d47a1;
 }
 
 .q-user {
+  padding:5px;
   float: left;
   width: 40%;
-  background: blue;
+  /* background: blue; */
   height: 80px;
 }
 </style>

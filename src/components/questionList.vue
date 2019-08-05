@@ -18,15 +18,25 @@
       <span class="hr-line"></span>
       {{text}}
     </nav>
-      <question-com></question-com>
+    <question-com></question-com>
+
+    <nav>
+      <v-toolbar flat color="#FAFAFA" height="50">
+        <v-toolbar-title>
+          <span class="title">Best Post</span>
+        </v-toolbar-title>
+      </v-toolbar>
+      <span class="hr-line"></span>
+    </nav>
+    <question-com></question-com>
   </v-container>
 </template>
 
 <script>
-import questionCom from './questionCom'
+import questionCom from "./questionCom";
 export default {
-  components:{
-    questionCom,
+  components: {
+    questionCom
   },
   data() {
     return {
@@ -49,8 +59,8 @@ export default {
 }
 
 .hr-line {
-  display:flex;
-  width:100%;
+  display: flex;
+  width: 100%;
   height: 2px;
   background: black;
   justify-content: center;
