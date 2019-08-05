@@ -136,15 +136,16 @@ export default {
 	},
 
 	postPost(item ,title, content,img) {
-		created_time = firestore.Timestamp.now().toDate()+" "
+		created_time = firebase.firestore.Timestamp.now().toDate()+" "
 		created_time = created_time.substring(0,24)
 		
 		return firestore.collection(item).add({
 			email,
 			img,
+			voted:0,
 			title,
 			content,
-			created_at: firestore.FieldValue.serverTimestamp(),
+			created_at: firebase.firestore.FieldValue.serverTimestamp(),
 		})
 	},
 	
@@ -168,13 +169,13 @@ export default {
 	},
 
 	postAnswer(item, post_token,content){
-		created_time = firestore.Timestamp.now().toDate()+" "
+		created_time = firebase.firestore.Timestamp.now().toDate()+" "
 		created_time = created_time.substring(0,24)
 		return firestore.collection(item).doc(post_token).collection("Answer").add(
 			{
 				email,
 				content,
-				created_at: firestore.FieldValue.serverTimestamp(),
+				created_at: firebase.firestore.FieldValue.serverTimestamp(),
 
 			}
 		)

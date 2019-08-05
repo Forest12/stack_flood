@@ -1,10 +1,18 @@
 <template>
 <v-container>
-      <v-layout my-2>
-        <v-flex mx-3 xs1>
+      <v-layout my-5>
+        <v-flex xs1>
+            <v-layout justify-center>
             <v-btn icon ><v-icon dark>fas fa-chevron-up</v-icon></v-btn>
-            <h1>123</h1>
-            <v-btn icon><v-icon dark>fas fa-chevron-down</v-icon></v-btn>
+            </v-layout>
+
+            <v-layout justify-center>
+              <h1>121</h1>
+            </v-layout>
+            
+            <v-layout justify-center>
+              <v-btn icon><v-icon dark>fas fa-chevron-down</v-icon></v-btn>
+            </v-layout>
         </v-flex>
         
         <v-flex xs11>

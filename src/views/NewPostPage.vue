@@ -66,7 +66,9 @@ export default {
                     if (xmlHttpRequest.status == 200) {
                         var result = JSON.parse(xmlHttpRequest.responseText)
                         this.img = result.data.link    
+                        console.log("DDDDDDDDDDDDDDDDDDDDDDDDd",this.img)
                         this.postPost().then(() => {
+                               
                                 alert("업로드 성공")
                                 this.$router.push(`/post/${this.item}`);   
                         })

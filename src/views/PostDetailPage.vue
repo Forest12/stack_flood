@@ -10,9 +10,17 @@
 
     <v-layout xs1 my-5>
         <v-flex px-12 mx-3 >
+          <v-layout justify-center>
             <v-btn icon ><v-icon dark>fas fa-chevron-up</v-icon></v-btn>
-            <h1>123</h1>
+          </v-layout>
+
+          <v-layout justify-center>
+            <h1>{{post.voted}}</h1>
+          </v-layout>
+            
+          <v-layout justify-center>
             <v-btn icon><v-icon dark>fas fa-chevron-down</v-icon></v-btn>
+          </v-layout>
         </v-flex>
 
         <v-flex xs11>
