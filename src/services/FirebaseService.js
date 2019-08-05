@@ -22,10 +22,12 @@ var firebaseConfig = {
   	var user;
   
 	firebase.auth().onAuthStateChanged(() => {
-		user = firebase.auth().currentUser;	
+		user = firebase.auth().currentUser;
+		console.log(user)
 		if (user != null) {
 			email = user.email
 			store.commit('setUser', user)
+			store.commit('setAdmin', user)
 		}else {
 			email = "undefine";
 			store.commit('setUser', user)
@@ -35,7 +37,6 @@ var firebaseConfig = {
 const firestore = firebase.firestore()
 
 Vue.prototype.$firebase = firebase
-
 
 export default {
 
@@ -219,7 +220,7 @@ export default {
 	get_user_info(email) {
 		const user_info = firestore.collection("member").where("email","==",email);
 		return user_info
-				.orderBy('user_authority', 'level')
+				.orderBy('user_authority')
 				.get()
 				.then((docSnapshots) => {
 					return docSnapshots.docs.map((doc) => {

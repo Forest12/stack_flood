@@ -1,6 +1,5 @@
 <template>
   <v-toolbar color="#084035">
-    
     <router-link style="width:150px" to="/">
        <ssafy ></ssafy> 
     </router-link>
@@ -14,7 +13,7 @@
           color="pink"
           dark
           v-on="on"
-          :class="{notAdmin: !isAdmin}"
+          :class="{notAdmin: !$store.state.isAdmin}"
         >
           Admin Page
         </v-btn>
@@ -48,6 +47,7 @@
 <script>
 import Login from './Login'
 import ssafy from './ssafy'
+import FirebaseService from '../services/FirebaseService'
 
 export default {
   name:'Navbar',
@@ -64,17 +64,20 @@ export default {
       isAdmin: false,
       }
     },
-    created() {
-      
-    },
+    computed: {
+      checkerer(){
+        
+        
+        }
+      }, 
     components: {
-        ssafy,
+      ssafy,
         Login,
      },
     methods : {
       go_path(item){
         this.$router.push(`/post/${item}`);
-      }
+      },
     },
 
 
