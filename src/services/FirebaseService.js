@@ -28,8 +28,7 @@ var firebaseConfig = {
 			email = user.email
 			store.commit('setUser', user)
 			store.commit('setAdmin', user)
-			
-			
+
 			console.log("login check")
 			console.log(store.state.user)
 				console.log("you are login!!!!")
