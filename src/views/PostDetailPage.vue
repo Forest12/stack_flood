@@ -3,7 +3,7 @@
     <v-layout my-5>
         <v-flex>
             <h1>{{post.title}}</h1>
-            <div class="font-weight-light subheading cutfourline">ASKED {{formatedDate}}</div>
+            <div class="font-weight-light  subheading cutfourline">ASKED {{formatedDate}}</div>
             <hr>
         </v-flex>
     </v-layout>
@@ -21,10 +21,48 @@
         </v-flex >  
     </v-layout>
       
-      <v-flex mx-5 v-if="post.email == $store.state.user.email">
-        <v-btn outlined color="green" dark ><v-icon left small>fas fa-edit</v-icon>Edit</v-btn>
-        <v-btn outlined color="pink" dark ><v-icon left small>fas fa-trash-alt</v-icon>Delete</v-btn>
-      </v-flex>
+
+    <v-layout mx-5 v-if="post.email == $store.state.user.email">
+      <v-dialog v-model="dialog" persistent max-width="600px">
+        <template v-slot:activator="{ on }">
+            <v-btn outlined color="green" dark v-on="on" ><v-icon left small>fas fa-edit</v-icon>Edit</v-btn>
+            <v-btn outlined color="pink" @click="removePost" dark ><v-icon left small>fas fa-trash-alt</v-icon>Delete</v-btn>
+        </template>
+        <v-card>
+          <v-card-title>
+            <span class="headline">Edit Post</span>
+          </v-card-title>
+          <v-card-text>
+            <v-container grid-list-md>
+              <v-layout wrap>
+                <!-- <v-flex xs12>
+                  <v-text-field
+                    label="Legal last name*"
+                    hint="example of persistent helper text"
+                    persistent-hint
+                  ></v-text-field>
+                </v-flex> -->
+                <v-flex xs12>
+                  <v-text-field label="Title" v-model="editTitle"></v-text-field>
+                  <h1>{{editTitle}}</h1>
+                </v-flex>
+                <v-flex xs12>
+                  <v-text-field label="Image URL" v-model="editImgURL"></v-text-field>
+                </v-flex>
+                <v-flex xs12>
+                    <markdown-editor label="Content" v-model="editContent" ref="markdownEditor"></markdown-editor>
+                </v-flex>
+              </v-layout>
+            </v-container>
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn color="blue darken-1" text @click="dialog = false">Close</v-btn>
+            <v-btn color="blue darken-1" text @click="editPost">Save</v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    </v-layout>
 
 
 
@@ -45,10 +83,9 @@
         <h1>Your Answer</h1>
     </div>
     
-    
 
     <div>
-        <markdown-editor v-model="content" ref="markdownEditor"></markdown-editor>
+        <markdown-editor v-model="answerContent" ref="markdownEditor"></markdown-editor>
         <div class="my-2">
         <v-btn @click="postAnswer" color="primary" >Post Your Answer</v-btn>
         </div>
@@ -76,25 +113,25 @@ export default {
         AnswerList,
         MarkdownViewer,
         Editor,
-        
     },
     data(){
         return{
             post_token: '',
             item: '',
             post:'',
-            content:'',
+            answerContent:'',
             text:'# hello \n ```html \n <div>hello</div> \n```',
+            dialog: false,
+
+            editTitle: "",
+            editImgURL: "",
+            editContent: "",
         }
     },
 	created(){
         this.item = this.$route.params.item
         this.post_token = this.$route.params.post_token
-
-    },
-    mounted(){
         this.getPost(this.post_token,  this.item)
- 
     },
     computed:{
         formatedDate(){
@@ -104,11 +141,29 @@ export default {
     methods:{
         async getPost(post_token,item) {
             this.post = await FirebaseService.getPost(post_token, item)
+            this.editTitle = this.post.title
+            this.editImgURL = this.post.img
+            this.editContent = this.post.content
         },
+        
         postAnswer(){
-            FirebaseService.postAnswer(this.item, this.post_token, this.content)
+            FirebaseService.postAnswer(this.item, this.post_token, this.answerContent)
             console.log("com")
+        },
+        editPost(){
+            FirebaseService.editPost(this.item,this.post_token, this.editTitle, this.editImgURL ,this.editContent)
+            this.post.title = this.editTitle
+            this.post.img = this.editImgURL
+            this.post.content = this.editContent
+            this.dialog = false
+        },
+        removePost(){
+            FirebaseService.removePost(this.item,this.post_token)
+            alert("POST가 삭제되었습니다.")
+            this.$router.push(`/post/${this.item}`)
+            
         }
+
     }
 }
 </script>
