@@ -12,10 +12,11 @@
     <div class="img-banner"></div>
 
     <!-- 카드 -->
-   
     <introduce-card></introduce-card>
 
-
+    <!-- 질문목록 -->
+    <question-list></question-list>
+    
   </div>
 </template>
 <script>
@@ -27,7 +28,7 @@ import ImgBanner from "../components/ImgBanner"
 import FirebaseService from '@/services/FirebaseService'
 
 import introduceCard from '../components/introduceCard'
-
+import questionList from '../components/questionList'
 
 export default {
   name: 'Main',
@@ -40,6 +41,7 @@ export default {
     board,
     ImgBanner,
     introduceCard,
+    questionList,
   },
 }
 </script>
