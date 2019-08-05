@@ -2,8 +2,8 @@
   <v-container class="pa-5">
     <v-layout row wrap>
       <v-flex xs12 sm4 v-for="data in dataset" :key="data.title">
-        <v-card max-width="300" class="mx-auto" >
-          <v-icon>{{ data.icon }}</v-icon>
+        <v-card max-width="300" class="mx-auto" height="230">
+          <div class="data-icon"><v-icon size="70">{{ data.icon }}</v-icon></div>
           <v-card-title>{{ data.title }}</v-card-title>
           <v-card-text>{{ data.content}}</v-card-text>
         </v-card>
@@ -29,5 +29,10 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.data-icon {
+  height:100px;
+  display:flex;
+  justify-content: center;
+}
 </style>
