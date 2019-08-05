@@ -64,9 +64,9 @@
           </div>
         </v-flex>
       </v-layout>
-    </v-container>
     <div>웹 로그 확인하러 가기</div>
     <a href="https://analytics.google.com/analytics/web/#/report-home/a144982861w206594667p199451962">클릭</a>
+    </v-container>
 
     <div :class="{notAdmin : !isAdmin}">
       <div class="user-list">
