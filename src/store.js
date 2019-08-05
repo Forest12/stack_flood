@@ -10,6 +10,7 @@ export const store = new Vuex.Store({
     title : 'original',
     isAdmin:false,
     user_authority: '',
+    alarm : -1,
   },
   mutations: {
     setTitle(state, p){
@@ -23,7 +24,13 @@ export const store = new Vuex.Store({
       if (user.displayName == 'admin'){
         state.isAdmin = true
       }
+    },
+
+    setalarm(x){
+      state.alarm=x;
     }
+
+
   },
   actions: {
   },

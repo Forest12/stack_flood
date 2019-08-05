@@ -1,5 +1,5 @@
 <template>
-  <v-app style="background-color: white;">
+  <v-app>
     <Header>
     </Header>
       <transition name="page">

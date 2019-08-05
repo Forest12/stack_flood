@@ -16,10 +16,13 @@ axios.defaults.baseURL = 'https://webmobile-5.firebaseio.com'
 
 Vue.prototype.$http = axios
 
+var VueCookie = require('vue-cookie');
+
 Vue.config.productionTip = false
 Vue.use(VueSimplemde);
 Vue.use(ChartPlugin);
 Vue.use(animePlugin);
+Vue.use(VueCookie);
 
 Vue.use(VueAnalytics, {
   id:'UA-144982861-1',
