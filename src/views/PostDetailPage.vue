@@ -11,7 +11,7 @@
     <v-layout xs1 my-5>
         <v-flex px-12 mx-3 >
           <v-layout justify-center>
-            <v-btn icon ><v-icon dark>fas fa-chevron-up</v-icon></v-btn>
+            <v-btn icon @click="upVote"><v-icon dark>fas fa-chevron-up</v-icon></v-btn>
           </v-layout>
 
           <v-layout justify-center>
@@ -170,6 +170,11 @@ export default {
             alert("POST가 삭제되었습니다.")
             this.$router.push(`/post/${this.item}`)
             
+        },
+
+        upVote(){
+            FirebaseService.vote(this.post_token, this.$store.state.user.email)
+            this.post.vote =+ 1
         }
 
     }

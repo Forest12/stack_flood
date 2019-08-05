@@ -179,6 +179,7 @@ export default {
 			content,
 			created_at: firebase.firestore.FieldValue.serverTimestamp(),
 		})
+		
 	},
 	
 	editPost(item, post_token, editTitle, editImgURL ,editContent){
@@ -196,8 +197,6 @@ export default {
 	removePost(item, post_token){
 		let postDoc = firestore.collection(item).doc(post_token)
 		postDoc.delete();
-		
-
 	},
 
 	postAnswer(item, post_token,content){
@@ -308,5 +307,26 @@ export default {
 						return data
 					})
 				})
-	}
+	},
+
+	vote(post_token, email){
+		var docRef = firestore.collection("Votes").where("post_token","==",post_token)
+		docRef.get().then(function(doc) {
+			let data = doc.data()
+			console.log("-----------------------", data)
+			if (doc.empty || !(email in data)) {
+				firestore.collection("Votes").add({
+					post_token,
+					"users":[email],
+				})
+				
+			} else {
+				docRef.users.append(email)
+				
+			}
+		}).catch(function(error) {
+			console.log("Error getting document:", error);
+		});
+	},
+
 }
