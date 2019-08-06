@@ -11,15 +11,15 @@
     <v-layout xs1 my-5>
         <v-flex px-12 mx-3 >
           <v-layout justify-center>
-            <v-btn icon @click="upVote"><v-icon dark>fas fa-chevron-up</v-icon></v-btn>
+            <v-btn icon @click="vote(true)"><v-icon dark>fas fa-chevron-up</v-icon></v-btn>
           </v-layout>
 
           <v-layout justify-center>
-            <h1>{{post.voted}}</h1>
+            <h1>{{num_vote}}</h1>
           </v-layout>
             
           <v-layout justify-center>
-            <v-btn icon><v-icon dark>fas fa-chevron-down</v-icon></v-btn>
+            <v-btn icon @click="vote(false)"><v-icon dark>fas fa-chevron-down</v-icon></v-btn>
           </v-layout>
         </v-flex>
 
@@ -127,6 +127,7 @@ export default {
             post_token: '',
             item: '',
             post:'',
+            num_vote:0,
             answerContent:'',
             text:'# hello \n ```html \n <div>hello</div> \n```',
             dialog: false,
@@ -140,6 +141,7 @@ export default {
         this.item = this.$route.params.item
         this.post_token = this.$route.params.post_token
         this.getPost(this.post_token,  this.item)
+        this.getVote()
     },
     computed:{
         formatedDate(){
@@ -172,10 +174,25 @@ export default {
             
         },
 
-        upVote(){
-            FirebaseService.vote(this.post_token, this.$store.state.user.email)
-            this.post.vote =+ 1
+        vote(check){
+            FirebaseService.vote(this.post_token, this.$store.state.user.email,check).then(res=>{
+            if(res){
+              if(check){
+                this.num_vote += 1
+              }
+              else{
+                this.num_vote -=1
+              }
+            }
+          })
+        },
+
+        getVote(){
+          FirebaseService.getVote(this.post_token).then(res => {
+            this.num_vote = res
+          })
         }
+
 
     }
 }

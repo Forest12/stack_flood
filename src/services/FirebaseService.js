@@ -174,7 +174,6 @@ export default {
 		return firestore.collection(item).add({
 			email,
 			img,
-			voted:0,
 			title,
 			content,
 			created_at: firebase.firestore.FieldValue.serverTimestamp(),
@@ -195,8 +194,7 @@ export default {
 
 	},
 	removePost(item, post_token){
-		let postDoc = firestore.collection(item).doc(post_token)
-		postDoc.delete();
+		firestore.collection(item).doc(post_token).delete();
 	},
 
 	postAnswer(item, post_token,content){
@@ -309,24 +307,61 @@ export default {
 				})
 	},
 
-	vote(post_token, email){
-		var docRef = firestore.collection("Votes").where("post_token","==",post_token)
-		docRef.get().then(function(doc) {
-			let data = doc.data()
-			console.log("-----------------------", data)
-			if (doc.empty || !(email in data)) {
-				firestore.collection("Votes").add({
+	async vote(post_token, email, check){
+		var updocRef = firestore.collection("VOTE_UP").where("post_token","==",post_token).where("user", "==", email)
+		var downdocRef = firestore.collection("VOTE_DOWN").where("post_token","==",post_token).where("user", "==", email)
+
+		if(check){
+			let docSnapshots = await updocRef.get()
+			if (docSnapshots.empty){
+				firestore.collection("VOTE_UP").add({
 					post_token,
-					"users":[email],
+					"user":email,
 				})
-				
-			} else {
-				docRef.users.append(email)
-				
+				let docSnapshots2 = await downdocRef.get()
+				if(!docSnapshots2.empty){
+					let id = docSnapshots2.docs[0].id
+					firestore.collection("VOTE_DOWN").doc(id).delete()
+				} 
+				return true
 			}
-		}).catch(function(error) {
-			console.log("Error getting document:", error);
-		});
+			else{
+				return false
+			}
+		}else{
+			let docSnapshots = await downdocRef.get()
+			if (docSnapshots.empty){
+				firestore.collection("VOTE_DOWN").add({
+					post_token,
+					"user":email,
+				})
+				let docSnapshots2 = await updocRef.get()
+				if(!docSnapshots2.empty){
+					let id = docSnapshots2.docs[0].id
+					firestore.collection("VOTE_UP").doc(id).delete()
+					return true
+				}
+				return true
+			}
+			else{
+				return false
+			}
+		}
 	},
 
+	async getVote(post_token){
+		console.log(post_token)
+		var updocRef = firestore.collection("VOTE_UP").where("post_token","==",post_token)
+		var downdocRef = firestore.collection("VOTE_DOWN").where("post_token","==",post_token)
+		
+		let count = 0
+
+		await updocRef.get().then(docSnapshots=>{
+			count += docSnapshots.docs.length
+			downdocRef.get().then(docSnapshots=>{
+				count -= docSnapshots.docs.length
+			})
+		})
+		return count
+	}
 }
