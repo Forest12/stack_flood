@@ -3,6 +3,7 @@ import 'firebase/firestore'
 import 'firebase/auth'
 import Vue from 'vue'
 import {store} from '../store.js'
+import { Cookie, CookieJar } from 'tough-cookie';
 
 
 
@@ -32,34 +33,30 @@ var firebaseConfig = {
 
 			console.log("12312312313123123213312312")
 
-			console.log(this.$cookie.get('alarm'))
-			console.log(this.$cookie.get())
-			cookie1=this.$cookie.get('alarm')
-			if(cookie1!=null){
-			
-			Notification.requestPermission(function (result) { // 알림을 허용 할 지 알람을 띄운다.
-
-				//요청을 거절하면,
-				if (result === 'denied') {
-					state.setalarm(0);
-					this.$cookie.set('alarm', 'alarm', 0);  
-				}
-				//요청을 허용하면,
-				else {
-					state.setalarm(1);
-					this.$cookie.set('alarm', 'alarm', 1); 
-					//데스크탑 알림 권한 요청 버튼을 비활성화
-					requestPermissionButton.attr('disabled', 'disabled');
-					//데스크탑 메시지 입력폼을 활성화
-					notificationMessage.removeAttr('disabled');
-					//데스크탑 메시지 요청 버튼을 활성화
-					notificationButton.removeAttr('disabled');
-					return;
-				}
-			});
-		}
-
-
+			if(store.state.alarm==-1){
+				Notification.requestPermission(function (result) { // 알림을 허용 할 지 알람을 띄운다.
+					console.log("check12312131321312313~~~")
+					//요청을 거절하면,
+					if (result === 'denied') {
+						store.commit('setalarm',0)
+						console.log("alarm setting = ", store.state.alarm)
+						return;
+					}
+					//요청을 허용하면,
+					else {
+						store.commit('setalarm',1)
+						console.log("alarm setting = ", store.state.alarm)
+						// //데스크탑 알림 권한 요청 버튼을 비활성화
+						// requestPermissionButton.attr('disabled', 'disabled');
+						// //데스크탑 메시지 입력폼을 활성화
+						// notificationMessage.removeAttr('disabled');
+						// //데스크탑 메시지 요청 버튼을 활성화
+						// notificationButton.removeAttr('disabled');
+						return;
+					}
+				});
+			}
+		
 
 			// console.log("login check")
 			// console.log(store.state.user)

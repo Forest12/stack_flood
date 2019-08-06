@@ -26,9 +26,10 @@ export const store = new Vuex.Store({
     },
     setLogOut(state){
       state.isAdmin = false
+      state.alarm=-1
     },
 
-    setalarm(x){
+    setalarm(state,x){
       state.alarm=x;
     }
 
