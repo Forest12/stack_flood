@@ -226,8 +226,16 @@ export default {
 
 .q-content-tag {
   float: left;
-  padding: 5px 0px;
+  padding: 0px;
+  margin-top:3px;
   width: 60%;
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
+
 }
 
 .q-content-tag-item {
@@ -241,7 +249,6 @@ export default {
   padding:5px;
   float: left;
   width: 40%;
-  /* background: blue; */
   height: 80px;
 }
 </style>
