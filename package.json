@@ -5,20 +5,28 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "start": "firebase serve --only functions:dialogflowFirebaseFulfillment",
+    "deploy": "firebase deploy --only functions:dialogflowFirebaseFulfillment"
   },
   "dependencies": {
+    "actions-on-google": "^2.2.0",
     "animejs": "^3.0.1",
+    "api-ai-javascript": "^2.0.0-beta.21",
     "axios": "^0.19.0",
     "chart.js": "^2.8.0",
     "core-js": "^2.6.5",
+    "dialogflow": "^0.10.3",
+    "dialogflow-fulfillment": "^0.5.0",
     "firebase": "^6.2.4",
     "firebase-admin": "^8.2.0",
+    "firebase-functions": "^2.0.2",
     "firebase-tools": "^7.0.2",
     "katex": "^0.10.2",
     "marked": "^0.7.0",
     "moment": "^2.24.0",
     "momentjs": "^2.0.0",
+    "uuid": "^3.3.2",
     "v-markdown-editor": "^1.0.8",
     "vue": "^2.6.10",
     "vue-analytics": "^5.17.0",
@@ -39,13 +47,17 @@
     "@vue/cli-plugin-eslint": "^3.9.0",
     "@vue/cli-service": "^3.9.0",
     "babel-eslint": "^10.0.1",
+    "css-loader": "^3.1.0",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "sass-loader": "^7.1.0",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.1",
     "vue-cli-plugin-vuetify": "^0.5.0",
     "vue-template-compiler": "^2.6.10",
-    "vuetify-loader": "^1.0.5"
+    "vuetify-loader": "^1.0.5",
+    "webpack": "^4.39.1",
+    "webpack-cli": "^3.3.6"
   },
   "eslintConfig": {
     "root": true,

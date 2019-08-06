@@ -9,7 +9,7 @@ import PostDetailPage from './views/PostDetailPage.vue'
 import PortfolioPage from './views/PortfolioPage.vue'
 import NewPortfolioPage from './views/NewPortfolioPage.vue'
 
-
+import chatbot from './components/chatbot'
 
 import Main from './views/Main.vue'
 import UserProfile from './views/UserProfile.vue'
@@ -71,6 +71,9 @@ export const router = new VueRouter({
     name: 'Admin',
     component: AdminPage,
   },
- 
+  {
+    path: '/chatbot',
+    component: chatbot,
+  }
   ]
 })

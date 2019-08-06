@@ -9,7 +9,6 @@ import 'simplemde/dist/simplemde.min.css'
 import { store } from './store.js'
 import VueAnalytics from 'vue-analytics'
 
-
 import axios from 'axios'
 
 axios.defaults.baseURL = 'https://webmobile-5.firebaseio.com'
@@ -39,3 +38,4 @@ new Vue({
   router,
   store,
 }).$mount('#app')
+
