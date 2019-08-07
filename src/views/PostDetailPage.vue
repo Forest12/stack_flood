@@ -26,14 +26,10 @@
         <v-flex xs11>
             <v-img :src="post.img" height="200px" width="200px"></v-img>
             <MarkdownViewer :content="post.content"></MarkdownViewer>
-        </v-flex >  
-    </v-layout>
-      
-
-    <v-layout mx-5 v-if="post.email == $store.state.user.email">
+             <v-layout mx-5 v-if="post.email == $store.state.user.email">
       <v-dialog v-model="dialog" persistent max-width="600px">
         <template v-slot:activator="{ on }">
-            <v-btn outlined color="green" dark v-on="on" ><v-icon left small>fas fa-edit</v-icon>Edit</v-btn>
+            <v-btn outlined color="green" dark v-on="on" @click="initedit"><v-icon left small>fas fa-edit</v-icon>Edit</v-btn>
             <v-btn outlined color="pink" @click="removePost" dark ><v-icon left small>fas fa-trash-alt</v-icon>Delete</v-btn>
         </template>
         <v-card>
@@ -72,6 +68,11 @@
       </v-dialog>
     </v-layout>
 
+        </v-flex >  
+    </v-layout>
+      
+
+   
 
 
     <div>
@@ -149,11 +150,15 @@ export default {
         }
     },
     methods:{
-        async getPost(post_token,item) {
-            this.post = await FirebaseService.getPost(post_token, item)
+        initedit(){
             this.editTitle = this.post.title
             this.editImgURL = this.post.img
             this.editContent = this.post.content
+          
+        },
+        async getPost(post_token,item) {
+            this.post = await FirebaseService.getPost(post_token, item)
+            
         },
         
         postAnswer(){
