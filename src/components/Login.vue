@@ -114,7 +114,7 @@ export default {
       this.$router.push(Mypage);
     },
     signUp() {
-      FirebaseService.signup_database(this.singup_email, "visitor", "0");
+      FirebaseService.signup_database(this.singup_email, "visitor", "0","https://i.imgur.com/PJpHPNO.jpg");
 
       firebase
         .auth()
@@ -126,7 +126,8 @@ export default {
             console.log("왜안들아가져?");
             user
               .updateProfile({
-                displayName: "visitor"
+                displayName: "visitor",
+                photoURL: "https://i.imgur.com/PJpHPNO.jpg"
               })
               .then(() => alert("회원가입 성공!"));
           }
