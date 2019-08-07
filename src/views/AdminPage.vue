@@ -25,7 +25,7 @@
 
           <div class="gogo">
             <div class="user-l" v-for="user in userlist" :key="user.email">
-              <input class="user-chk" type="radio" name="userlist" :id="user.email" @click="authth(user.email,user.created_at,user.level)">
+              <input class="user-chk" type="radio" name="userlist" :id="user.email" @click="authth(user.email,user.created_at,user.level,user.img)">
               <label class="user-rdo" :for="user.email">{{user.email}}</label>
             </div>
           </div>
@@ -67,39 +67,6 @@
     <div>웹 로그 확인하러 가기</div>
     <a href="https://analytics.google.com/analytics/web/#/report-home/a144982861w206594667p199451962">클릭</a>
     </v-container>
-
-    <div :class="{notAdmin : !isAdmin}">
-      <div class="user-list">
-        <div class="user-list-title">
-          <div>유저 목록</div>
-        </div>
-        <div class="user-list-content">
-          {{ username }}
-        </div>
-      </div>
-
-      <div class="authority-list">
-        <div class="authority-list-title">
-          <div>권한 변경</div>
-        </div>
-        <div class="authority-list-content">
-          {{ auth }}
-        </div>
-      </div>
-
-      <button>변경하기</button>
-
-      <div class="post-list">
-        <div class="post-list-total">
-          <div>블록체인 게시글 수 : 00</div>
-          <div>빅데이터 게시글 수 : 00</div>
-          <div>웹모바일 게시글 수 : 00</div>
-          <div>AI 게시글 수 : 00</div>
-          <div>Total : 00</div>
-        </div>
-      </div>
-    </div>
-
   </div>
 </template>
 
@@ -117,19 +84,21 @@ export default {
       userlist:[],
       email:'',
       created_at:'',
+      img:'',
     }
   },
   methods: {
-    authth(e,ee,eee){
+    authth(e,ee,eee,eeee){
       this.email = e
       this.created_at = ee
       this.level = eee
+      this.img = eeee
     },
     auththth(e){
       this.auth = e
     },
     editUser(){
-      FirebaseService.update_database_member(this.email,this.auth,this.level,this.created_at)
+      FirebaseService.update_database_member(this.email,this.auth,this.level,this.img,this.created_at)
       alert('수정완료')
     },
     track () {
@@ -147,7 +116,7 @@ export default {
       FirebaseService.getPosts('member').then(res => {
         res.forEach(item => {
           // console.log(item)
-          this.userlist.push({email:item.email,authority:item.user_authority,created_at:item.created_at,level:item.level})
+          this.userlist.push({email:item.email,authority:item.user_authority,created_at:item.created_at,level:item.level,img:item.img})
         })
         // console.log(this.userlist)
         })

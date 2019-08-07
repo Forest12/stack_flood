@@ -74,7 +74,7 @@
 
   .post-score-votes{
     position:relative;
-    height:33%;
+    height:30%;
     border-bottom:1px solid #E0E0E0;
     border-right:1px solid #E0E0E0;
   }
@@ -82,14 +82,15 @@
   .post-score-answer{
     padding:10px;
     position:relative;
-    height:33%;
+    height:40%;
     border-bottom:1px solid #E0E0E0;
     border-right:1px solid #E0E0E0;
+    background: url('../assets/images/check-mark.svg')
   }
 
   .post-score-views{
     position:relative;
-    height:33%;
+    height:30%;
     border-right:1px solid #E0E0E0;
   }
 
