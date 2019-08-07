@@ -221,6 +221,19 @@ export default {
 				})
 
 	},
+	editAnswer(item, post_token ,answer_token,editContent){
+		let postDoc = firestore.collection(item).doc(post_token).collection("Answer").doc(answer_token)
+		postDoc.update(
+			{	
+				content: editContent,
+
+			}
+		)
+
+	},
+	removeAnswer(item, post_token,answer_token){
+		firestore.collection(item).doc(post_token).collection("Answer").doc(answer_token).delete();
+	},
 	getPortfolios() {
 		const postsCollection = firestore.collection("Portfolios")
 		return postsCollection

@@ -2,10 +2,12 @@
   <v-layout wrap>
     <v-flex xs12 v-for="i in answers.length" v-bind:key='i.email'>
       <Answer
-            :id ="answers[i - 1].id"
+            :post_token="post_token"
+            :answer_token ="answers[i - 1].id"
 	  		    :email="answers[i - 1].email"
             :date="answers[i - 1].created_at"
-            :content="answers[i - 1].content"></Answer>
+            :content="answers[i - 1].content"
+            :item="item"></Answer>
       <v-divider></v-divider>
     </v-flex>
   </v-layout>
