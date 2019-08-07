@@ -268,17 +268,18 @@ export default {
 		})
 	},
 
-	signup_database(email,user_authority,level) {//가입시 데이터베이스에 데이터 저장. login.vue에 함수 호출 있음
+	signup_database(email,user_authority,level,img) {//가입시 데이터베이스에 데이터 저장. login.vue에 함수 호출 있음
 		console.log('new member in')
 		return firestore.collection("member").doc(email).set({
 			email,
 			user_authority,
 			level,
+			img,
 			created_at: firebase.firestore.FieldValue.serverTimestamp()
 		})
 	},
 
-	update_database_member(email,user_authority,level,created_at) { //데이터베이스 업데이트 부분, 미완. 수정 필요
+	update_database_member(email,user_authority,level,img,created_at) { //데이터베이스 업데이트 부분, 미완. 수정 필요
 		console.log('유저권한 수정하기')
 		user.updateProfile({
 			displayName: user_authority,})
@@ -286,12 +287,25 @@ export default {
 			user_authority,
 			email,
 			level,
+			img,
 			created_at
 		})
 		
 	},
 
 	get_user_info(email) {
+		const user_info = firestore.collection("member").where("email","==",email);
+		return user_info
+				.get()
+				.then((docSnapshots) => {
+					return docSnapshots.docs.map((doc) => {
+						let data = doc.data()
+						data.created_at = new Date(data.created_at.toDate())
+						return data
+					})
+				})
+	},
+	getUser() {
 		const user_info = firestore.collection("member").where("email","==",email);
 		return user_info
 				.orderBy('user_authority')
