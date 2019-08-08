@@ -186,6 +186,7 @@ export default {
   data() {
     return {
       user_email: "",
+      tempitem:"",
       tags: ["블록체인", "빅데이터", "카카오톡", "집에갈래", "AI","블록체인", "빅데이터", "카카오톡", "집에갈래", "AI"]
     };
   },
@@ -196,14 +197,19 @@ export default {
     date: { type: Date },
     title: { type: String },
     content: { type: String },
-    imgSrc: { type: String }
+    imgSrc: { type: String },
+    item: { type: String },
   },
 
-  created() {
-    console.log("in post");
-    this.item = this.$route.params.item;
-    this.user_email = this.$store.state.user.email;
+  created(){
+      this.tempitem=this.item
+      this.item = this.$route.params.item
+      if(this.item==null){
+        this.item=this.tempitem
+      }
+      this.user_email = this.$store.state.user.email
   },
+
 
   computed: {
     formatedDate() {
