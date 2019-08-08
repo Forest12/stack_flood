@@ -24,7 +24,6 @@
         </v-flex>
 
         <v-flex xs11>
-            <v-img :src="post.img" height="200px" width="200px"></v-img>
             <MarkdownViewer :content="post.content"></MarkdownViewer>
              <v-layout mx-5 v-if="post.email == $store.state.user.email">
       <v-dialog v-model="dialog" persistent max-width="600px">
@@ -39,19 +38,9 @@
           <v-card-text>
             <v-container grid-list-md>
               <v-layout wrap>
-                <!-- <v-flex xs12>
-                  <v-text-field
-                    label="Legal last name*"
-                    hint="example of persistent helper text"
-                    persistent-hint
-                  ></v-text-field>
-                </v-flex> -->
                 <v-flex xs12>
                   <v-text-field label="Title" v-model="editTitle"></v-text-field>
                   <h1>{{editTitle}}</h1>
-                </v-flex>
-                <v-flex xs12>
-                  <v-text-field label="Image URL" v-model="editImgURL"></v-text-field>
                 </v-flex>
                 <v-flex xs12>
                     <markdown-editor label="Content" v-model="editContent" ref="markdownEditor"></markdown-editor>
@@ -87,23 +76,18 @@
             <AnswerList :item = this.item :post_token= this.post_token></AnswerList>
         </v-flex>
     </v-layout>
-
     <div>
         <h1>Your Answer</h1>
     </div>
-    
-
     <div>
         <markdown-editor v-model="answerContent" ref="markdownEditor"></markdown-editor>
         <div class="my-2">
         <v-btn @click="postAnswer" color="primary" >Post Your Answer</v-btn>
         </div>
-
     </div>
     <div>
         <h1>TEST</h1>
         <Editor ref="editor" :outline="true" mode="Rendered" v-model="text" />
-        
     </div>
   </v-container>
 </template>
@@ -129,12 +113,12 @@ export default {
             item: '',
             post:'',
             num_vote:0,
+            tegs:[],
             answerContent:'',
             text:'# hello \n ```html \n <div>hello</div> \n```',
             dialog: false,
 
             editTitle: "",
-            editImgURL: "",
             editContent: "",
         }
     },
@@ -146,6 +130,7 @@ export default {
         this.post_token = this.$route.params.post_token
         this.getPost(this.post_token,  this.item)
         this.getVote()
+        this.getTeg()
     },
     computed:{
         formatedDate(){
@@ -155,7 +140,6 @@ export default {
     methods:{
         initedit(){
             this.editTitle = this.post.title
-            this.editImgURL = this.post.img
             this.editContent = this.post.content
           
         },
@@ -163,15 +147,13 @@ export default {
             this.post = await FirebaseService.getPost(post_token, item)
             
         },
-        
         postAnswer(){
             FirebaseService.postAnswer(this.item, this.post_token, this.answerContent)
             console.log("com")
         },
         editPost(){
-            FirebaseService.editPost(this.item,this.post_token, this.editTitle, this.editImgURL ,this.editContent)
+            FirebaseService.editPost(this.item,this.post_token, this.editTitle,this.editContent)
             this.post.title = this.editTitle
-            this.post.img = this.editImgURL
             this.post.content = this.editContent
             this.dialog = false
         },
@@ -181,7 +163,6 @@ export default {
             this.$router.push(`/post/${this.item}`)
             
         },
-
         vote(check){
             FirebaseService.vote(this.post_token, this.$store.state.user.email,check).then(res=>{
             if(res){
@@ -194,11 +175,16 @@ export default {
             }
           })
         },
-
         getVote(){
           FirebaseService.getVote(this.post_token).then(res => {
             this.num_vote = res
           })
+        },
+        getTeg(){
+          // FirebaseService.getVote(this.post_token).then(res => {
+          //   this.num_vote = res
+          // })
+
         }
 
 
