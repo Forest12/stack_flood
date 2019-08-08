@@ -1,173 +1,220 @@
 <template>
   <v-layout py-4 h-100>
-    <v-flex >
-      <div row @click="moveDetail" class="post-body-box">
+    <v-flex>
+      <div row class="post-body-box">
         <!-- <div class="caption ">{{formatedDate}}</div>
         <h2 class="color-333 headline font-weight-light cutoneline">{{title}}</h2>
         <p class="mb-1 color-666 font-weight-light subheading cutfourline">{{content}}</p>
-      </div> -->
+        </div>-->
         <!-- <div class="post-body-box"> -->
-          <div class="post-score-box">
-            <div class="post-score-votes">
-              <div class="center">
-                <span class="post-score-num">11 </span>
-                <span>votes</span>
-              </div>
-            </div>
-
-            <div class="post-score-answer">
-              <div class="center">
-                <span class="post-score-num">27 </span>
-                <span>answers</span>
-              </div>
-            </div>
-
-            <div class="post-score-views">
-              <div class="center">
-                <span class="post-score-num">8 </span>
-                <span>views</span>
-              </div>
-            </div>
-
-          </div>
-          <div class="post-content-box pa-3">
-            <div class="post-content-title title blue--text mb-2">
-              {{ title }}
-            </div>
-
-            <div class="post-content-content">
-              {{ content }}
+        <div class="post-score-box">
+          <div class="post-score-votes">
+            <div class="center">
+              <span class="post-score-num">11</span>
+              <span>votes</span>
             </div>
           </div>
+
+          <!-- answer box -->
+          <div class="post-score-answer">
+            <div class="center">
+              <span class="post-score-num">27</span>
+              <span>answers</span>
+              <!-- 답변 완료시 체크모양 표시 -->
+              <ssafy class="ssafy"></ssafy>
+            </div>
+          </div>
+
+          <div class="post-score-views">
+            <div class="center">
+              <span class="post-score-num">8</span>
+              <span>views</span>
+            </div>
+          </div>
+        </div>
+        <div class="post-content-box pa-3">
+          <div class="post-content-title title blue--text mb-2" @click="moveDetail">{{ title }}</div>
+
+          <div class="post-content-content">{{ content }}</div>
+          <div class="post-content-tags">
+            <span
+              class="post-content-tag blue lighten-4 mr-2 mb-1"
+              v-for="tag in tags"
+              :key="tag.index"
+            >{{ tag }}</span>
+          </div>
+        </div>
+
         <!-- </div> -->
       </div>
     </v-flex>
-    
   </v-layout>
 </template>
 
 <style scoped>
-  .center {
-    width:90px;
-    position:absolute;
-    top:50%;
-    left:50%;
-    transform : translate(-50%,-50%);
-  }
-  
-  .post-body-box{
-    display:flex;
-    min-height:200px;
-    max-height:400px;
-    width:100%;
-  }
+.ssafy {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+}
 
-  .post-score-box{
-    flex:left;
-    width:100px;
-  }
+.center {
+  width: 90px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-40%, -50%);
+}
 
-  .post-content-box {
-    flex:left;
-    width:70%;
-  }
+.post-body-box {
+  display: flex;
+  min-height: 200px;
+  max-height: 400px;
+  width: 100%;
+  transition: all 0.3s;
+}
 
-  .post-score-votes{
-    position:relative;
-    height:30%;
-    border-bottom:1px solid #E0E0E0;
-    border-right:1px solid #E0E0E0;
-  }
+.post-score-box {
+  flex: left;
+  width: 100px;
+}
 
-  .post-score-answer{
-    padding:10px;
-    position:relative;
-    height:40%;
-    border-bottom:1px solid #E0E0E0;
-    border-right:1px solid #E0E0E0;
-    background: url('../assets/images/check-mark.svg')
-  }
+.post-content-title {
+  cursor: pointer;
+  transition: all 0.3s;
+}
 
-  .post-score-views{
-    position:relative;
-    height:30%;
-    border-right:1px solid #E0E0E0;
-  }
+.post-content-title:hover {
+  transform: translateX(7px);
+}
+.post-content-box {
+  flex: left;
+  width: 80%;
+}
 
-  .post-score-num {
-    font-size:19px;
-  }
+.post-score-votes {
+  position: relative;
+  height: 30%;
+  border-bottom: 1px solid #e0e0e0;
+  border-right: 1px solid #e0e0e0;
+}
 
-  .post-content-content{
-      word-wrap: break-word;
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    line-height:150%;
-  }
+.post-score-answer {
+  padding: 10px;
+  position: relative;
+  height: 40%;
+  border-bottom: 1px solid #e0e0e0;
+  border-right: 1px solid #e0e0e0;
+  /* background: url('../assets/images/check-mark.svg') */
+}
 
-  .color-666 {
-    color: #666;
-  }
-  .color-333 {
-    color: #333;
-  }
-  .h-100 {
-    height: 100%;
-  }
-    .cutfourline {
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 4;
-  }
+.post-score-views {
+  position: relative;
+  height: 30%;
+  border-right: 1px solid #e0e0e0;
+}
 
-  .cutoneline {
-    overflow: hidden;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 1;
-  }
+.post-score-num {
+  font-size: 19px;
+}
+
+.post-content-content {
+  word-wrap: break-word;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 150%;
+}
+
+.post-content-tags{
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  height:85px;
+
+}
+
+.post-content-tag {
+  display: inline-block;
+  padding: 5px;
+  border-radius: 5px;
+  color: #0d47a1;
+  position: relative;
+  top: 20px;
+}
+
+.color-666 {
+  color: #666;
+}
+.color-333 {
+  color: #333;
+}
+.h-100 {
+  height: 100%;
+}
+.cutfourline {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+}
+
+.cutoneline {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
 </style>
 
 <script>
+import FirebaseService from "@/services/FirebaseService";
+import { functions } from "firebase";
+import { write } from "fs";
 
-import FirebaseService from '@/services/FirebaseService'
-import { functions } from 'firebase';
-import { write } from 'fs';
+import ssafy from "./ssafy";
 
 export default {
-  name: 'Post',
-   data(){
-        return{
-          user_email:''
-        }
-    },
-    
-	props: {
-    id:{type:String},
-    email:{type:String},
-		date: {type: Date},
-		title: {type: String},
-    content: {type: String},
+  components: {
+    ssafy
+  },
+  name: "Post",
+  data() {
+    return {
+      user_email: "",
+      tags: ["블록체인", "빅데이터", "카카오톡", "집에갈래", "AI","블록체인", "빅데이터", "카카오톡", "집에갈래", "AI"]
+    };
   },
 
-  created(){
-      console.log("in post")
-      this.item = this.$route.params.item
-      this.user_email = this.$store.state.user.email
+  props: {
+    id: { type: String },
+    email: { type: String },
+    date: { type: Date },
+    title: { type: String },
+    content: { type: String },
+    imgSrc: { type: String }
+  },
+
+  created() {
+    console.log("in post");
+    this.item = this.$route.params.item;
+    this.user_email = this.$store.state.user.email;
   },
 
   computed: {
-		formatedDate() {
-			return `${this.date.getFullYear()}년 ${this.date.getMonth()+1}월 ${this.date.getDate()}일`
+    formatedDate() {
+      return `${this.date.getFullYear()}년 ${this.date.getMonth() +
+        1}월 ${this.date.getDate()}일`;
     }
   },
-  methods:{
-    moveDetail(){
+  methods: {
+    moveDetail() {
       this.$router.push(`/${this.item}/detail/${this.id}`);
     }
-  },
-}
+  }
+};
 </script>

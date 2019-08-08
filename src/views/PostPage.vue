@@ -29,7 +29,6 @@
         </v-layout>
         </div>
       
-        <div class="post-postit"></div>
       </div>
 
     </v-container>
@@ -44,43 +43,31 @@
 .post-container {
   margin:20px;
   width:100%;
-  overflow:auto;
+  /* overflow:auto; */
   /* border:2px solid orange; */
 }
 
 .post-box{
   display:flex;
   height:100%;
-  width:100%;
 }
 
 .post-left {
-  width:25%;
+  width:300px;
   float:left;
   background:#2E303E;
 }
 
-.post-postit{
-  background: black;
-  width:150px;
-}
-
 .post-right {
-  width:70%;
+  width:100%;
   float:left;
 }
 
 @media screen and (max-width:1000px) and (min-width:700px){
-  .post-postit{
-    display:none;
-    width:0px;
-  }
-  .post-right{
-    display: contents;
-  }
+  
 }
 
-@media screen and (max-width: 700px){
+@media screen and (max-width: 800px){
   .post-box{
     height:100%;
     width:100%;
@@ -92,14 +79,10 @@
     width:100%;
     background:#2E303E;
   }
-  .post-postit{
-    width:0px;
-    display:none;
-  }
   .post-right {
     width:100%;
     float:left;
-}
+  }
 }
 
 

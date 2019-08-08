@@ -7,6 +7,7 @@
 	.st0{fill:none;stroke:#D3FF20;stroke-width:20;stroke-miterlimit:10;}
 	.st1{clip-path:url(#SVGID_2_);}
 	.st2{fill:#05FF18;}
+	.st3{fill:none;stroke:#003300;stroke-width:40;stroke-miterlimit:10;}
 </style>
 <circle class="st0" cx="261.8" cy="290.6" r="144"/>
 <title>Check mark</title>
@@ -27,4 +28,5 @@
 		</g>
 	</g>
 </g>
+<polygon class="st3" points="156.8,75.2 302.3,67.6 346.7,146.6 405.8,419.9 147.4,449 61.8,216 "/>
 </svg>
