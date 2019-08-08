@@ -18,15 +18,44 @@
             </v-flex>  
             <div style="clear: both; height: 0; overflow: hidden;"> </div>
             <br>
-            <h3>AI</h3>
+
+            <h2>--My Post--</h2>
+
+            <div style="border:2px solid black; border-radius:10px;">
+
+                <div class="my-2" style="display:inline-block">
+                  <v-btn text small color="primary"
+                  v-on:click="viewpost('AI')">AI</v-btn>
+                </div>
+                <div class="my-2" style="display:inline-block; margin-left:10px;">
+                  <v-btn text small color="primary"
+                  v-on:click="viewpost('Bigdata')">Bigdata</v-btn>
+                </div>
+                <div class="my-2" style="display:inline-block; margin-left:10px;">
+                  <v-btn text small color="primary"
+                  v-on:click="viewpost('Blockchain')">Blockchain</v-btn>
+                </div>
+                <div class="my-2" style="display:inline-block; margin-left:10px;">
+                  <v-btn text small color="primary"
+                  v-on:click="viewpost('Webmobile')">Webmobile</v-btn>
+                </div>
+
             <PostList :item="'AI'" :limits="10" :load-more="true"></PostList>
-            <h3>Bigdata</h3>
+  
+
+            <div v-show="postitem=='Bigdata'">
             <PostList :item="'Bigdata'" :limits="10" :load-more="true"></PostList>
-            <h3>Blockchain</h3>
+            </div>
+
+            <div v-show="postitem=='Blockchain'">
             <PostList :item="'Blockchain'" :limits="10" :load-more="true"></PostList>
-            <h3>Webmobile</h3>
+            </div>
+
+            <div v-show="postitem=='Webmobile'">
             <PostList :item="'Webmobile'" :limits="10" :load-more="true"></PostList>
-           
+            </div>
+            </div>
+
         </v-flex>
       </v-layout>
       
@@ -48,6 +77,7 @@ export default {
     data(){
         return{
             user:'',
+            postitem:'',
         }
     },
     
@@ -66,6 +96,9 @@ export default {
     async getUser() {
             this.user = await FirebaseService.getUser()
         },
+        viewpost:function(postitem){
+          this.postitem=postitem;
+        }
   }
 }
 </script>
