@@ -141,7 +141,8 @@ export default {
   name: 'Post',
    data(){
         return{
-          user_email:''
+          user_email:'',
+          tempitem:'',
         }
     },
     
@@ -152,11 +153,23 @@ export default {
 		title: {type: String},
     content: {type: String},
     imgSrc: {type: String},
+    item: {type: String},
   },
 
   created(){
       console.log("in post")
+      console.log(this.item)
+        console.log(this.content)
+      this.tempitem=this.item
+      console.log(this.tempitem)
       this.item = this.$route.params.item
+      console.log(this.item)
+      if(this.item==null){
+        console.log("no item~~~~~~~~~~~~~~~~~~~")
+        console.log(this.item)
+        this.item=this.tempitem
+        console.log(this.item)
+      }
       this.user_email = this.$store.state.user.email
   },
 

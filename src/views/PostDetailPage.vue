@@ -140,6 +140,9 @@ export default {
     },
 	created(){
         this.item = this.$route.params.item
+        if(this.item==null){
+
+        }
         this.post_token = this.$route.params.post_token
         this.getPost(this.post_token,  this.item)
         this.getVote()

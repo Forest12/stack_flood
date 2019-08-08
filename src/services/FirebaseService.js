@@ -156,7 +156,9 @@ export default {
 				return docSnapshots.docs.map((doc) => {
 					let data = doc.data()
 					data.id = doc.id
+					data.item = item
 					data.created_at = new Date(data.created_at.toDate())
+					console.log(data)
 					return data
 				})
 			})
