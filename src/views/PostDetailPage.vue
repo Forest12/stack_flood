@@ -165,15 +165,16 @@ export default {
         },
         vote(check){
             FirebaseService.vote(this.post_token, this.$store.state.user.email,check).then(res=>{
-            if(res){
-              if(check){
-                this.num_vote += 1
+              console.log(res)
+              if(res){
+                if(check){
+                  this.num_vote += 1
+                }
+                else{
+                  this.num_vote -=1
+                }
               }
-              else{
-                this.num_vote -=1
-              }
-            }
-          })
+            })
         },
         getVote(){
           FirebaseService.getVote(this.post_token).then(res => {
@@ -181,9 +182,6 @@ export default {
           })
         },
         getTeg(){
-          // FirebaseService.getVote(this.post_token).then(res => {
-          //   this.num_vote = res
-          // })
 
         }
 
