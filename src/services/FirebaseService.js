@@ -332,40 +332,53 @@ export default {
 		var downdocRef = firestore.collection("VOTE_DOWN").where("post_token","==",post_token).where("user", "==", email)
 
 		if(check){
-			let docSnapshots = await updocRef.get()
-			if (docSnapshots.empty){
-				firestore.collection("VOTE_UP").add({
-					post_token,
-					"user":email,
-				})
-				let docSnapshots2 = await downdocRef.get()
-				if(!docSnapshots2.empty){
-					let id = docSnapshots2.docs[0].id
+			//좋아요를 눌렀을때
+			let docSnapshotsDown = await downdocRef.get()
+				if(!docSnapshotsDown.empty){
+					//이전에 싫어요를 눌렀으면
+					let id = docSnapshotsDown.docs[0].id
 					firestore.collection("VOTE_DOWN").doc(id).delete()
-				} 
-				return true
-			}
-			else{
-				return false
+					//flase가 return 되면 num_vote가 줄어든다.
+					return true
+				}else{
+					let docSnapshotsUP = await updocRef.get()
+					if (docSnapshotsUP.empty){
+						//이전에 좋아요를 한번도 누른적이 없으면
+						firestore.collection("VOTE_UP").add({
+						post_token,
+						"user":email,
+						})
+						return true
+					}else{
+						//이전에 좋아요를 눌렀으면
+						return false
+					}
+			
 			}
 		}else{
-			let docSnapshots = await downdocRef.get()
-			if (docSnapshots.empty){
-				firestore.collection("VOTE_DOWN").add({
-					post_token,
-					"user":email,
-				})
-				let docSnapshots2 = await updocRef.get()
-				if(!docSnapshots2.empty){
-					let id = docSnapshots2.docs[0].id
+			//싫어요를 눌렀을때
+			let docSnapshotsUP = await updocRef.get()
+				if(!docSnapshotsUP.empty){
+					//이전에 좋아요를 눌렀으면
+					let id = docSnapshotsUP.docs[0].id
 					firestore.collection("VOTE_UP").doc(id).delete()
+					//flase가 return 되면 num_vote가 줄어든다.
 					return true
-				}
-				return true
+				}else{
+					let docSnapshotsDOWN = await downdocRef.get()
+					if (docSnapshotsDOWN.empty){
+						//이전에 싫어요를 한번도 누른적이 없으면
+						firestore.collection("VOTE_DOWN").add({
+						post_token,
+						"user":email,
+						})
+						return true
+					}else{
+						//이전에 싫어요를 눌렀으면
+						return false
+					}
 			}
-			else{
-				return false
-			}
+			
 		}
 	},
 
@@ -386,7 +399,6 @@ export default {
 	},
 	async getTeg(post_token){
 		var tegdocRef = firestore.collection("TEG").where("post_token","==",post_token)
-	
 	
 	}
 }
