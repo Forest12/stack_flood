@@ -24,18 +24,13 @@ var firebaseConfig = {
   
 	firebase.auth().onAuthStateChanged(() => {
 		user = firebase.auth().currentUser;
-		console.log(user)
 		if (user != null) {
 			email = user.email
 			store.commit('setUser', user)
 			store.commit('setAdmin', user)
 
-
-			console.log("12312312313123123213312312")
-
 			if(store.state.alarm==-1){
 				Notification.requestPermission(function (result) { // 알림을 허용 할 지 알람을 띄운다.
-					console.log("check12312131321312313~~~")
 					//요청을 거절하면,
 					if (result === 'denied') {
 						store.commit('setalarm',0)
@@ -157,7 +152,6 @@ export default {
 					data.id = doc.id
 					data.item = item
 					data.created_at = new Date(data.created_at.toDate())
-					console.log(data)
 					return data
 				})
 			})
@@ -280,18 +274,19 @@ export default {
 		})
 	},
 
-	signup_database(email,user_authority,level,img) {//가입시 데이터베이스에 데이터 저장. login.vue에 함수 호출 있음
+	signup_database(email,user_authority,level,img,giturl) {//가입시 데이터베이스에 데이터 저장. login.vue에 함수 호출 있음
 		console.log('new member in')
 		return firestore.collection("member").doc(email).set({
 			email,
 			user_authority,
 			level,
 			img,
+			giturl,
 			created_at: firebase.firestore.FieldValue.serverTimestamp()
 		})
 	},
 
-	update_database_member(email,user_authority,level,img,created_at) { //데이터베이스 업데이트 부분, 미완. 수정 필요
+	update_database_member(email,user_authority,level,img,giturl,created_at) { //데이터베이스 업데이트 부분, 미완. 수정 필요
 		console.log('유저권한 수정하기')
 		user.updateProfile({
 			displayName: user_authority,})
@@ -300,6 +295,7 @@ export default {
 			email,
 			level,
 			img,
+			giturl,
 			created_at
 		})
 		

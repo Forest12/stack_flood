@@ -114,7 +114,7 @@ export default {
       this.$router.push(Mypage);
     },
     signUp() {
-      FirebaseService.signup_database(this.singup_email, "visitor", "0","https://i.imgur.com/PJpHPNO.jpg");
+      FirebaseService.signup_database(this.singup_email, "visitor", "0","https://i.imgur.com/PJpHPNO.jpg","--");
 
       firebase
         .auth()
