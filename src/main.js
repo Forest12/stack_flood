@@ -23,6 +23,7 @@ Vue.use(ChartPlugin);
 Vue.use(animePlugin);
 Vue.use(VueCookie);
 
+
 Vue.use(VueAnalytics, {
   id:'UA-144982861-1',
   router,
