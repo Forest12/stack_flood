@@ -98,7 +98,7 @@ import AnswerList from '../components/AnswerList'
 import MarkdownViewer from '../components/MarkdownViewer'
 import { constants } from 'crypto';
 import { Editor, Renderer } from 'vuetify-markdown-editor';
-import 'vuetify-markdown-editor/dist/vuetify-markdown-editor.css'
+// import 'vuetify-markdown-editor/dist/vuetify-markdown-editor.css'
 
 export default {
     name: 'PostDetailPage',
