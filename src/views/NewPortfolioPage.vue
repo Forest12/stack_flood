@@ -9,9 +9,12 @@
       label="Title"
       required
     ></v-text-field>
-    <ImageUploader v-on:gotimg="changeImgFile"></ImageUploader>
+   
+    <ImageUploader></ImageUploader>
+
+
     <markdown-editor v-model="content" ref="markdownEditor"></markdown-editor>
-    <v-btn @click="upload" color="pink darken-2" dark><v-icon dark left>fas fa-edit</v-icon>Post</v-btn>
+    <v-btn @click="postPortfolio" color="pink darken-2" dark><v-icon dark left>fas fa-edit</v-icon>Post</v-btn>
  
   </v-form>
 </v-container>
@@ -23,11 +26,7 @@ import FirebaseService from '@/services/FirebaseService'
 import ImageUploader from '../components/ImageUploader'
 
 export default {
-    name: 'NewPortfolio',
-    created:function(){
-        this.item = this.$route.params.item;
-        FirebaseService.logging('new portfolio');
-    },
+	name: 'NewPost',
 	components:{
         ImageUploader
     },
@@ -35,51 +34,22 @@ export default {
 		return {
             title: "",
             content: "",
-            item: "",
             img: "",
-            imageFile: "",
          
 		}
     },
+
+    created(){
+        FirebaseService.logging("new portfolio");    
+    },
+
     methods: {
-        changeImgFile(value){
-            this.imageFile = value;
-        },
-        postPortfolio() {
+       postPortfolio() {
             return FirebaseService.postPortfolio(this.title, this.content, this.img)
             
         },
-        // chPage(){
-        //     this.$router.push(this.$route.query.redirect || '/portfolio')
-        // },
-      
+    },
 
-        upload(){
-            var xmlHttpRequest = new XMLHttpRequest();
-            xmlHttpRequest.open('POST', 'https://api.imgur.com/3/image/', true)
-
-            xmlHttpRequest.setRequestHeader("Authorization", "Client-ID 38e11911aeaa6ab")
-
-            xmlHttpRequest.onreadystatechange = () => {
-                if (xmlHttpRequest.readyState == 4) {
-                    if (xmlHttpRequest.status == 200) {
-                        var result = JSON.parse(xmlHttpRequest.responseText)
-                        this.img = result.data.link    
-                        this.postPortfolio().then(() =>{
-                             alert("업로드 성공")
-                            this.$router.go(-1)
-                        })
-                       
-
-                    }
-                    else {
-                        alert("업로드 실패")
-                    }
-                }
-            }
-            xmlHttpRequest.send(this.imageFile)
-            }, 
-        },
 }
 </script>
 

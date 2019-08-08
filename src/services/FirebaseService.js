@@ -113,7 +113,6 @@ const firestore = firebase.firestore()
 Vue.prototype.$firebase = firebase
 
 export default {
-
 	getPost(post_token, item){
 		var docRef = firestore.collection(item).doc(post_token)
 	
@@ -165,13 +164,12 @@ export default {
 			})
 	},
 
-	postPost(item ,title, content,img) {
+	postPost(item ,title, content) {
 		created_time = firebase.firestore.Timestamp.now().toDate()+" "
 		created_time = created_time.substring(0,24)
 		
 		return firestore.collection(item).add({
 			email,
-			img,
 			title,
 			content,
 			created_at: firebase.firestore.FieldValue.serverTimestamp(),
@@ -179,12 +177,11 @@ export default {
 		
 	},
 	
-	editPost(item, post_token, editTitle, editImgURL ,editContent){
+	editPost(item, post_token, editTitle ,editContent){
 		let postDoc = firestore.collection(item).doc(post_token)
 		postDoc.update(
 			{	
 				title: editTitle,
-				img:editImgURL,
 				content: editContent,
 
 			}
@@ -388,5 +385,10 @@ export default {
 			})
 		})
 		return count
+	},
+	async getTeg(post_token){
+		var tegdocRef = firestore.collection("TEG").where("post_token","==",post_token)
+	
+	
 	}
 }

@@ -151,7 +151,6 @@ export default {
 		date: {type: Date},
 		title: {type: String},
     content: {type: String},
-    imgSrc: {type: String},
   },
 
   created(){
