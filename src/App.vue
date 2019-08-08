@@ -45,6 +45,11 @@ export default {
 </script>
 
 <style>
+@import url('https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap&subset=korean');
+
+body{
+  font-family: 'Nanum Gothic', sans-serif;
+}
 .page-enter-active, .page-leave-active {
 transition: opacity .5s;
 }
