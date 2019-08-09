@@ -10,7 +10,7 @@
         
         <!-- 유저 이메일 -->
         <slot name="user-email">
-          Mycampground@daum.net
+          {{email}}
         </slot>
 
         </div>
@@ -18,7 +18,7 @@
       
         <!-- 유저 reputation -->
         <slot name="user-score">
-          50
+          내공 : {{level}}
         </slot>
 
       </div>
@@ -28,7 +28,8 @@
       <v-card-actions class="pa-0 d-flex ms" justify-content-center>
         <v-btn flat color="grey">
           <v-icon small left>message</v-icon>
-          <span>Message</span>
+          <a v-if="giturl!='I\'m visiter'&&giturl!='no have giturl'" v-bind:href="'http://'+giturl">{{giturl}}</a>
+          <a v-else>{{giturl}}</a>
         </v-btn>
       </v-card-actions>
     </slot>
@@ -38,8 +39,12 @@
 </template>
 
 <script>
-export default {
-
+export default { 
+  props: {
+    email: { type: String },
+    giturl: { type: String },
+    level: { type: String },
+  },
 }
 </script>
 

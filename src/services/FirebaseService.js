@@ -34,13 +34,11 @@ var firebaseConfig = {
 					//요청을 거절하면,
 					if (result === 'denied') {
 						store.commit('setalarm',0)
-						console.log("alarm setting = ", store.state.alarm)
 						return;
 					}
 					//요청을 허용하면,
 					else {
 						store.commit('setalarm',1)
-						console.log("alarm setting = ", store.state.alarm)
 						// //데스크탑 알림 권한 요청 버튼을 비활성화
 						// requestPermissionButton.attr('disabled', 'disabled');
 						// //데스크탑 메시지 입력폼을 활성화
@@ -134,17 +132,36 @@ export default {
 		.then((docSnapshots) => {
 			return docSnapshots.docs.map((doc) => {
 				let data = doc.data()
-				console.log(data.email)
-				this.getUser(data.email)
+				data.level="0"
+				data.userImg="https://i.imgur.com/PJpHPNO.jpg"
+				data.giturl="I'm visiter"
+				data.vote=0
+				if(data.email==null){
+					data.email='visiter'
+				}
+				else{
+				this.get_user_info(data.email)
 				.then( res => {
-					console.log("res~~",res)
+					if(res[0]!=null&&res[0].level!=null){
 					data.level=res[0].level
 					data.userImg=res[0].img
 					data.giturl=res[0].giturl
+					}else{
+						data.level="0"
+						data.userImg="https://i.imgur.com/PJpHPNO.jpg"
+						data.giturl="no have giturl"
+					}
 					})
+				}	
+						data=data
 						data.id = doc.id
-						data.created_at = new Date(data.created_at.toDate())+""
-						data.created_at = data.created_at.substring(0,24)
+						data.vote=this.getVote(data.id)
+						.then(res=>{
+							data.vote=res
+						})
+						data.postdate = new Date(data.created_at.toDate())+""
+						data.postdate = data.postdate.substring(0,24)
+						data.created_at = new Date(data.created_at.toDate())
 						return data
 					})
 				})

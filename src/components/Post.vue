@@ -198,13 +198,13 @@ export default {
     title: { type: String },
     content: { type: String },
     imgSrc: { type: String },
-    item: { type: String },
+    getitem: { type: String },
   },
 
   created(){
-      this.tempitem=this.item
+      this.tempitem=this.getitem
       this.item = this.$route.params.item
-      if(this.item==null){
+      if(this.item==null&&this.tempitem!=null){
         this.item=this.tempitem
       }
       this.user_email = this.$store.state.user.email
