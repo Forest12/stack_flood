@@ -35,7 +35,7 @@
         <div class="post-content-box pa-3">
           <div class="post-content-title title blue--text mb-2" @click="moveDetail">{{ title }}</div>
 
-          <div class="post-content-content">{{ content }}</div>
+          <div class="post-content-content">{{ removetag }}</div>
           <div class="post-content-tags">
             <span
               class="post-content-tag blue lighten-4 mr-2 mb-1"
@@ -220,6 +220,11 @@ export default {
     formatedDate() {
       return `${this.date.getFullYear()}년 ${this.date.getMonth() +
         1}월 ${this.date.getDate()}일`;
+    },
+    removetag() {
+      let ta = this.content.replace(/<br\/>/ig, "\n"); 
+      ta = ta.replace(/<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig, "");
+      return ta
     }
   },
   methods: {

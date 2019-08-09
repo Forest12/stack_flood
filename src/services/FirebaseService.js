@@ -3,6 +3,8 @@ import 'firebase/firestore'
 import 'firebase/auth'
 import Vue from 'vue'
 import {store} from '../store.js'
+import { Cookie, CookieJar } from 'tough-cookie';
+
 
 
 var firebaseConfig = {
@@ -18,7 +20,7 @@ var firebaseConfig = {
 	firebase.initializeApp(firebaseConfig);
 	var email;
 	var created_time=""
-	var user;
+  	var user;
   
 	firebase.auth().onAuthStateChanged(() => {
 		user = firebase.auth().currentUser;
@@ -39,26 +41,77 @@ var firebaseConfig = {
 					else {
 						store.commit('setalarm',1)
 						console.log("alarm setting = ", store.state.alarm)
+						// //데스크탑 알림 권한 요청 버튼을 비활성화
+						// requestPermissionButton.attr('disabled', 'disabled');
+						// //데스크탑 메시지 입력폼을 활성화
+						// notificationMessage.removeAttr('disabled');
+						// //데스크탑 메시지 요청 버튼을 활성화
+						// notificationButton.removeAttr('disabled');
 						return;
 					}
 				});
 			}
+		
 
+			// console.log("login check")
+			// console.log(store.state.user)
+			// 	console.log("you are login!!!!")
+			// 	cookies = this.$cookies.get("alarm");
+			// 	console.log("get cookie ok!!!!")
+			// 	if(cookies==null){
+			// 		Notification.requestPermission(function (result) {
+
+			// 		//요청을 거절하면,
+			// 		if (result === 'denied') {
+			// 			state.setalarm(0);
+			// 			info = new Cookie("alarm", "0");    // 쿠키를 생성한다. 이름:alarm, 값 : 0
+			// 			info.setMaxAge(365*24*60*60);                                 // 쿠키의 유효기간을 365일로 설정한다.
+			// 			info.setPath("/");                                                    // 쿠키의 유효한 디렉토리를 "/" 로 설정한다.
+			// 			response.addCooke(info);   
+			// 		}
+			// 		//요청을 허용하면,
+			// 		else {
+			// 			state.setalarm(1);
+			// 			info = new Cookie("alarm", "1");    // 쿠키를 생성한다. 이름:alarm, 값 : 1
+			// 			info.setMaxAge(365*24*60*60);                                 // 쿠키의 유효기간을 365일로 설정한다.
+			// 			info.setPath("/");                                                    // 쿠키의 유효한 디렉토리를 "/" 로 설정한다.
+			// 			response.addCooke(info);  
+			// 			//데스크탑 알림 권한 요청 버튼을 비활성화
+			// 			requestPermissionButton.attr('disabled', 'disabled');
+			// 			//데스크탑 메시지 입력폼을 활성화
+			// 			notificationMessage.removeAttr('disabled');
+			// 			//데스크탑 메시지 요청 버튼을 활성화
+			// 			notificationButton.removeAttr('disabled');
+			// 			return;
+			// 		}
+			// 	});
+			// 	}else{
+			// 	if(cookies.getValue==1){
+			// 		state.setalarm(1)
+			// 	}else{
+			// 		state.setalarm(0)
+			// 	}
+			// 	}
+		
+
+
+			
 
 		}else {
 			email = "undefine";
 			store.commit('setUser', user)
 		}})
 	
+
 const firestore = firebase.firestore()
+
 Vue.prototype.$firebase = firebase
 
-
 export default {
-	getPost(post_token, item) {
+	getPost(post_token, item){
 		var docRef = firestore.collection(item).doc(post_token)
-
-		return docRef.get().then(function (doc) {
+	
+		return docRef.get().then(function(doc) {
 			if (doc.exists) {
 				let data = doc.data()
 				data.created_at = new Date(data.created_at.toDate())
@@ -67,60 +120,38 @@ export default {
 				// doc.data() will be undefined in this case
 				console.log("No such document!");
 			}
-		}).catch(function (error) {
+		}).catch(function(error) {
 			console.log("Error getting document:", error);
 		});
 	},
 
 	getPosts(item) {
 		let postsCollection = firestore.collection(item)
-
+		
 		return postsCollection
-			.orderBy('created_at', 'desc')
-			.get()
-			.then((docSnapshots) => {
-				return docSnapshots.docs.map((doc) => {
-					let data = doc.data()
-					if (!data.view) {
-						data.view = 0;
-					}
-					data.level = "0"
-					data.userImg = "https://i.imgur.com/PJpHPNO.jpg"
-					data.giturl = "I'm visiter"
-					data.vote = 0
-					if (data.email == null) {
-						data.email = 'visiter'
-					}
-					else {
-						this.get_user_info(data.email)
-							.then(res => {
-								if (res[0] != null && res[0].level != null) {
-									data.level = res[0].level
-									data.userImg = res[0].img
-									data.giturl = res[0].giturl
-								} else {
-									data.level = "0"
-									data.userImg = "https://i.imgur.com/PJpHPNO.jpg"
-									data.giturl = "no have giturl"
-								}
-							})
-					}
-					data = data
-					data.id = doc.id
-					this.getVote(data.id)
-						.then(res => {
-							data.vote = res
-						})
-					data.postdate = new Date(data.created_at.toDate()) + ""
-					data.postdate = data.postdate.substring(0, 24)
-					data.created_at = new Date(data.created_at.toDate())
-					return data
+		.orderBy('created_at', 'desc')
+		.get()
+		.then((docSnapshots) => {
+			return docSnapshots.docs.map((doc) => {
+				let data = doc.data()
+				console.log(data.email)
+				this.getUser(data.email)
+				.then( res => {
+					console.log("res~~",res)
+					data.level=res[0].level
+					data.userImg=res[0].img
+					data.giturl=res[0].giturl
+					})
+						data.id = doc.id
+						data.created_at = new Date(data.created_at.toDate())+""
+						data.created_at = data.created_at.substring(0,24)
+						return data
+					})
 				})
-			})
 	},
 
 	getMyPosts(item) {
-		let postsCollection = firestore.collection(item).where("email", "==", user.email)
+		let postsCollection = firestore.collection(item).where("email","==",user.email)
 
 		return postsCollection
 			.get()
@@ -133,27 +164,28 @@ export default {
 					return data
 				})
 			})
-			.catch(function (error) {
+			.catch(function(error) {
 				console.log("Error getting documents: ", error)
 			})
 	},
 
-	postPost(item, title, content) {
-		const view = 0;
+	postPost(item ,title, content) {
+		created_time = firebase.firestore.Timestamp.now().toDate()+" "
+		created_time = created_time.substring(0,24)
+		console.log('postPost')
 		return firestore.collection(item).add({
 			email,
 			title,
 			content,
-			view,
 			created_at: firebase.firestore.FieldValue.serverTimestamp(),
 		})
 
 	},
-
-	editPost(item, post_token, editTitle, editContent) {
+	
+	editPost(item, post_token, editTitle ,editContent){
 		let postDoc = firestore.collection(item).doc(post_token)
 		postDoc.update(
-			{
+			{	
 				title: editTitle,
 				content: editContent,
 
@@ -161,79 +193,66 @@ export default {
 		)
 
 	},
-	addview(item, post_token, editview) {
-		let postDoc = firestore.collection(item).doc(post_token)
-		if (!editview) {
-			editview = 1
-		} else {
-			editview = editview + 1
-		}
-		postDoc.update(
-			{
-				view: editview,
-			}
-		)
-
-	},
-	removePost(item, post_token) {
+	removePost(item, post_token){
 		firestore.collection(item).doc(post_token).delete();
 	},
 
-
-
 	postAnswer(item, post_token,content){
-		console.log(item, post_token)
+		created_time = firebase.firestore.Timestamp.now().toDate()+" "
+		created_time = created_time.substring(0,24)
 		return firestore.collection(item).doc(post_token).collection("Answer").add(
-			{email,
-			content,
-			created_at: firebase.firestore.FieldValue.serverTimestamp()
-		}
+			{
+				email,
+				content,
+				created_at: firebase.firestore.FieldValue.serverTimestamp(),
+
+			}
 		)
 	},
-	getAnswers(item, post_token) {
+	getAnswers(item, post_token){
 		let AnswersCollection = firestore.collection(item).doc(post_token).collection("Answer")
-
+		
 		return AnswersCollection.get()
-			.then((docSnapshots) => {
-				return docSnapshots.docs.map((doc) => {
-					let data = doc.data()
-					data.id = doc.id
-					data.created_at = new Date(data.created_at.toDate())
-					return data
+				.then((docSnapshots) => {
+					return docSnapshots.docs.map((doc) => {
+						let data = doc.data()
+						data.id = doc.id
+						data.created_at = new Date(data.created_at.toDate())
+						return data
+					})
 				})
-			})
 
 	},
-	editAnswer(item, post_token, answer_token, editContent) {
+	editAnswer(item, post_token ,answer_token,editContent){
 		let postDoc = firestore.collection(item).doc(post_token).collection("Answer").doc(answer_token)
 		postDoc.update(
-			{
+			{	
 				content: editContent,
 
 			}
 		)
 
 	},
-	removeAnswer(item, post_token, answer_token) {
+	removeAnswer(item, post_token,answer_token){
 		firestore.collection(item).doc(post_token).collection("Answer").doc(answer_token).delete();
 	},
 	getPortfolios() {
 		const postsCollection = firestore.collection("Portfolios")
 		return postsCollection
-			.orderBy('created_at', 'desc')
-			.get()
-			.then((docSnapshots) => {
-				return docSnapshots.docs.map((doc) => {
-					let data = doc.data()
-					data.id = doc.id
-					data.created_at = new Date(data.created_at.toDate())
-					return data
+				.orderBy('created_at', 'desc')
+				.get()
+				.then((docSnapshots) => {
+					return docSnapshots.docs.map((doc) => {
+						let data = doc.data()
+						data.id = doc.id
+						data.created_at = new Date(data.created_at.toDate())
+						return data
+					})
 				})
-			})
 	},
 	postPortfolio(title, content, img) {
-		created_time = firebase.firestore.Timestamp.now().toDate() + " "
-		created_time = created_time.substring(0, 24)
+		created_time = firebase.firestore.Timestamp.now().toDate()+" "
+		created_time = created_time.substring(0,24)
 		return firestore.collection("Portfolios").add({
 			title,
 			content,
@@ -242,29 +261,29 @@ export default {
 		})
 	},
 	logging(item) {
-		created_time = firebase.firestore.Timestamp.now().toDate() + " "
-		created_time = created_time.substring(0, 24)
+		created_time = firebase.firestore.Timestamp.now().toDate()+" "
+		created_time = created_time.substring(0,24)
 		console.log('logging start')
-		return firestore.collection('LOG').doc(email + " " + created_time).set({
+		return firestore.collection('LOG').doc(email+" "+created_time).set({
 			email,
 			item,
-			time: firebase.firestore.FieldValue.serverTimestamp()
+			time: firebase.firestore.FieldValue.serverTimestamp() 
 		})
 	},
 
 
 	loginWithGoogle() {
 		let provider = new firebase.auth.GoogleAuthProvider()
-		return firebase.auth().signInWithPopup(provider).then(function (result) {
+		return firebase.auth().signInWithPopup(provider).then(function(result) {
 			let accessToken = result.credential.accessToken
 			let user = result.user
 			return result
-		}).catch(function (error) {
+		}).catch(function(error) {
 			console.error('[Google Login Error]', error)
 		})
 	},
 
-	signup_database(email, user_authority, level, img, giturl) {//가입시 데이터베이스에 데이터 저장. login.vue에 함수 호출 있음
+	signup_database(email,user_authority,level,img,giturl) {//가입시 데이터베이스에 데이터 저장. login.vue에 함수 호출 있음
 		console.log('new member in')
 		return firestore.collection("member").doc(email).set({
 			email,
@@ -276,11 +295,10 @@ export default {
 		})
 	},
 
-	update_database_member(email, user_authority, level, img, giturl, created_at) { //데이터베이스 업데이트 부분, 미완. 수정 필요
+	update_database_member(email,user_authority,level,img,giturl,created_at) { //데이터베이스 업데이트 부분, 미완. 수정 필요
 		console.log('유저권한 수정하기')
 		user.updateProfile({
-			displayName: user_authority,
-		})
+			displayName: user_authority,})
 		return firestore.collection("member").doc(email).set({
 			user_authority,
 			email,
@@ -289,100 +307,100 @@ export default {
 			giturl,
 			created_at
 		})
-
+		
 	},
 
 	get_user_info(email) {
-		const user_info = firestore.collection("member").where("email", "==", email);
+		const user_info = firestore.collection("member").where("email","==",email);
 		return user_info
-			.get()
-			.then((docSnapshots) => {
-				return docSnapshots.docs.map((doc) => {
-					let data = doc.data()
-					data.created_at = new Date(data.created_at.toDate())
-					return data
+				.get()
+				.then((docSnapshots) => {
+					return docSnapshots.docs.map((doc) => {
+						let data = doc.data()
+						data.created_at = new Date(data.created_at.toDate())
+						return data
+					})
 				})
-			})
 	},
 	getUser() {
-		const user_info = firestore.collection("member").where("email", "==", email);
+		const user_info = firestore.collection("member").where("email","==",email);
 		return user_info
-			.orderBy('user_authority')
-			.get()
-			.then((docSnapshots) => {
-				return docSnapshots.docs.map((doc) => {
-					let data = doc.data()
-					data.created_at = new Date(data.created_at.toDate())
-					return data
+				.orderBy('user_authority')
+				.get()
+				.then((docSnapshots) => {
+					return docSnapshots.docs.map((doc) => {
+						let data = doc.data()
+						data.created_at = new Date(data.created_at.toDate())
+						return data
+					})
 				})
-			})
 	},
 
-	async vote(post_token, email, check) {
-		var updocRef = firestore.collection("VOTE_UP").where("post_token", "==", post_token).where("user", "==", email)
-		var downdocRef = firestore.collection("VOTE_DOWN").where("post_token", "==", post_token).where("user", "==", email)
+	async vote(post_token, email, check){
+		var updocRef = firestore.collection("VOTE_UP").where("post_token","==",post_token).where("user", "==", email)
+		var downdocRef = firestore.collection("VOTE_DOWN").where("post_token","==",post_token).where("user", "==", email)
 
-		if (check) {
+		if(check){
 			//좋아요를 눌렀을때
 			let docSnapshotsDown = await downdocRef.get()
-			if (!docSnapshotsDown.empty) {
-				//이전에 싫어요를 눌렀으면
-				let id = docSnapshotsDown.docs[0].id
-				firestore.collection("VOTE_DOWN").doc(id).delete()
-				//flase가 return 되면 num_vote가 줄어든다.
-				return true
-			} else {
-				let docSnapshotsUP = await updocRef.get()
-				if (docSnapshotsUP.empty) {
-					//이전에 좋아요를 한번도 누른적이 없으면
-					firestore.collection("VOTE_UP").add({
-						post_token,
-						"user": email,
-					})
+				if(!docSnapshotsDown.empty){
+					//이전에 싫어요를 눌렀으면
+					let id = docSnapshotsDown.docs[0].id
+					firestore.collection("VOTE_DOWN").doc(id).delete()
+					//flase가 return 되면 num_vote가 줄어든다.
 					return true
-				} else {
-					//이전에 좋아요를 눌렀으면
-					return false
-				}
-
+				}else{
+					let docSnapshotsUP = await updocRef.get()
+					if (docSnapshotsUP.empty){
+						//이전에 좋아요를 한번도 누른적이 없으면
+						firestore.collection("VOTE_UP").add({
+						post_token,
+						"user":email,
+						})
+						return true
+					}else{
+						//이전에 좋아요를 눌렀으면
+						return false
+					}
+			
 			}
-		} else {
+		}else{
 			//싫어요를 눌렀을때
 			let docSnapshotsUP = await updocRef.get()
-			if (!docSnapshotsUP.empty) {
-				//이전에 좋아요를 눌렀으면
-				let id = docSnapshotsUP.docs[0].id
-				firestore.collection("VOTE_UP").doc(id).delete()
-				//flase가 return 되면 num_vote가 줄어든다.
-				return true
-			} else {
-				let docSnapshotsDOWN = await downdocRef.get()
-				if (docSnapshotsDOWN.empty) {
-					//이전에 싫어요를 한번도 누른적이 없으면
-					firestore.collection("VOTE_DOWN").add({
-						post_token,
-						"user": email,
-					})
+				if(!docSnapshotsUP.empty){
+					//이전에 좋아요를 눌렀으면
+					let id = docSnapshotsUP.docs[0].id
+					firestore.collection("VOTE_UP").doc(id).delete()
+					//flase가 return 되면 num_vote가 줄어든다.
 					return true
-				} else {
-					//이전에 싫어요를 눌렀으면
-					return false
-				}
+				}else{
+					let docSnapshotsDOWN = await downdocRef.get()
+					if (docSnapshotsDOWN.empty){
+						//이전에 싫어요를 한번도 누른적이 없으면
+						firestore.collection("VOTE_DOWN").add({
+						post_token,
+						"user":email,
+						})
+						return true
+					}else{
+						//이전에 싫어요를 눌렀으면
+						return false
+					}
 			}
-
+			
 		}
 	},
 
-	async getVote(post_token) {
+	async getVote(post_token){
 		console.log(post_token)
-		var updocRef = firestore.collection("VOTE_UP").where("post_token", "==", post_token)
-		var downdocRef = firestore.collection("VOTE_DOWN").where("post_token", "==", post_token)
-
+		var updocRef = firestore.collection("VOTE_UP").where("post_token","==",post_token)
+		var downdocRef = firestore.collection("VOTE_DOWN").where("post_token","==",post_token)
+		
 		let count = 0
 
-		await updocRef.get().then(docSnapshots => {
+		await updocRef.get().then(docSnapshots=>{
 			count += docSnapshots.docs.length
-			downdocRef.get().then(docSnapshots => {
+			downdocRef.get().then(docSnapshots=>{
 				count -= docSnapshots.docs.length
 			})
 		})
@@ -394,7 +412,7 @@ export default {
 
 	// 태그추가
 	addTag(tag, id){ // tags = ['aaa','bbb','ccc]
-			firestore.collection('Tags').doc(tag).set({
+			return firestore.collection('Tags').doc(tag).set({
 				post_token:id,
 			})
 	},
@@ -409,5 +427,5 @@ export default {
 		} else {
 			return ''
 		}
-	}
+	},
 }
