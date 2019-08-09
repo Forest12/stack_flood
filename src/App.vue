@@ -47,6 +47,8 @@ export default {
 <style>
 @import url('https://fonts.googleapis.com/css?family=Nanum+Gothic&display=swap&subset=korean');
 
+@import "./assets/css/markdown.css";
+
 body{
   font-family: 'Nanum Gothic', sans-serif;
 }
@@ -55,6 +57,18 @@ transition: opacity .5s;
 }
 .page-enter, .page-leave-to /* .page-leave-active below version 2.1.8 */ {
   opacity: 0;
+}
+
+code{
+  -webkit-box-shadow:none;
+  box-shadow:none;
+  color: white;
+  font-weight:400;
+  line-height:150%;
+}
+
+code::before{
+  content:'';
 }
 
 </style>

@@ -33,13 +33,13 @@
 
           <div class="q-content-content py-2">{{ question.content }}</div>
 
-          <div class="q-content-tag">
+          <!-- <div class="q-content-tag">
             <span
               class="q-content-tag-item blue lighten-4 mr-2 mb-1"
               v-for="tag in question.tags"
               :key="tag.index"
             >{{ tag }}</span>
-          </div>
+          </div> -->
         </div>
           <!-- user_info -->
           <div class="q-user">
