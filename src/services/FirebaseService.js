@@ -127,15 +127,24 @@ export default {
 
 	getPosts(item) {
 		let postsCollection = firestore.collection(item)
-	
+		
 		return postsCollection
-				.orderBy('created_at', 'desc')
-				.get()
-				.then((docSnapshots) => {
-					return docSnapshots.docs.map((doc) => {
-						let data = doc.data()
+		.orderBy('created_at', 'desc')
+		.get()
+		.then((docSnapshots) => {
+			return docSnapshots.docs.map((doc) => {
+				let data = doc.data()
+				console.log(data.email)
+				this.getUser(data.email)
+				.then( res => {
+					console.log("res~~",res)
+					data.level=res[0].level
+					data.userImg=res[0].img
+					data.giturl=res[0].giturl
+					})
 						data.id = doc.id
-						data.created_at = new Date(data.created_at.toDate())
+						data.created_at = new Date(data.created_at.toDate())+""
+						data.created_at = data.created_at.substring(0,24)
 						return data
 					})
 				})

@@ -7,17 +7,19 @@
 			<div class="post-con-left">
 					<div class="post-time py-2">
 				<v-layout justify-space-between>
-						<span class="grey--text">2019.03.16 am 10:39 Fri</span>
-						<span class="grey--text">내공 : 100</span>
+						<span class="grey--text">{{posts[i-1].created_at}}</span>
+						<span class="grey--text">내공 : {{posts[i-1].giturl}}</span>
 				</v-layout>
 					</div>
 				<Post
-						:email="posts[i-1].email"
-						:id="posts[i - 1].id"
-								:date="posts[i - 1].created_at"
-								:title="posts[i - 1].title"
-								:content="posts[i - 1].content"
-					:imgSrc="posts[i - 1].img"></Post>
+					:email="posts[i-1].email"
+					:id="posts[i - 1].id"
+					:date="posts[i - 1].created_at"
+					:title="posts[i - 1].title"
+					:content="posts[i - 1].content"
+					:imgSrc="posts[i - 1].img"
+					
+					></Post>
 				</div>
 			
 
@@ -93,6 +95,7 @@ export default {
 	methods: {
 		async getPosts(item) {
 			this.posts = await FirebaseService.getPosts(item)
+			console.log(this.posts)
 		},
 	}
 }
