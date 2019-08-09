@@ -1,0 +1,71 @@
+/*
+
+Visual Studio-like style based on original C# coloring by Jason Diamond <jason@diamond.name>
+
+*/
+.aahljs{
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #eee;
+}
+
+.aahljs code{
+  color: black;
+}
+
+.aahljs .hljs-comment,
+.aahljs .hljs-quote,
+.aahljs .hljs-variable {
+  color: #008000;
+}
+
+.aahljs .hljs-keyword,
+.aahljs .hljs-selector-tag,
+.aahljs .hljs-built_in,
+.aahljs .hljs-name,
+.aahljs .hljs-tag {
+  color: #00f;
+}
+
+.aahljs .hljs-string,
+.aahljs .hljs-title,
+.aahljs .hljs-section,
+.aahljs .hljs-attribute,
+.aahljs .hljs-literal,
+.aahljs .hljs-template-tag,
+.aahljs .hljs-template-variable,
+.aahljs .hljs-type,
+.aahljs .hljs-addition {
+  color: #a31515;
+}
+
+.aahljs .hljs-deletion,
+.aahljs .hljs-selector-attr,
+.aahljs .hljs-selector-pseudo,
+.aahljs .hljs-meta {
+  color: #2b91af;
+}
+
+.aahljs .hljs-doctag {
+  color: #808080;
+}
+
+.aahljs .hljs-attr {
+  color: #f00;
+}
+
+.aahljs .hljs-symbol,
+.aahljs .hljs-bullet,
+.aahljs .hljs-link {
+  color: #00b0e8;
+}
+
+
+.aahljs .hljs-emphasis {
+  font-style: italic;
+}
+
+.aahljs .hljs-strong {
+  font-weight: bold;
+}
