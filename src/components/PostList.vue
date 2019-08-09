@@ -30,6 +30,7 @@
 					:email="posts[i-1].email"
 					:giturl="posts[i-1].giturl"
 					:level="posts[i-1].level"
+					:userImg="posts[i-1].userImg"
 					
 					></user-info>
 				</div>

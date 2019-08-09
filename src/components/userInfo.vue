@@ -2,7 +2,7 @@
   <v-card flat class="text-xs-center post-card">
     <v-responsive class="pt-1">
       <v-avatar size="100">
-        <img src="../assets/images/user_default.png" alt="">
+        <v-img :src="userImg" alt=""></v-img>
       </v-avatar>
     </v-responsive>
     <v-card-text class="pt-2 pb-0">
@@ -44,6 +44,7 @@ export default {
     email: { type: String },
     giturl: { type: String },
     level: { type: String },
+    userImg: { type: String },
   },
 }
 </script>
