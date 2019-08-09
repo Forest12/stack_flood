@@ -100,11 +100,7 @@ export default {
       dialog: false,
       editContent:"",
       num_vote:0,
-<<<<<<< HEAD
-      tags: ['Javascript','Vuejs'],
-=======
       editor:"",
->>>>>>> 2fef656c96e0d7ad87ed5a5e4f6d602f8203bb6c
     }
   },
 	props: {
