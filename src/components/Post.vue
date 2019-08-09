@@ -10,16 +10,16 @@
         <div class="post-score-box">
           <div class="post-score-votes">
             <div class="center">
-              <span class="post-score-num">11</span>
-              <span>votes</span>
+              <span class="post-score-num">{{ vote }}</span>
+              <span> votes</span>
             </div>
           </div>
 
           <!-- answer box -->
           <div class="post-score-answer">
             <div class="center">
-              <span class="post-score-num">27</span>
-              <span>answers</span>
+              <span class="post-score-num">{{answer}}</span>
+              <span> answers</span>
               <!-- 답변 완료시 체크모양 표시 -->
               <ssafy class="ssafy"></ssafy>
             </div>
@@ -27,8 +27,8 @@
 
           <div class="post-score-views">
             <div class="center">
-              <span class="post-score-num">8</span>
-              <span>views</span>
+              <span class="post-score-num">{{view}}</span>
+              <span> views</span>
             </div>
           </div>
         </div>
@@ -173,7 +173,7 @@
 
 <script>
 import FirebaseService from "@/services/FirebaseService";
-import { functions } from "firebase";
+import { functions, firestore } from "firebase";
 import { write } from "fs";
 
 import ssafy from "./ssafy";
@@ -187,6 +187,8 @@ export default {
     return {
       user_email: "",
       tempitem:"",
+      answer:"",
+      vote:"",
       tags: ["블록체인", "빅데이터", "카카오톡", "집에갈래", "AI","블록체인", "빅데이터", "카카오톡", "집에갈래", "AI"]
     };
   },
@@ -198,16 +200,19 @@ export default {
     title: { type: String },
     content: { type: String },
     imgSrc: { type: String },
-    item: { type: String },
+    getitem: { type: String },
+    view: { type: String },
   },
 
   created(){
-      this.tempitem=this.item
+      this.tempitem=this.getitem
       this.item = this.$route.params.item
-      if(this.item==null){
+      if(this.item==null&&this.tempitem!=null){
         this.item=this.tempitem
       }
       this.user_email = this.$store.state.user.email
+      this.getAnswerCount(this.id,this.item)
+      this.getvoteCount(this.id)
   },
 
 
@@ -220,6 +225,18 @@ export default {
   methods: {
     moveDetail() {
       this.$router.push(`/${this.item}/detail/${this.id}`);
+    },
+    getAnswerCount(id,item){
+      FirebaseService.getAnswers(item, id)
+      .then(res => {
+        this.answer=res.length
+      })
+    },
+    getvoteCount(id){
+      FirebaseService.getVote(id)
+      .then(res => {
+        this.vote=res
+      })
     }
   }
 };

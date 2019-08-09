@@ -121,6 +121,7 @@ export default {
             num_vote:0,
             tegs:[],
             answerContent:'',
+            view:"",
             text:'# hello \n ```html \n <div>hello</div> \n```',
             dialog: false,
 
@@ -138,7 +139,6 @@ export default {
         this.getPost(this.post_token,  this.item)
         this.getVote()
         this.getTeg()
-        
     },
     computed:{
         formatedDate(){
@@ -153,6 +153,7 @@ export default {
         },
         async getPost(post_token,item) {
             this.post = await FirebaseService.getPost(post_token, item)
+            this.addview()
             this.editor = this.post.content
             console.log(this.editor,'에디터에디터')
         },
@@ -166,6 +167,10 @@ export default {
             this.post.title = this.editTitle
             this.post.content = this.editContent
             this.dialog = false
+        },
+        addview(){
+            console.log(this.post,"postcheck!!!~~~~~~~~~~~~~")
+            FirebaseService.addview(this.item,this.post_token,this.post.view)
         },
         removePost(){
             FirebaseService.removePost(this.item,this.post_token)

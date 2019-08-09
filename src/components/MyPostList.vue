@@ -8,7 +8,7 @@
             	:title="posts[i - 1].title"
             	:content="posts[i - 1].content"
 				:imgSrc="posts[i - 1].img"
-				:item="posts[i - 1].item">
+				:getitem="posts[i - 1].item">
 				</Post>
       <v-divider></v-divider>
     </v-flex>

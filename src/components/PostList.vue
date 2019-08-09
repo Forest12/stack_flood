@@ -7,8 +7,8 @@
 			<div class="post-con-left">
 					<div class="post-time py-2">
 				<v-layout justify-space-between>
-						<span class="grey--text">{{posts[i-1].created_at}}</span>
-						<span class="grey--text">내공 : {{posts[i-1].giturl}}</span>
+						<span class="grey--text">{{posts[i-1].postdate}}</span>
+						<span class="grey--text"> 추천 수 : {{posts[i-1].vote}}</span>
 				</v-layout>
 					</div>
 				<Post
@@ -18,6 +18,7 @@
 					:title="posts[i - 1].title"
 					:content="posts[i - 1].content"
 					:imgSrc="posts[i - 1].img"
+					:view="posts[i - 1].view"
 					
 					></Post>
 				</div>
@@ -25,7 +26,12 @@
 
 			<!-- 유저 정보 표시 -->
 				<div class="post-con-right">
-					<user-info></user-info>
+					<user-info
+					:email="posts[i-1].email"
+					:giturl="posts[i-1].giturl"
+					:level="posts[i-1].level"
+					
+					></user-info>
 				</div>
 			</div>
       <!-- <v-divider></v-divider> -->
@@ -69,7 +75,6 @@ export default {
     this.item = this.$route.params.item;
 	FirebaseService.logging(this.item);
 
-	console.log('uid check');
 	if (firebase.auth().currentUser !== null) {
 		console.log("user id: " + firebase.auth().currentUser.uid);
 	 }
@@ -95,7 +100,6 @@ export default {
 	methods: {
 		async getPosts(item) {
 			this.posts = await FirebaseService.getPosts(item)
-			console.log(this.posts)
 		},
 	}
 }
