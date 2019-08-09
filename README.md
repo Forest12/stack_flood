@@ -1,6 +1,6 @@
 # webmobile-final
 
-## Project setup..
+## Project setup...
 ```
 npm installdd
 ```
