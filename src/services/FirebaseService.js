@@ -2,109 +2,57 @@ import firebase from 'firebase/app'
 import 'firebase/firestore'
 import 'firebase/auth'
 import Vue from 'vue'
-import { store } from '../store.js'
-import { Cookie, CookieJar } from 'tough-cookie';
-
+import {store} from '../store.js'
 
 
 var firebaseConfig = {
-	apiKey: "AIzaSyAOaxPMUrFVZmtPhk945-pku0Vr1_9TkGs",
-	authDomain: "webmobile-5.firebaseapp.com",
-	databaseURL: "https://webmobile-5.firebaseio.com",
-	projectId: "webmobile-5",
-	storageBucket: "",
-	messagingSenderId: "934123234328",
-	appId: "1:934123234328:web:0932bbb6042d5da3"
-};
+    apiKey: "AIzaSyAOaxPMUrFVZmtPhk945-pku0Vr1_9TkGs",
+    authDomain: "webmobile-5.firebaseapp.com",
+    databaseURL: "https://webmobile-5.firebaseio.com",
+    projectId: "webmobile-5",
+    storageBucket: "",
+    messagingSenderId: "934123234328",
+    appId: "1:934123234328:web:0932bbb6042d5da3"
+  };
 
-firebase.initializeApp(firebaseConfig);
-var email;
-var created_time = ""
-var user;
+	firebase.initializeApp(firebaseConfig);
+	var email;
+	var created_time=""
+	var user;
+  
+	firebase.auth().onAuthStateChanged(() => {
+		user = firebase.auth().currentUser;
+		if (user != null) {
+			email = user.email
+			store.commit('setUser', user)
+			store.commit('setAdmin', user)
 
-firebase.auth().onAuthStateChanged(() => {
-	user = firebase.auth().currentUser;
-	if (user != null) {
-		email = user.email
-		store.commit('setUser', user)
-		store.commit('setAdmin', user)
-
-		if (store.state.alarm == -1) {
-			Notification.requestPermission(function (result) { // 알림을 허용 할 지 알람을 띄운다.
-				//요청을 거절하면,
-				if (result === 'denied') {
-					store.commit('setalarm', 0)
-					return;
-				}
-				//요청을 허용하면,
-				else {
-					store.commit('setalarm', 1)
-					// //데스크탑 알림 권한 요청 버튼을 비활성화
-					// requestPermissionButton.attr('disabled', 'disabled');
-					// //데스크탑 메시지 입력폼을 활성화
-					// notificationMessage.removeAttr('disabled');
-					// //데스크탑 메시지 요청 버튼을 활성화
-					// notificationButton.removeAttr('disabled');
-					return;
-				}
-			});
-		}
+			if(store.state.alarm==-1){
+				Notification.requestPermission(function (result) { // 알림을 허용 할 지 알람을 띄운다.
+					//요청을 거절하면,
+					if (result === 'denied') {
+						store.commit('setalarm',0)
+						console.log("alarm setting = ", store.state.alarm)
+						return;
+					}
+					//요청을 허용하면,
+					else {
+						store.commit('setalarm',1)
+						console.log("alarm setting = ", store.state.alarm)
+						return;
+					}
+				});
+			}
 
 
-		// console.log("login check")
-		// console.log(store.state.user)
-		// 	console.log("you are login!!!!")
-		// 	cookies = this.$cookies.get("alarm");
-		// 	console.log("get cookie ok!!!!")
-		// 	if(cookies==null){
-		// 		Notification.requestPermission(function (result) {
-
-		// 		//요청을 거절하면,
-		// 		if (result === 'denied') {
-		// 			state.setalarm(0);
-		// 			info = new Cookie("alarm", "0");    // 쿠키를 생성한다. 이름:alarm, 값 : 0
-		// 			info.setMaxAge(365*24*60*60);                                 // 쿠키의 유효기간을 365일로 설정한다.
-		// 			info.setPath("/");                                                    // 쿠키의 유효한 디렉토리를 "/" 로 설정한다.
-		// 			response.addCooke(info);   
-		// 		}
-		// 		//요청을 허용하면,
-		// 		else {
-		// 			state.setalarm(1);
-		// 			info = new Cookie("alarm", "1");    // 쿠키를 생성한다. 이름:alarm, 값 : 1
-		// 			info.setMaxAge(365*24*60*60);                                 // 쿠키의 유효기간을 365일로 설정한다.
-		// 			info.setPath("/");                                                    // 쿠키의 유효한 디렉토리를 "/" 로 설정한다.
-		// 			response.addCooke(info);  
-		// 			//데스크탑 알림 권한 요청 버튼을 비활성화
-		// 			requestPermissionButton.attr('disabled', 'disabled');
-		// 			//데스크탑 메시지 입력폼을 활성화
-		// 			notificationMessage.removeAttr('disabled');
-		// 			//데스크탑 메시지 요청 버튼을 활성화
-		// 			notificationButton.removeAttr('disabled');
-		// 			return;
-		// 		}
-		// 	});
-		// 	}else{
-		// 	if(cookies.getValue==1){
-		// 		state.setalarm(1)
-		// 	}else{
-		// 		state.setalarm(0)
-		// 	}
-		// 	}
-
-
-
-
-
-	} else {
-		email = "undefine";
-		store.commit('setUser', user)
-	}
-})
-
-
+		}else {
+			email = "undefine";
+			store.commit('setUser', user)
+		}})
+	
 const firestore = firebase.firestore()
-
 Vue.prototype.$firebase = firebase
+
 
 export default {
 	getPost(post_token, item) {
@@ -231,16 +179,15 @@ export default {
 		firestore.collection(item).doc(post_token).delete();
 	},
 
-	postAnswer(item, post_token, content) {
-		created_time = firebase.firestore.Timestamp.now().toDate() + " "
-		created_time = created_time.substring(0, 24)
-		return firestore.collection(item).doc(post_token).collection("Answer").add(
-			{
-				email,
-				content,
-				created_at: firebase.firestore.FieldValue.serverTimestamp(),
 
-			}
+
+	postAnswer(item, post_token,content){
+		console.log(item, post_token)
+		return firestore.collection(item).doc(post_token).collection("Answer").add(
+			{email,
+			content,
+			created_at: firebase.firestore.FieldValue.serverTimestamp()
+		}
 		)
 	},
 	getAnswers(item, post_token) {
@@ -441,8 +388,26 @@ export default {
 		})
 		return count
 	},
-	async getTeg(post_token) {
-		var tegdocRef = firestore.collection("TEG").where("post_token", "==", post_token)
+	// async getTeg(post_token){
+	// 	var tegdocRef = firestore.collection("TAG").where("post_token","==",post_token)
+	// },
 
+	// 태그추가
+	addTag(tag, id){ // tags = ['aaa','bbb','ccc]
+			firestore.collection('Tags').doc(tag).set({
+				post_token:id,
+			})
+	},
+
+	async getTag(item){
+		const res = await firestore.collection('Tags').doc(item)
+
+		const doc = await res.get()
+		let data = doc.data()
+		if (doc.exists){
+			return data.post_token
+		} else {
+			return ''
+		}
 	}
 }

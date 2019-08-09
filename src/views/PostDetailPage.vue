@@ -92,9 +92,6 @@
         </div>
     </div>
     <div>
-
-    {{ answerContent }}
-
     </div>
   </v-container>
 </template>
