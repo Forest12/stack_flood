@@ -6,7 +6,6 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint",
-    "start": "firebase serve --only functions:dialogflowFirebaseFulfillment",
     "deploy": "firebase deploy --only functions:dialogflowFirebaseFulfillment"
   },
   "dependencies": {
@@ -24,6 +23,7 @@
     "firebase-tools": "^7.0.2",
     "github-markdown-css": "^3.0.1",
     "highlight.js": "^9.15.9",
+    "http2": "^3.3.7",
     "katex": "^0.10.2",
     "markdown-it": "^9.0.1",
     "marked": "^0.7.0",
