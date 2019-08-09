@@ -169,11 +169,11 @@ export default {
 			})
 	},
 
-	postPost(item ,title, content) {
-		created_time = firebase.firestore.Timestamp.now().toDate()+" "
-		created_time = created_time.substring(0,24)
-		console.log('postPost')
+	postPost(item, title, content) {
+		const view = 0;
+		const uid = user.uid
 		return firestore.collection(item).add({
+			uid,
 			email,
 			title,
 			content,
