@@ -18,6 +18,7 @@
 					:title="posts[i - 1].title"
 					:content="posts[i - 1].content"
 					:imgSrc="posts[i - 1].img"
+					:view="posts[i - 1].view"
 					
 					></Post>
 				</div>
@@ -74,7 +75,6 @@ export default {
     this.item = this.$route.params.item;
 	FirebaseService.logging(this.item);
 
-	console.log('uid check');
 	if (firebase.auth().currentUser !== null) {
 		console.log("user id: " + firebase.auth().currentUser.uid);
 	 }
@@ -100,7 +100,6 @@ export default {
 	methods: {
 		async getPosts(item) {
 			this.posts = await FirebaseService.getPosts(item)
-			console.log(this.posts)
 		},
 	}
 }

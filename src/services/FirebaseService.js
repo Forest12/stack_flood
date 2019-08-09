@@ -155,7 +155,7 @@ export default {
 				}	
 						data=data
 						data.id = doc.id
-						data.vote=this.getVote(data.id)
+						this.getVote(data.id)
 						.then(res=>{
 							data.vote=res
 						})
@@ -186,14 +186,13 @@ export default {
 			})
 	},
 
-	postPost(item ,title, content) {
-		created_time = firebase.firestore.Timestamp.now().toDate()+" "
-		created_time = created_time.substring(0,24)
-		
+	postPost(item ,title, content) {		
+		const view=0;
 		return firestore.collection(item).add({
 			email,
 			title,
 			content,
+			view,
 			created_at: firebase.firestore.FieldValue.serverTimestamp(),
 		})
 		
@@ -205,6 +204,19 @@ export default {
 			{	
 				title: editTitle,
 				content: editContent,
+
+			}
+		)
+
+	},
+	addview(item, post_token, editview){
+		console.log(editview)
+		editview=editview+1
+		console.log(item,"!@#!@#!@#!#!#!",post_token)
+		let postDoc = firestore.collection(item).doc(post_token)
+		postDoc.update(
+			{	
+				view: editview,
 
 			}
 		)
