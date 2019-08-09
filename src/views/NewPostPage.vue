@@ -101,25 +101,26 @@ export default {
 
   methods: {
     async postPost() {
-      let itemtag = [];
+      let itemtag = '';
       const edit = await md1.render(this.content);
       
       // 작성한 포스트의 토큰값을 가져옴
       const res1 = await FirebaseService.postPost(this.itemz, this.title, edit);
-      
+      // tag = ['aaa','bbb','ccc'] 일 때
       await this.tag.forEach(async (item) => {
-        itemtag = [];
-        let res = await FirebaseService.getTag(item)
-        if (res) {
-          itemtag.push(res)
-        }
-        itemtag.push(item)
-        console.log(itemtag, res1.id)
-        await FirebaseService.addTag(itemtag, res1.id)
-      })
 
-      
-      // FirebaseService.addTag(this.tag, res1.id)
+        // 'aaa' 태그의 post_token값을 읽어온다. (다른 게시글에도 태그가 있는경우)
+        let res = await FirebaseService.getTag(item)
+
+        // (태그가 있다면 내 토큰과 더함 ) 
+        if (res) {
+          res += `#${res1.id}`
+        }
+        else {
+          res = res1.id
+        }
+        const res3 = await FirebaseService.addTag(item, res)
+      })
 
       this.$router.push(`/post/${this.itemz}/new`);
     },
