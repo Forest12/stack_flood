@@ -38,7 +38,33 @@
                         <v-flex xs12>
                             <markdown-editor label="Content" v-model="editContent" ref="markdownEditor"></markdown-editor>
                         </v-flex>
+                        <v-flex class="blue">
+                          <VueTags v-model="tags">
+                          <div class="tags-input"
+                             slot-scope="{tag,removeTag,inputEventHandlers,inputBindings }">
+
+                            <span v-for="tag in tags" class="tags-input-tag" >
+                              <span>{{ tag }}</span>
+
+                              <button type="button" class="tags-input-remove"
+                                  v-on:click="removeTag(tag)">&times;
+                              </button>
+
+                            </span>
+                            <input
+                              class="tags-input-text"  placeholder="Add tag..."
+                              v-on="inputEventHandlers"
+                              v-bind="inputBindings"
+                            >
+                            </div>
+                          </VueTags>
+                        </v-flex>
                       </v-layout>
+                     
+                      
+                   
+
+
                     </v-container>
                   </v-card-text>
                   <v-card-actions>
@@ -62,10 +88,10 @@
 
 
 <script>
-
 import FirebaseService from '@/services/FirebaseService'
 import MarkdownViewer from './MarkdownViewer'
 import { functions } from 'firebase';
+import VueTags from "vue-tags"
 
 export default {
   name: 'Answer',
@@ -74,7 +100,11 @@ export default {
       dialog: false,
       editContent:"",
       num_vote:0,
+<<<<<<< HEAD
+      tags: ['Javascript','Vuejs'],
+=======
       editor:"",
+>>>>>>> 2fef656c96e0d7ad87ed5a5e4f6d602f8203bb6c
     }
   },
 	props: {
@@ -86,7 +116,8 @@ export default {
         item: {type:String},
   },
   components:{
-    MarkdownViewer
+    MarkdownViewer,
+    VueTags
   },
  
   computed: {

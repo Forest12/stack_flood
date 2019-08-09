@@ -39,6 +39,7 @@
     "vue-coverflow": "^2.2.0",
     "vue-router": "^3.0.7",
     "vue-simplemde": "^0.5.2",
+    "vue-tags": "^1.0.4",
     "vue-weather-widget": "^2.1.7",
     "vueperslides": "^1.19.1",
     "vuetify": "^1.5.5",
