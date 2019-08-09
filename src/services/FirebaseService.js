@@ -117,7 +117,7 @@ export default {
 			content,
 			created_at: firebase.firestore.FieldValue.serverTimestamp(),
 		})
-		
+
 	},
 	
 	editPost(item, post_token, editTitle ,editContent){
@@ -343,8 +343,26 @@ export default {
 		})
 		return count
 	},
-	async getTeg(post_token){
-		var tegdocRef = firestore.collection("TEG").where("post_token","==",post_token)
-	
+	// async getTeg(post_token){
+	// 	var tegdocRef = firestore.collection("TAG").where("post_token","==",post_token)
+	// },
+
+	// 태그추가
+	addTag(tag, id){ // tags = ['aaa','bbb','ccc]
+			firestore.collection('Tags').doc(tag).set({
+				post_token:id,
+			})
+	},
+
+	async getTag(item){
+		const res = await firestore.collection('Tags').doc(item)
+
+		const doc = await res.get()
+		let data = doc.data()
+		if (doc.exists){
+			return data.post_token
+		} else {
+			return ''
+		}
 	}
 }
