@@ -24,13 +24,19 @@
         </v-flex>
 
         <v-flex xs11>
-            <MarkdownViewer :content="post.content"></MarkdownViewer>
+            <!-- <MarkdownViewer :content="post.content"></MarkdownViewer> -->
+            <div class="markdown-body">
+              <div v-html="editor"></div>
+            </div>
+
              <v-layout mx-5 v-if="post.email == $store.state.user.email">
+
       <v-dialog v-model="dialog" persistent max-width="600px">
         <template v-slot:activator="{ on }">
             <v-btn outlined color="green" dark v-on="on" @click="initedit"><v-icon left small>fas fa-edit</v-icon>Edit</v-btn>
             <v-btn outlined color="pink" @click="removePost" dark ><v-icon left small>fas fa-trash-alt</v-icon>Delete</v-btn>
         </template>
+
         <v-card>
           <v-card-title>
             <span class="headline">Edit Post</span>
@@ -86,8 +92,9 @@
         </div>
     </div>
     <div>
-        <h1>TEST</h1>
-        <Editor ref="editor" :outline="true" mode="Rendered" v-model="text" />
+
+    {{ answerContent }}
+
     </div>
   </v-container>
 </template>
@@ -99,6 +106,8 @@ import MarkdownViewer from '../components/MarkdownViewer'
 import { constants } from 'crypto';
 import { Editor, Renderer } from 'vuetify-markdown-editor';
 // import 'vuetify-markdown-editor/dist/vuetify-markdown-editor.css'
+
+import { md2 } from '../plugins/markdownit'
 
 export default {
     name: 'PostDetailPage',
@@ -120,6 +129,7 @@ export default {
 
             editTitle: "",
             editContent: "",
+            editor:"",
         }
     },
 	created(){
@@ -131,24 +141,27 @@ export default {
         this.getPost(this.post_token,  this.item)
         this.getVote()
         this.getTeg()
+        
     },
     computed:{
         formatedDate(){
 			return `${this.post.created_at.getFullYear()}년 ${this.post.created_at.getMonth()+1}월 ${this.post.created_at.getDate()}일`
-        }
+        },
+        
     },
     methods:{
         initedit(){
             this.editTitle = this.post.title
             this.editContent = this.post.content
-          
         },
         async getPost(post_token,item) {
             this.post = await FirebaseService.getPost(post_token, item)
-            
+            this.editor = this.post.content
+            console.log(this.editor,'에디터에디터')
         },
-        postAnswer(){
-            FirebaseService.postAnswer(this.item, this.post_token, this.answerContent)
+        async postAnswer(){
+            const edit = await md2.render(this.answerContent)
+            FirebaseService.postAnswer(this.item, this.post_token, edit)
             console.log("com")
         },
         editPost(){
@@ -183,7 +196,9 @@ export default {
         },
         getTeg(){
 
-        }
+        },
+      
+        
 
 
     }
@@ -191,7 +206,9 @@ export default {
 </script>
 
 <style scoped>
+
 Editor {
     display:none;
 }
+
 </style>

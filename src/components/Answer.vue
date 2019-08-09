@@ -18,7 +18,10 @@
         <v-flex xs11>
             <div class="font-weight-light  subheading cutfourline">ASKED {{formatedDate}}</div>
 
-            <MarkdownViewer :content="content"></MarkdownViewer>
+            <!-- <MarkdownViewer :content="content"></MarkdownViewer> -->
+            <div class="markdown-body">
+              <div v-html="content"></div>
+            </div>
             <v-layout v-if="email == $store.state.user.email">
               <v-dialog v-model="dialog" persistent max-width="600px">
                 <template v-slot:activator="{ on }">
@@ -72,11 +75,17 @@
                 </v-card>
               </v-dialog>
             </v-layout>
+            
         </v-flex > 
          
     </v-layout>
  </v-container>
 </template>
+
+<style scoped>
+@import '../assets/css/github.css';
+</style>
+
 
 <script>
 import FirebaseService from '@/services/FirebaseService'
@@ -91,7 +100,11 @@ export default {
       dialog: false,
       editContent:"",
       num_vote:0,
+<<<<<<< HEAD
       tags: ['Javascript','Vuejs'],
+=======
+      editor:"",
+>>>>>>> 2fef656c96e0d7ad87ed5a5e4f6d602f8203bb6c
     }
   },
 	props: {
@@ -148,7 +161,10 @@ export default {
       FirebaseService.getVote(this.answer_token).then(res => {
         this.num_vote = res
       })
-    }  
+    },
+    
+    
   }
+
 }
 </script>
