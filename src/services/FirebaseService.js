@@ -140,7 +140,9 @@ export default {
 
 	postPost(item, title, content) {
 		const view = 0;
+		const uid = user.uid
 		return firestore.collection(item).add({
+			uid,
 			email,
 			title,
 			content,
