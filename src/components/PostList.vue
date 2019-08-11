@@ -30,6 +30,7 @@
 					:email="posts[i-1].email"
 					:giturl="posts[i-1].giturl"
 					:level="posts[i-1].level"
+					:userImg="posts[i-1].userImg"
 					
 					></user-info>
 				</div>
@@ -71,13 +72,9 @@ import Post from './Post'
 import userInfo from './userInfo'
 
 export default {
-	 created:function(){
+	created(){
     this.item = this.$route.params.item;
 	FirebaseService.logging(this.item);
-
-	if (firebase.auth().currentUser !== null) {
-		console.log("user id: " + firebase.auth().currentUser.uid);
-	 }
   },
 	props: {
         item:{type:String},
