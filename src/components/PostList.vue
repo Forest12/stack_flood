@@ -72,13 +72,9 @@ import Post from './Post'
 import userInfo from './userInfo'
 
 export default {
-	 created:function(){
+	created(){
     this.item = this.$route.params.item;
 	FirebaseService.logging(this.item);
-
-	if (firebase.auth().currentUser !== null) {
-		console.log("user id: " + firebase.auth().currentUser.uid);
-	 }
   },
 	props: {
         item:{type:String},
