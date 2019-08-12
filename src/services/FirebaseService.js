@@ -99,11 +99,11 @@ export default {
 					this.getPostTag().then(
 						res => {
 							for (let i = 0; i < res.length; i++) {
-								console.log("======================")
-								console.log(doc.id)
-								console.log(res[i].id, "123123123312")
-								console.log(res[i].post_token.split('#'))
-								console.log(res[i].post_token.includes(doc.id),'sibal')
+								// console.log("======================")
+								// console.log(doc.id)
+								// console.log(res[i].id, "123123123312")
+								// console.log(res[i].post_token.split('#'))
+								// console.log(res[i].post_token.includes(doc.id),'sibal')
 								if (res[i].post_token.includes(doc.id)) {
 									arr.push(res[i].id)
 								}
@@ -116,7 +116,6 @@ export default {
 					data.postdate = data.postdate.substring(0, 24)
 					data.created_at = new Date(data.created_at.toDate())
 					data.tags = arr
-					console.log('데이터출력하기전 태그',data)
 					return data
 				})
 			})
@@ -416,6 +415,7 @@ export default {
 			return ''
 		}
 	},
+
 	getPostTag() {
 		let postsCollection = firestore.collection('Tags')
 		return postsCollection
@@ -427,8 +427,7 @@ export default {
 					return data
 				})
 			})
-		})
-	
-},
-	
+	},
+
+
 }
