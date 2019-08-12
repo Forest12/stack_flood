@@ -19,7 +19,7 @@ export const store = new Vuex.Store({
       state.user = user
     },
     setAdmin(state,user){
-      console.log(user,'유저확인')
+      //console.log(user,'유저확인')
       if (user.displayName == 'admin' || user.displayName=='manager'){
         state.isAdmin = true
       }
