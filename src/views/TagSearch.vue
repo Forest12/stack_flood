@@ -107,12 +107,13 @@ export default {
       this.subjects.forEach(subject => {
         res2.forEach(async token => {
           let data = await FirebaseService.getPost(token,subject)
+          
           if (data){
             this.posts.push(data)
           }
         })
       })
-      console.log(this.posts)
+      console.log(this.posts,"ggasdgasdg")
     },
     setContent() {
       this.msg = '해당 내용이 포함된 게시글을 보여드립니다.'
