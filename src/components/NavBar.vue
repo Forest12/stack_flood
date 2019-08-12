@@ -68,7 +68,7 @@ export default {
       items: [
         { title: "AI", item: "AI" },
         { title: "BigData", item: "Bigdata" },
-        { title: "BLockChain", item: "Blockchain" },
+        { title: "BlockChain", item: "Blockchain" },
         { title: "Web&Mobile", item: "Webmobile" }
       ],
       path_item: "",
@@ -81,6 +81,9 @@ export default {
     Login
   },
   methods: {
+    getAlarm(){
+
+    },
     go_path(item) {
       this.$router.push(`/post/${item}`);
     },

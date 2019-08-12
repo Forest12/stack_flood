@@ -120,7 +120,6 @@ export default {
 					return data
 				})
 			})
-
 	},
 
 	getMyPosts(item) {
@@ -428,5 +427,8 @@ export default {
 					return data
 				})
 			})
-	}
+		})
+	
+},
+	
 }
