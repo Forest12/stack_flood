@@ -119,7 +119,7 @@ export default {
             item: '',
             post:'',
             num_vote:0,
-            tegs:[],
+            tags:[],
             answerContent:'',
             view:"",
             text:'# hello \n ```html \n <div>hello</div> \n```',
