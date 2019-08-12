@@ -141,13 +141,13 @@ export default {
 					data.level=res[0].level
 					data.userImg=res[0].img
 					data.giturl=res[0].giturl
-					})
-						data.id = doc.id
-						data.created_at = new Date(data.created_at.toDate())+""
-						data.created_at = data.created_at.substring(0,24)
-						return data
-					})
 				})
+				data.id = doc.id
+				data.created_at = new Date(data.created_at.toDate())+""
+				data.created_at = data.created_at.substring(0,24)
+				return data
+			})
+		})
 	},
 
 	getMyPosts(item) {
@@ -427,5 +427,17 @@ export default {
 		} else {
 			return ''
 		}
+	},
+	getPostTag(post_token){
+		let postsCollection = firestore.collection('Tags')
+		return postsCollection
+		.get()
+		.then((docSnapshots) => {
+			return docSnapshots.docs.map((doc) => {
+				let data = doc.data()
+				console.log(data,"12312313123123")
+				return data
+			})
+		})
 	},
 }
