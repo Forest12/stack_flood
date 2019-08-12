@@ -256,7 +256,7 @@ export default {
       this.$router.push({
         path:`/search/${tag}`,
         query:{
-          options:tag
+          options:'tag'
         }
       })
     }
