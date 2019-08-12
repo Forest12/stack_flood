@@ -93,12 +93,24 @@ export default {
 								}
 							})
 					}
-					data = data
 					data.id = doc.id
-					this.getVote(data.id)
-						.then(res => {
-							data.vote = res
+					let arr = [];
+					this.getPostTag().then(
+						res => {
+							for (let i = 0; i < res.length; i++) {
+								// console.log("======================")
+								// console.log(doc.id)
+								// console.log(res[i].id, "123123123312")
+								// console.log(res[i].post_token.split('#'))
+								// console.log(res[i].post_token.includes(doc.id),'sibal')
+								if (res[i].post_token.includes(doc.id)) {
+									arr.push(res[i].id)
+								}
+							}
 						})
+					this.getVote(data.id).then(res => {
+						data.vote = res
+					})
 					data.postdate = new Date(data.created_at.toDate()) + ""
 					data.postdate = data.postdate.substring(0, 24)
 					data.created_at = new Date(data.created_at.toDate())
@@ -185,23 +197,25 @@ export default {
 			created_at: firebase.firestore.FieldValue.serverTimestamp(),
 		})
 
-	}, addview(item, post_token, editview){
-		if(!editview){
+	},
+
+	addview(item, post_token, editview) {
+		if (!editview) {
 			let postDoc = firestore.collection(item).doc(post_token)
-		postDoc.update(
-			{	
-				view: 1,
+			postDoc.update(
+				{
+					view: 1,
 
-			})
-		}else{
-		editview=editview+1
-		let postDoc = firestore.collection(item).doc(post_token)
-		postDoc.update(
-			{	
-				view: editview,
+				})
+		} else {
+			editview = editview + 1
+			let postDoc = firestore.collection(item).doc(post_token)
+			postDoc.update(
+				{
+					view: editview,
 
-			}
-		)
+				}
+			)
 		}
 	},
 	
@@ -286,9 +300,9 @@ export default {
 		})
 	},
 	logging(item) {
-		created_time = firebase.firestore.Timestamp.now().toDate()+" "
-		created_time = created_time.substring(0,24)
-		return firestore.collection('LOG').doc(email+" "+created_time).set({
+		created_time = firebase.firestore.Timestamp.now().toDate() + " "
+		created_time = created_time.substring(0, 24)
+		return firestore.collection('LOG').doc(email + " " + created_time).set({
 			email,
 			item,
 			time: firebase.firestore.FieldValue.serverTimestamp() 
@@ -307,7 +321,7 @@ export default {
 		})
 	},
 
-	signup_database(email,user_authority,level,img,giturl) {//가입시 데이터베이스에 데이터 저장. login.vue에 함수 호출 있음
+	signup_database(email, user_authority, level, img, giturl) {//가입시 데이터베이스에 데이터 저장. login.vue에 함수 호출 있음
 		return firestore.collection("member").doc(email).set({
 			email,
 			user_authority,
@@ -318,7 +332,7 @@ export default {
 		})
 	},
 
-	update_database_member(email,user_authority,level,img,giturl,created_at) { //데이터베이스 업데이트 부분, 미완. 수정 필요
+	update_database_member(email, user_authority, level, img, giturl, created_at) { //데이터베이스 업데이트 부분, 미완. 수정 필요
 		user.updateProfile({
 			displayName: user_authority,})
 		return firestore.collection("member").doc(email).set({
@@ -401,22 +415,21 @@ export default {
 						//이전에 싫어요를 한번도 누른적이 없으면
 						firestore.collection("VOTE_DOWN").add({
 						post_token,
-						"user":email,
-						})
-						return true
-					}else{
-						//이전에 싫어요를 눌렀으면
-						return false
-					}
+						"user": email,
+					})
+					return true
+				} else {
+					//이전에 싫어요를 눌렀으면ddd
+					return false
+				}
 			}
-			
 		}
 	},
 
-	async getVote(post_token){
-		var updocRef = firestore.collection("VOTE_UP").where("post_token","==",post_token)
-		var downdocRef = firestore.collection("VOTE_DOWN").where("post_token","==",post_token)
-		
+	async getVote(post_token) {
+		var updocRef = firestore.collection("VOTE_UP").where("post_token", "==", post_token)
+		var downdocRef = firestore.collection("VOTE_DOWN").where("post_token", "==", post_token)
+
 		let count = 0
 
 		await updocRef.get().then(docSnapshots=>{
@@ -449,15 +462,38 @@ export default {
 			return ''
 		}
 	},
-	getPostTag(post_token){
+
+	getPostTag() {
 		let postsCollection = firestore.collection('Tags')
 		return postsCollection
-		.get()
-		.then((docSnapshots) => {
+			.get()
+			.then((docSnapshots) => {
+				return docSnapshots.docs.map((doc) => {
+					let data = doc.data()
+					data.id = doc.id
+					return data
+				})
+			})
+		})
+	
+	},
+	getAlarms(user_email){
+		var docRef = firestore.collection("member").doc(user_email).collection("Notice")
+		
+		return docRef.get().then((docSnapshots) => {
 			return docSnapshots.docs.map((doc) => {
 				let data = doc.data()
 				return data
 			})
 		})
 	},
+	getNumOfAlarms(user_email){
+		var docRef = firestore.collection("member").doc(user_email).collection("Notice").where("read", "==", false)
+	
+		return docRef.get().then((docSnapshots) => {
+			return docSnapshots.size
+			
+		})
+	},
+	
 }

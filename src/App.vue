@@ -4,7 +4,7 @@
     </Header>
       <transition name="page">
         <v-content>
-          <router-view :key="$route.fullPath"></router-view>
+          <router-view  :key="$route.fullPath"></router-view>
         </v-content>
       </transition>
     <Footer>
@@ -26,6 +26,9 @@ export default {
     Header,
     Footer
   },
+  methods: {
+
+  },
   //   mounted(){
   //   this.item = this.$route.params.item;
   //   console.log("mount start")
@@ -35,10 +38,33 @@ export default {
   data () {
     return {
       //
+      num:0
     }
   },
-  created(){
-    
+
+  watch: {
+    '$route'(){
+      this.getNumOfAlarms()
+    }
+  },
+  methods:{
+     getNumOfAlarms(){
+      if(this.$store.state.user.email == 'undefine'){
+        return
+      }
+      else{
+          FirebaseService.getNumOfAlarms(this.$store.state.user.email).then(res=>{
+            this.$store.commit('setAlarm',res)
+            console.log("-----------------------------------",this.$store.state.alarm)
+
+          })
+
+         
+
+
+      }
+     
+    }
   },
 
 }
