@@ -11,14 +11,14 @@
             <br><br><br>
             
              <v-flex xs11>
-                <v-img :src="user[0].img" height="23vh" width="23vh" style="float:left; margin-left:7%"></v-img>
+                <v-img :src="user.img" height="23vh" width="23vh" style="float:left; margin-left:7%"></v-img>
                 <!-- 여기에 이미지 업로더 들어가기 -->
 
-                <h2 style="margin-left : 30%">    Your Email :   {{user[0].email}}    </h2>
+                <h2 style="margin-left : 30%">    Your Email :   {{user.email}}    </h2>
 
                   <div class="my-2" style="margin-left:30%; ">
                 <v-text-field v-model="giturl" label="your git address"
-                  filled shaped style="width:20%; display:inline-block" >123{{user[0].giturl}}</v-text-field>
+                  filled shaped style="width:20%; display:inline-block" >123{{user.giturl}}</v-text-field>
                   <v-btn text small color="primary"
                   v-on:click="updateUserGit(giturl)">GIT 주소 수정</v-btn>
                 </div>
@@ -93,9 +93,7 @@ export default {
     },
     
     created:function(){
-    console.log('created mypage')
     FirebaseService.logging('mypage');
-    console.log("getuser start")
     this.getUser()
   },
 
@@ -105,15 +103,18 @@ export default {
   },
   methods:{
     async getUser() {
-            this.user = await FirebaseService.getUser()
-            this.giturl=this.user[0].giturl
+            await FirebaseService.getUser().then
+            (res=>{
+              this.user=res[0]
+            })
+            this.giturl=this.user.giturl
         },
         viewpost:function(postitem){
           this.postitem=postitem;
         },
         updateUserGit:function(giturl){
           FirebaseService.update_database_member(
-            this.user[0].email,this.user[0].user_authority,this.user[0].level,this.user[0].img,this.giturl,this.user[0].created_at);
+            this.user.email,this.user.user_authority,this.user.level,this.user.img,this.giturl,this.user.created_at);
         alert("Git address changed!!")
        },
   }

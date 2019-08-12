@@ -38,11 +38,11 @@ export default {
 		Post
 	},
 	mounted() {
-		this.getMyPosts(this.item)
+		this.getMyPosts(this.item,this.email)
 	},
 	methods: {
-		async getMyPosts(item) {
-			this.posts = await FirebaseService.getMyPosts(item)
+		async getMyPosts(item,email) {
+			this.posts = await FirebaseService.getMyPosts(item,email)
 		},
 	}
 }
