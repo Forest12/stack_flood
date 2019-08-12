@@ -429,6 +429,24 @@ export default {
 			})
 		})
 	
-},
+	},
+	getAlarms(user_email){
+		var docRef = firestore.collection("member").doc(user_email).collection("Notice")
+		
+		return docRef.get().then((docSnapshots) => {
+			return docSnapshots.docs.map((doc) => {
+				let data = doc.data()
+				return data
+			})
+		})
+	},
+	getNumOfAlarms(user_email){
+		var docRef = firestore.collection("member").doc(user_email).collection("Notice").where("read", "==", false)
+	
+		return docRef.get().then((docSnapshots) => {
+			return docSnapshots.size
+			
+		})
+	},
 	
 }
