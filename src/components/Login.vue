@@ -66,6 +66,23 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+
+     <v-btn 
+    color="#070f35"
+    depressed
+
+    dark
+    ><v-icon dark left>fas fa-bell</v-icon> <v-avatar
+        size="25"
+        right
+        class="red darken-2">
+        1
+      </v-avatar>
+    </v-btn>
+
+
+
     <v-btn router to="/Mypage" 
     v-if="$store.state.user !== null" 
     color="#070f35"

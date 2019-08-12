@@ -124,55 +124,6 @@ export default {
 
       this.$router.push(`/post/${this.itemz}/new`);
     },
-  //   checktag() {
-  //     const a = this.$refs.tag.$el;
-  //     const b = a.querySelector("input");
-  //     console.log(this.tag, this.tags, this.canAddTag);
-  //     if (this.tag.length <= 10 && this.tags.length <= 10) {
-  //       // 태그 중복검사
-  //       if (this.tags.includes(this.tag)) {
-  //         b.style.color = "red";
-  //         this.message = "이미 있는 태그에요";
-  //         this.canAddTag = false;
-  //       }
-
-  //       // 파이어베이스 태그 중복검사
-
-  //       // 태그 제출 가능
-  //       else {
-  //         this.canAddTag = true;
-  //         b.style.color = "black";
-  //         this.message = "추가 가능해요";
-  //       }
-  //       this.canAddTag = true;
-  //       b.style.color = "black";
-  //       this.message = "추가 가능해요";
-  //     } else if (this.tag.length > 10 && this.tags.length <= 10) {
-  //       b.style.color = "red";
-  //       this.message = "10자를 넘겼어요";
-  //       this.canAddTag = false;
-  //     } else if (this.tags.length > 10) {
-  //       b.style.color = "red";
-  //       this.message = "태그가 10개에요";
-  //       this.canAddTag = false;
-  //     }
-  //   },
-  //   // 엔터를 누를 때 태그 추가
-  //   addtag(v) {
-  //     const a = this.$refs.tag.$el;
-  //     const b = a.querySelector("input");
-  //     if (this.canAddTag) {
-  //       b.style.color = "black";
-  //       this.tags.push(this.tag);
-  //       this.tag = "";
-  //       this.message = "태그 추가 완료";
-  //       this.canAddTag = false;
-  //     }
-  //   },
-  //   tagDelete(item) {
-  //     console.log('시발')
-  //     this.tag.slice(this.tag.indexOf(item),1);
-  //   }
   }
 };
 </script>

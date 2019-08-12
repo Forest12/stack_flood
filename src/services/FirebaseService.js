@@ -48,6 +48,8 @@ export default {
 		return docRef.get().then(function (doc) {
 			if (doc.exists) {
 				let data = doc.data()
+				data.postdate = new Date(data.created_at.toDate()) + ""
+				data.postdate = data.postdate.substring(3, 24)
 				data.created_at = new Date(data.created_at.toDate())
 				return data
 			} else {
@@ -61,7 +63,7 @@ export default {
 
 	getPosts(item) {
 		let postsCollection = firestore.collection(item)
-
+		
 		return postsCollection
 			.orderBy('created_at', 'desc')
 			.get()
@@ -118,7 +120,6 @@ export default {
 					data.tags = arr
 					return data
 				})
-			})
 	},
 
 	getMyPosts(item) {
@@ -151,6 +152,24 @@ export default {
 			created_at: firebase.firestore.FieldValue.serverTimestamp(),
 		})
 
+	}, addview(item, post_token, editview){
+		if(!editview){
+			let postDoc = firestore.collection(item).doc(post_token)
+		postDoc.update(
+			{	
+				view: 1,
+
+			})
+		}else{
+		editview=editview+1
+		let postDoc = firestore.collection(item).doc(post_token)
+		postDoc.update(
+			{	
+				view: editview,
+
+			}
+		)
+		}
 	},
 
 	editPost(item, post_token, editTitle, editContent) {
@@ -232,10 +251,9 @@ export default {
 		})
 	},
 	logging(item) {
-		created_time = firebase.firestore.Timestamp.now().toDate() + " "
-		created_time = created_time.substring(0, 24)
-		console.log('logging start')
-		return firestore.collection('LOG').doc(email + " " + created_time).set({
+		created_time = firebase.firestore.Timestamp.now().toDate()+" "
+		created_time = created_time.substring(0,24)
+		return firestore.collection('LOG').doc(email+" "+created_time).set({
 			email,
 			item,
 			time: firebase.firestore.FieldValue.serverTimestamp()
@@ -254,8 +272,7 @@ export default {
 		})
 	},
 
-	signup_database(email, user_authority, level, img, giturl) {//가입시 데이터베이스에 데이터 저장. login.vue에 함수 호출 있음
-		console.log('new member in')
+	signup_database(email,user_authority,level,img,giturl) {//가입시 데이터베이스에 데이터 저장. login.vue에 함수 호출 있음
 		return firestore.collection("member").doc(email).set({
 			email,
 			user_authority,
@@ -266,8 +283,7 @@ export default {
 		})
 	},
 
-	update_database_member(email, user_authority, level, img, giturl, created_at) { //데이터베이스 업데이트 부분, 미완. 수정 필요
-		console.log('유저권한 수정하기')
+	update_database_member(email,user_authority,level,img,giturl,created_at) { //데이터베이스 업데이트 부분, 미완. 수정 필요
 		user.updateProfile({
 			displayName: user_authority,
 		})
@@ -351,23 +367,22 @@ export default {
 					//이전에 싫어요를 한번도 누른적이 없으면
 					firestore.collection("VOTE_DOWN").add({
 						post_token,
-						"user": email,
-					})
-					return true
-				} else {
-					//이전에 싫어요를 눌렀으면
-					return false
-				}
+						"user":email,
+						})
+						return true
+					}else{
+						//이전에 싫어요를 눌렀으면ddd
+						return false
+					}
 			}
 
 		}
 	},
 
-	async getVote(post_token) {
-		console.log(post_token)
-		var updocRef = firestore.collection("VOTE_UP").where("post_token", "==", post_token)
-		var downdocRef = firestore.collection("VOTE_DOWN").where("post_token", "==", post_token)
-
+	async getVote(post_token){
+		var updocRef = firestore.collection("VOTE_UP").where("post_token","==",post_token)
+		var downdocRef = firestore.collection("VOTE_DOWN").where("post_token","==",post_token)
+		
 		let count = 0
 
 		await updocRef.get().then(docSnapshots => {
@@ -403,14 +418,11 @@ export default {
 	getPostTag() {
 		let postsCollection = firestore.collection('Tags')
 		return postsCollection
-			.get()
-			.then((docSnapshots) => {
-				return docSnapshots.docs.map((doc) => {
-					let data = doc.data()
-					data.id = doc.id
-					// console.log(data, "12312313123123")
-					return data
-				})
+		.get()
+		.then((docSnapshots) => {
+			return docSnapshots.docs.map((doc) => {
+				let data = doc.data()
+				return data
 			})
 	},
 }
