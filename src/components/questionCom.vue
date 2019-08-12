@@ -1,37 +1,35 @@
 <template>
   <v-layout row wrap>
-    <v-flex v-for="question in questionser" :key="question.index" class="xs12" px-3>
+    <v-flex>
       <!-- votes, answer, views  -->
       <div class="q-content-body">
         <div class="q-score">
           <div class="q-score-votes">
-            <span class="headline">{{ question.voted }}</span>
+            <span class="headline">{{ vote }}</span>
             <br />
             <span class="subtitle-1">votes</span>
           </div>
 
-          <div
-            :class="{ answerChecked : question.is_checked, answerNotChecked: !question.is_checked}"
-          >
-            <span class="headline">{{ question.answers }}</span>
+          <div  :class="{ answerChecked :answer>0, answerNotChecked: answer<=0}">
+            <span class="headline">{{ answer }}</span>
             <br />
             <span class="subtitle-1">answers</span>
           </div>
 
           <div class="q-score-views">
-            <span class="subtitle-2">{{ question.views }} views</span>
+            <span class="subtitle-2">{{ view }} views </span>
           </div>
         </div>
         <!-- title, content, tag -->
         <div class="q-content">
           <div class="q-content-title">
             <div class="q-content-header">
-              <span class="q-content-reputation">+ {{ question.reputation }}</span>
-              <span class="q-content-title ml-2 title blue--text">{{ question.title }}</span>
+              <span class="q-content-reputation">+ {{ vote }}</span>
+              <span class="q-content-title ml-2 title blue--text"  @click="moveDetail">{{ title }}</span>
             </div>
           </div>
 
-          <div class="q-content-content py-2">{{ question.content }}</div>
+          <div class="q-content-content py-2">{{ removetag }}</div>
 
           <!-- <div class="q-content-tag">
             <span
@@ -46,7 +44,12 @@
             <!-- <div class="q-user-date caption grey--text">{{ question.created_at}} 에 질문했습니다.</div>
             <v-icon>perm_identity</v-icon>
             {{ question.asked_user}} -->
-            <user-info></user-info>
+            <user-info
+            :email="this.email"
+			  		:giturl="this.giturl"
+				  	:userImg="this.userImg"
+				  	:level="this.level"
+					></user-info>
           </div>
       </div>
       <v-divider></v-divider>
@@ -175,82 +178,81 @@
 
 <script>
 import userInfo from './userInfo'
+
+import FirebaseService from "@/services/FirebaseService";
+import { functions, firestore } from "firebase";
+import { write } from "fs";
+
 export default {
   components:{
     userInfo,
   },
   data() {
     return {
-      questionser: [
-        {
-          voted: 6,
-          answers: 2,
-          views: 83,
-          reputation: 50,
-          is_checked: false,
-          title: "Why would you append a shard ID to a generated ID?",
-          content:
-            "i'am reading this: https://instagram-engineering.com/asjdkfljlksdajfkl sjdklfjasdklfjklsd jsklfj lej elrj iowejr iweonr owein rwekon rlkwe",
-          tags: [
-            "database",
-            "facebook",
-            "instagram",
-            "sharding",
-            "id-generation",
-            "database",
-            "facebook",
-            "instagram",
-            "sharding",
-            "id-generation"
-          ],
-          created_at: '19.08.05 18:15',
-          asked_user: 'Kim W mak',
-          user_point: 5050
-        },
+      user_email: "",
+      tempitem:"",
+      answer:"",
+      vote:"",
+  }
+  },
 
-        {
-          voted: 6,
-          answers: 2,
-          views: 83,
-          reputation: 50,
-          is_checked: true,
-          title: "W4hy would you append a shard ID to a generated ID?",
-          content:
-            "집에갈래 집에갈래 집에갈래 집에가고싶어 집에갈래 집에갈래 집에갈래 집에가고싶어 집에갈래 집에갈래 집에갈래 집에가고싶어 집에갈래 집에갈래 집에갈래 집에가고싶어 집에갈래 집에갈래 집에갈래 집에가고싶어 집에갈래 집에갈래 집에갈래 집에가고싶어 집에갈래 집에갈래 집에갈래 집에가고싶어 집에갈래 집에갈래 집에갈래 집에가고싶어",
-          tags: [
-            "database",
-            "facebook",
-            "instagram",
-            "sharding",
-            "id-generation"
-          ],
-          created_at: '19.08.05 18:15',
-          asked_user: 'Kim W mak',
-          user_point: 5050
-        },
 
-        {
-          voted: 6,
-          answers: 2,
-          views: 83,
-          reputation: 50,
-          is_checked: false,
-          title: "Whwy would you append a shard ID to a generated ID?",
-          content:
-            "i'am reading this: https://instagram-engineering.com/asjdkfljlksdajfkl sjdklfjasdklfjklsd jsklfj lej elrj iowejr iweonr owein rwekon rlkwe",
-          tags: [
-            "database",
-            "facebook",
-            "instagram",
-            "sharding",
-            "id-generation"
-          ],
-          created_at: '19.08.05 18:15',
-          asked_user: 'Kim W mak',
-          user_point: 5050
+
+  props: {
+    id: { type: String },
+    email: { type: String },
+    title: { type: String },
+    content: { type: String },
+    getitem: { type: String },
+    view: { type: Number },
+    tags: {},
+    giturl: { type: String },
+    userImg: { type: String },
+    level: { type: Number },
+  },
+
+  created(){
+      this.tempitem=this.getitem
+      this.item = this.$route.params.item
+      if(this.item==null&&this.tempitem!=null){
+        this.item=this.tempitem
+      }
+      this.getAnswerCount(this.id,this.item)
+      this.getvoteCount(this.id)
+  },
+
+
+  computed: {
+    removetag() {
+      let ta = this.content.replace(/<br\/>/ig, "\n"); 
+      ta = ta.replace(/<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig, "");
+      return ta
+    }
+  },
+  methods: {
+    moveDetail() {
+      this.$router.push(`/${this.item}/detail/${this.id}`);
+    },
+    getAnswerCount(id,item){
+      FirebaseService.getAnswers(item, id)
+      .then(res => {
+        this.answer=res.length
+      })
+    },
+    getvoteCount(id){
+      FirebaseService.getVote(id)
+      .then(res => {
+        this.vote=res
+      })
+    },
+    goSearch(tag){
+      this.$router.push({
+        path:`/search/${tag}`,
+        query:{
+          options:tag
         }
-      ]
-    };
+      })
+    }
   }
 };
 </script>

@@ -1,19 +1,20 @@
 <template>
-  <v-layout row wrap mw-700>
+  <v-layout row wrap>
     <v-flex v-for="i in posts.length > limits ? limits : posts.length" v-bind:key='i.title' :class="'xs' + 12 / column" px-3>
-      <Post
+      <questionCom
 	  			:email="posts[i-1].email"
 	  			:id="posts[i - 1].id"
-            	:date="posts[i - 1].created_at"
             	:title="posts[i - 1].title"
             	:content="posts[i - 1].content"
-				:imgSrc="posts[i - 1].img"
 				:getitem="posts[i - 1].item"
 				:view="posts[i - 1].view"
 				:tags="posts[i - 1].tags"
+				:giturl="posts[i - 1].giturl"
+				:userImg="posts[i - 1].userImg"
+				:level="posts[i - 1].level"
 				>
 				
-				</Post>
+				</questionCom>
       <v-divider></v-divider>
     </v-flex>
   </v-layout>
@@ -23,14 +24,14 @@
 
 import FirebaseService from '@/services/FirebaseService'
 import firebase from 'firebase/app'
-import Post from './Post'
+import questionCom from './questionCom'
 
 export default {
-	name: 'MyPostList',
+	name: 'MainPostList',
 	props: {
         item:{type:String},
 		column: {type: Number, default: 1},
-		limits: {type: Number, default: 4},
+		limits: {type: Number, default: 3},
 		loadMore: {type: Boolean, default: false}
 	},
 	data() {
@@ -39,14 +40,15 @@ export default {
 		}
 	},
 	components: {
-		Post
+		questionCom
 	},
 	mounted() {
-		this.getMyPosts(this.item)
+		this.getMainPosts(this.item)
+		console.log(limits,"!@##!@#!@#@#!!@#!@#")
 	},
 	methods: {
-		async getMyPosts(item) {
-			this.posts = await FirebaseService.getMyPosts(item)
+		async getMainPosts(item) {
+			this.posts = await FirebaseService.getMainPosts(item)
 		},
 	}
 }
