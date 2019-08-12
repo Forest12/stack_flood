@@ -120,6 +120,7 @@ export default {
 					data.tags = arr
 					return data
 				})
+			})
 	},
 
 	getMyPosts(item) {
@@ -424,9 +425,8 @@ export default {
 				let data = doc.data()
 				return data
 			})
-	},
-	getAlarm(){
-		
-
-	}
+		})
+	
+},
+	
 }
