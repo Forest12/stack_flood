@@ -46,6 +46,8 @@ export default {
 		return docRef.get().then(function(doc) {
 			if (doc.exists) {
 				let data = doc.data()
+				data.postdate = new Date(data.created_at.toDate()) + ""
+				data.postdate = data.postdate.substring(3, 24)
 				data.created_at = new Date(data.created_at.toDate())
 				return data
 			} else {
@@ -82,8 +84,8 @@ export default {
 				})
 	},
 
-	getMyPosts(item) {
-		let postsCollection = firestore.collection(item).where("email","==",user.email)
+	getMyPosts(item,email) {
+		let postsCollection = firestore.collection(item).where("email","==",email)
 
 		return postsCollection
 			.get()
@@ -112,7 +114,27 @@ export default {
 			created_at: firebase.firestore.FieldValue.serverTimestamp(),
 		})
 
+	}, addview(item, post_token, editview){
+		if(!editview){
+			let postDoc = firestore.collection(item).doc(post_token)
+		postDoc.update(
+			{	
+				view: 1,
+
+			})
+		}else{
+		editview=editview+1
+		let postDoc = firestore.collection(item).doc(post_token)
+		postDoc.update(
+			{	
+				view: editview,
+
+			}
+		)
+		}
 	},
+	
+	
 	
 	editPost(item, post_token, editTitle ,editContent){
 		let postDoc = firestore.collection(item).doc(post_token)
@@ -195,7 +217,6 @@ export default {
 	logging(item) {
 		created_time = firebase.firestore.Timestamp.now().toDate()+" "
 		created_time = created_time.substring(0,24)
-		console.log('logging start')
 		return firestore.collection('LOG').doc(email+" "+created_time).set({
 			email,
 			item,
@@ -216,7 +237,6 @@ export default {
 	},
 
 	signup_database(email,user_authority,level,img,giturl) {//가입시 데이터베이스에 데이터 저장. login.vue에 함수 호출 있음
-		console.log('new member in')
 		return firestore.collection("member").doc(email).set({
 			email,
 			user_authority,
@@ -228,7 +248,6 @@ export default {
 	},
 
 	update_database_member(email,user_authority,level,img,giturl,created_at) { //데이터베이스 업데이트 부분, 미완. 수정 필요
-		console.log('유저권한 수정하기')
 		user.updateProfile({
 			displayName: user_authority,})
 		return firestore.collection("member").doc(email).set({
@@ -323,8 +342,7 @@ export default {
 		}
 	},
 
-	async getVote(post_token){ 
-		console.log(post_token)
+	async getVote(post_token){
 		var updocRef = firestore.collection("VOTE_UP").where("post_token","==",post_token)
 		var downdocRef = firestore.collection("VOTE_DOWN").where("post_token","==",post_token)
 		
@@ -359,5 +377,16 @@ export default {
 		} else {
 			return ''
 		}
+	},
+	getPostTag(post_token){
+		let postsCollection = firestore.collection('Tags')
+		return postsCollection
+		.get()
+		.then((docSnapshots) => {
+			return docSnapshots.docs.map((doc) => {
+				let data = doc.data()
+				return data
+			})
+		})
 	},
 }

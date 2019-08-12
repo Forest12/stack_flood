@@ -3,7 +3,7 @@
     <v-layout my-5>
         <v-flex>
             <h1>{{post.title}}</h1>
-            <div class="font-weight-light  subheading cutfourline">ASKED {{formatedDate}}</div>
+            <div class="font-weight-light  subheading cutfourline">ASKED {{post.postdate}}</div>
             <hr>
         </v-flex>
     </v-layout>
@@ -141,9 +141,9 @@ export default {
         this.getTeg()
     },
     computed:{
-        formatedDate(){
-			return `${this.post.created_at.getFullYear()}년 ${this.post.created_at.getMonth()+1}월 ${this.post.created_at.getDate()}일`
-        },
+      //   formatedDate(){
+			// return `${this.post.created_at.getFullYear()}년 ${this.post.created_at.getMonth()+1}월 ${this.post.created_at.getDate()}일`
+      //   },
         
     },
     methods:{
@@ -155,12 +155,12 @@ export default {
             this.post = await FirebaseService.getPost(post_token, item)
             this.addview()
             this.editor = this.post.content
-            console.log(this.editor,'에디터에디터')
+            //console.log(this.editor,'에디터에디터')
         },
         async postAnswer(){
             const edit = await md2.render(this.answerContent)
             FirebaseService.postAnswer(this.item, this.post_token, edit)
-            console.log("com")
+            //console.log("com")
         },
         editPost(){
             FirebaseService.editPost(this.item,this.post_token, this.editTitle,this.editContent)
@@ -169,7 +169,7 @@ export default {
             this.dialog = false
         },
         addview(){
-            console.log(this.post,"postcheck!!!~~~~~~~~~~~~~")
+            //console.log(this.post,"postcheck!!!~~~~~~~~~~~~~")
             FirebaseService.addview(this.item,this.post_token,this.post.view)
         },
         removePost(){
@@ -180,7 +180,7 @@ export default {
         },
         vote(check){
             FirebaseService.vote(this.post_token, this.$store.state.user.email,check).then(res=>{
-              console.log(res)
+              //console.log(res)
               if(res){
                 if(check){
                   this.num_vote += 1
