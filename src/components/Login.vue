@@ -70,7 +70,7 @@
     <!-- modal -->
   
 
-    <v-btn 
+    <v-btn  v-if="$store.state.user !== null"
       color="#070f35"
       depressed
       @click="getAlarmlist"
@@ -233,6 +233,8 @@ export default {
     async signOut() {
       const r = await this.$firebase.auth().signOut();
       this.$store.commit("setLogOut");
+      this.$router.push("/")
+
       alert("로그아웃 성공");
     },
 
