@@ -28,7 +28,8 @@ var firebaseConfig = {
 			email = user.email
 			store.commit('setUser', user)
 			store.commit('setAdmin', user)
-  
+	
+
 		}else {
 			email = "undefine"
 			store.commit('setUser', user)
@@ -59,27 +60,49 @@ export default {
 
 	getPosts(item) {
 		let postsCollection = firestore.collection(item)
-		
+
 		return postsCollection
-		.orderBy('created_at', 'desc')
-		.get()
-		.then((docSnapshots) => {
-			return docSnapshots.docs.map((doc) => {
-				let data = doc.data()
-				console.log(data.email)
-				this.getUser(data.email)
-				.then( res => {
-					console.log("res~~",res)
-					data.level=res[0].level
-					data.userImg=res[0].img
-					data.giturl=res[0].giturl
+			.orderBy('created_at', 'desc')
+			.get()
+			.then((docSnapshots) => {
+				return docSnapshots.docs.map((doc) => {
+					let data = doc.data()
+					if (!data.view) {
+						data.view = 0;
+					}
+					data.level = "0"
+					data.userImg = "https://i.imgur.com/PJpHPNO.jpg"
+					data.giturl = "I'm visiter"
+					data.vote = 0
+					if (data.email == null) {
+						data.email = 'visiter'
+					}
+					else {
+						this.get_user_info(data.email)
+							.then(res => {
+								if (res[0] != null && res[0].level != null) {
+									data.level = res[0].level
+									data.userImg = res[0].img
+									data.giturl = res[0].giturl
+								} else {
+									data.level = "0"
+									data.userImg = "https://i.imgur.com/PJpHPNO.jpg"
+									data.giturl = "no have giturl"
+								}
+							})
+					}
+					data = data
+					data.id = doc.id
+					this.getVote(data.id)
+						.then(res => {
+							data.vote = res
+						})
+					data.postdate = new Date(data.created_at.toDate()) + ""
+					data.postdate = data.postdate.substring(0, 24)
+					data.created_at = new Date(data.created_at.toDate())
+					return data
 				})
-				data.id = doc.id
-				data.created_at = new Date(data.created_at.toDate())+""
-				data.created_at = data.created_at.substring(0,24)
-				return data
 			})
-		})
 	},
 
 	getMyPosts(item) {

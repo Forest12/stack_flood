@@ -201,7 +201,7 @@ export default {
     content: { type: String },
     imgSrc: { type: String },
     getitem: { type: String },
-    view: { type: String },
+    view: { type: Number },
   },
 
   created(){
