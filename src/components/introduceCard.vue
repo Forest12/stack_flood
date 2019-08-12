@@ -6,7 +6,7 @@
           <div class="data-icon"><v-icon size="70">{{ data.icon }}</v-icon></div>
           <v-card-title>{{ data.title }}</v-card-title>
           <v-card-text>{{ data.content}}</v-card-text>
-        </v-card>
+        </v-card> 
       </v-flex>
       
 
