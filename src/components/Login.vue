@@ -68,24 +68,19 @@
     </v-dialog>
 
     <!-- modal -->
-   
-    <!-- <v-btn
-      color="primary"
-      dark
-      @click.stop="dialog = true">
-      Open Dialog
-    </v-btn> -->
+  
 
     <v-btn 
       color="#070f35"
       depressed
+      @click="getAlarmlist"
       @click.stop="dialog = true"
       dark
       ><v-icon dark left>fas fa-bell</v-icon> <v-avatar
           size="25"
           right
           class="red darken-2">
-          1
+          {{$store.state.alarm}}
         </v-avatar>
     </v-btn>
 
@@ -94,12 +89,22 @@
       max-width="290"
     >
       <v-card>
-        <v-card-title class="headline">Use Google's location service?</v-card-title>
+        <v-card-title class="headline">Check your Alarms</v-card-title>
+        <v-list two-line>
+      <template v-for="item in alarms">
+        <v-list-item
+          :key="item.content"
+          @click="item.link"
+        >
+          <v-list-item-content>
+            <v-list-item-title v-html="item.content"></v-list-item-title>
+            <v-list-item-subtitle v-html="item.content"></v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </template>
+    </v-list>
 
-        <v-card-text>
-          Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.
-        </v-card-text>
-
+    
         <v-card-actions>
           <v-spacer></v-spacer>
 
@@ -108,24 +113,11 @@
             text
             @click="dialog = false"
           >
-            Disagree
-          </v-btn>
-
-          <v-btn
-            color="green darken-1"
-            text
-            @click="dialog = false"
-          >
-            Agree
+            OK
           </v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
-
-
-
-
-
 
     <v-btn router to="/Mypage" 
     v-if="$store.state.user !== null" 
@@ -165,8 +157,12 @@ export default {
       dialog_singup: false,
       dialog: false,
       title: "",
-      content: ""
+      content: "",
+      alarms:[]
     };
+  },
+  mounted(){
+    this.getAlarm()
   },
   methods: {
     login() {
@@ -238,6 +234,20 @@ export default {
       const r = await this.$firebase.auth().signOut();
       this.$store.commit("setLogOut");
       alert("로그아웃 성공");
+    },
+
+    getAlarmlist(){
+      if(this.$store.state.user.email == 'undefine'){
+        return
+      }
+      else{
+          FirebaseService.getAlarms(this.$store.state.user.email).then(res =>{
+                this.alarms = res
+                console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++",res)
+
+                }
+          )
+      }
     }
   }
 };

@@ -9,9 +9,12 @@ export const store = new Vuex.Store({
     title : 'original',
     isAdmin:false,
     user_authority: '',
-    alarm : -1,
+    alarm : 0,
+
+
   },
   mutations: {
+    //
     setTitle(state, p){
       state.title = p
     },
@@ -29,11 +32,13 @@ export const store = new Vuex.Store({
       state.alarm=-1
     },
 
-    setalarm(state,x){
+    setAlarm(state,x){
       state.alarm=x;
-    }
+    },
 
   },
   actions: {
+    // 비동기처리
+    
   },
 })
