@@ -107,8 +107,8 @@ export default {
 			})
 	},
 
-	getMyPosts(item,email) {
-		let postsCollection = firestore.collection(item).where("email","==",email)
+	getMyPosts(item) {
+		let postsCollection = firestore.collection(item).where("email","==",user.email)
 
 		return postsCollection
 			.get()
