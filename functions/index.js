@@ -12,7 +12,8 @@ exports.sendMassage = functions.firestore.document('{item}/{post_token}/Answer/{
       const post_token = context.params.post_token
       var docRef = admin.database().ref(`${item}/${post_token}`).once('value')
 
-  
+      console.log("snapshot: ",snapshot)
+      console.log("context",context)
   
       console.log("============docREF======================",docRef)
       

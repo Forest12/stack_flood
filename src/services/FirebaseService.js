@@ -20,7 +20,7 @@ var firebaseConfig = {
 	firebase.initializeApp(firebaseConfig);
 	var email;
 	var created_time=""
-  	var user;
+	var user;
   
 	firebase.auth().onAuthStateChanged(() => {
 		user = firebase.auth().currentUser;
@@ -31,7 +31,7 @@ var firebaseConfig = {
 	
 
 		}else {
-			email = "undefine";
+			email = "undefine"
 			store.commit('setUser', user)
 		}})
 	
@@ -382,5 +382,17 @@ export default {
 		} else {
 			return ''
 		}
+	},
+	getPostTag(post_token){
+		let postsCollection = firestore.collection('Tags')
+		return postsCollection
+		.get()
+		.then((docSnapshots) => {
+			return docSnapshots.docs.map((doc) => {
+				let data = doc.data()
+				console.log(data,"12312313123123")
+				return data
+			})
+		})
 	},
 }

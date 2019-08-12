@@ -97,6 +97,7 @@ export default {
 	methods: {
 		async getPosts(item) {
 			this.posts = await FirebaseService.getPosts(item)
+			
 		},
 	}
 }
