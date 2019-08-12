@@ -39,7 +39,7 @@
           <div class="post-content-tags">
             <span
               class="post-content-tag lighten-4 mr-2 mb-1"
-              v-for="(tag,index) in tags"
+              v-for="(tag, index) in tags"
               :key="index"
               @click="goSearch(tag)"
             >{{ tag }}</span>
