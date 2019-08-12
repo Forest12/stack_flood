@@ -137,7 +137,7 @@ export default {
     removeAnswer(){
         FirebaseService.removeAnswer(this.item,this.post_token,this.answer_token)
         alert("Answer이 삭제되었습니다.")
-        this.$router.push(`/${this.item}/detail/${this.post_token}`)    
+        location.href = `/${this.item}/detail/${this.post_token}`
     },
 
     vote(check){

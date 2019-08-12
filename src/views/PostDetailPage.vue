@@ -160,7 +160,7 @@ export default {
         async postAnswer(){
             const edit = await md2.render(this.answerContent)
             FirebaseService.postAnswer(this.item, this.post_token, edit)
-            //console.log("com")
+            location.href = `/${this.item}/detail/${this.post_token}`
         },
         editPost(){
             FirebaseService.editPost(this.item,this.post_token, this.editTitle,this.editContent)

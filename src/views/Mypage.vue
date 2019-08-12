@@ -13,6 +13,7 @@
              <v-flex xs11>
                 <v-img :src="user.img" height="23vh" width="23vh" style="float:left; margin-left:7%"></v-img>
                 <!-- 여기에 이미지 업로더 들어가기 -->
+                 <ImageUploader></ImageUploader>
 
                 <h2 style="margin-left : 30%">    Your Email :   {{user.email}}    </h2>
 

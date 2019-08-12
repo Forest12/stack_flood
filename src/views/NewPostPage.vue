@@ -121,8 +121,7 @@ export default {
         }
         const res3 = await FirebaseService.addTag(item, res)
       })
-
-      this.$router.push(`/post/${this.itemz}/new`);
+      this.$router.go(-1)
     },
   }
 };
