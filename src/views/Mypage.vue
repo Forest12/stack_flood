@@ -49,8 +49,9 @@
                   v-on:click="viewpost('Webmobile')">Webmobile</v-btn>
                 </div>
 
+            <div v-show="postitem=='AI'">    
             <PostList :item="'AI'" :limits="10" :load-more="true"></PostList>
-  
+            </div>
 
             <div v-show="postitem=='Bigdata'">
             <PostList :item="'Bigdata'" :limits="10" :load-more="true"></PostList>

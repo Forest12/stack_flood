@@ -28,74 +28,7 @@ var firebaseConfig = {
 			email = user.email
 			store.commit('setUser', user)
 			store.commit('setAdmin', user)
-
-			if(store.state.alarm==-1){
-				Notification.requestPermission(function (result) { // 알림을 허용 할 지 알람을 띄운다.
-					//요청을 거절하면,
-					if (result === 'denied') {
-						store.commit('setalarm',0)
-						console.log("alarm setting = ", store.state.alarm)
-						return;
-					}
-					//요청을 허용하면,
-					else {
-						store.commit('setalarm',1)
-						console.log("alarm setting = ", store.state.alarm)
-						// //데스크탑 알림 권한 요청 버튼을 비활성화
-						// requestPermissionButton.attr('disabled', 'disabled');
-						// //데스크탑 메시지 입력폼을 활성화
-						// notificationMessage.removeAttr('disabled');
-						// //데스크탑 메시지 요청 버튼을 활성화
-						// notificationButton.removeAttr('disabled');
-						return;
-					}
-				});
-			}
-		
-
-			// console.log("login check")
-			// console.log(store.state.user)
-			// 	console.log("you are login!!!!")
-			// 	cookies = this.$cookies.get("alarm");
-			// 	console.log("get cookie ok!!!!")
-			// 	if(cookies==null){
-			// 		Notification.requestPermission(function (result) {
-
-			// 		//요청을 거절하면,
-			// 		if (result === 'denied') {
-			// 			state.setalarm(0);
-			// 			info = new Cookie("alarm", "0");    // 쿠키를 생성한다. 이름:alarm, 값 : 0
-			// 			info.setMaxAge(365*24*60*60);                                 // 쿠키의 유효기간을 365일로 설정한다.
-			// 			info.setPath("/");                                                    // 쿠키의 유효한 디렉토리를 "/" 로 설정한다.
-			// 			response.addCooke(info);   
-			// 		}
-			// 		//요청을 허용하면,
-			// 		else {
-			// 			state.setalarm(1);
-			// 			info = new Cookie("alarm", "1");    // 쿠키를 생성한다. 이름:alarm, 값 : 1
-			// 			info.setMaxAge(365*24*60*60);                                 // 쿠키의 유효기간을 365일로 설정한다.
-			// 			info.setPath("/");                                                    // 쿠키의 유효한 디렉토리를 "/" 로 설정한다.
-			// 			response.addCooke(info);  
-			// 			//데스크탑 알림 권한 요청 버튼을 비활성화
-			// 			requestPermissionButton.attr('disabled', 'disabled');
-			// 			//데스크탑 메시지 입력폼을 활성화
-			// 			notificationMessage.removeAttr('disabled');
-			// 			//데스크탑 메시지 요청 버튼을 활성화
-			// 			notificationButton.removeAttr('disabled');
-			// 			return;
-			// 		}
-			// 	});
-			// 	}else{
-			// 	if(cookies.getValue==1){
-			// 		state.setalarm(1)
-			// 	}else{
-			// 		state.setalarm(0)
-			// 	}
-			// 	}
-		
-
-
-			
+	
 
 		}else {
 			email = "undefine";
@@ -127,27 +60,49 @@ export default {
 
 	getPosts(item) {
 		let postsCollection = firestore.collection(item)
-		
+
 		return postsCollection
-		.orderBy('created_at', 'desc')
-		.get()
-		.then((docSnapshots) => {
-			return docSnapshots.docs.map((doc) => {
-				let data = doc.data()
-				console.log(data.email)
-				this.getUser(data.email)
-				.then( res => {
-					console.log("res~~",res)
-					data.level=res[0].level
-					data.userImg=res[0].img
-					data.giturl=res[0].giturl
-					})
-						data.id = doc.id
-						data.created_at = new Date(data.created_at.toDate())+""
-						data.created_at = data.created_at.substring(0,24)
-						return data
-					})
+			.orderBy('created_at', 'desc')
+			.get()
+			.then((docSnapshots) => {
+				return docSnapshots.docs.map((doc) => {
+					let data = doc.data()
+					if (!data.view) {
+						data.view = 0;
+					}
+					data.level = "0"
+					data.userImg = "https://i.imgur.com/PJpHPNO.jpg"
+					data.giturl = "I'm visiter"
+					data.vote = 0
+					if (data.email == null) {
+						data.email = 'visiter'
+					}
+					else {
+						this.get_user_info(data.email)
+							.then(res => {
+								if (res[0] != null && res[0].level != null) {
+									data.level = res[0].level
+									data.userImg = res[0].img
+									data.giturl = res[0].giturl
+								} else {
+									data.level = "0"
+									data.userImg = "https://i.imgur.com/PJpHPNO.jpg"
+									data.giturl = "no have giturl"
+								}
+							})
+					}
+					data = data
+					data.id = doc.id
+					this.getVote(data.id)
+						.then(res => {
+							data.vote = res
+						})
+					data.postdate = new Date(data.created_at.toDate()) + ""
+					data.postdate = data.postdate.substring(0, 24)
+					data.created_at = new Date(data.created_at.toDate())
+					return data
 				})
+			})
 	},
 
 	getMyPosts(item) {
