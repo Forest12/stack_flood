@@ -474,7 +474,6 @@ export default {
 					return data
 				})
 			})
-		})
 	
 	},
 	getAlarms(user_email){
