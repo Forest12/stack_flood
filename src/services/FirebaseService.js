@@ -425,4 +425,8 @@ export default {
 				return data
 			})
 	},
+	getAlarm(){
+		
+
+	}
 }
