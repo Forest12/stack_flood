@@ -21,7 +21,7 @@
               <span class="post-score-num">{{answer}}</span>
               <span> answers</span>
               <!-- 답변 완료시 체크모양 표시 -->
-              <ssafy class="ssafy"></ssafy>
+              <ssafy  v-if="answer > 0" class="ssafy"></ssafy>
             </div>
           </div>
 
