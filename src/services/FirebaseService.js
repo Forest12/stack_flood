@@ -389,4 +389,8 @@ export default {
 			})
 		})
 	},
+	getAlarm(){
+		
+
+	}
 }
