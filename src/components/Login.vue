@@ -66,6 +66,67 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <!-- modal -->
+   
+    <!-- <v-btn
+      color="primary"
+      dark
+      @click.stop="dialog = true">
+      Open Dialog
+    </v-btn> -->
+
+    <v-btn 
+      color="#070f35"
+      depressed
+      @click.stop="dialog = true"
+      dark
+      ><v-icon dark left>fas fa-bell</v-icon> <v-avatar
+          size="25"
+          right
+          class="red darken-2">
+          1
+        </v-avatar>
+    </v-btn>
+
+    <v-dialog
+      v-model="dialog"
+      max-width="290"
+    >
+      <v-card>
+        <v-card-title class="headline">Use Google's location service?</v-card-title>
+
+        <v-card-text>
+          Let Google help apps determine location. This means sending anonymous location data to Google, even when no apps are running.
+        </v-card-text>
+
+        <v-card-actions>
+          <v-spacer></v-spacer>
+
+          <v-btn
+            color="green darken-1"
+            text
+            @click="dialog = false"
+          >
+            Disagree
+          </v-btn>
+
+          <v-btn
+            color="green darken-1"
+            text
+            @click="dialog = false"
+          >
+            Agree
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
+
+
+
+
+
     <v-btn router to="/Mypage" 
     v-if="$store.state.user !== null" 
     color="#070f35"
@@ -102,6 +163,7 @@ export default {
       singin_password: "",
       dialog_singin: false,
       dialog_singup: false,
+      dialog: false,
       title: "",
       content: ""
     };

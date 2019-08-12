@@ -19,7 +19,7 @@
 					:content="posts[i - 1].content"
 					:imgSrc="posts[i - 1].img"
 					:view="posts[i - 1].view"
-					
+					:tags="posts[i - 1].tags"
 					></Post>
 				</div>
 			
@@ -73,11 +73,11 @@ import userInfo from './userInfo'
 
 export default {
 	created(){
-    this.item = this.$route.params.item;
+  this.item = this.$route.params.item;
 	FirebaseService.logging(this.item);
   },
 	props: {
-        item:{type:String},
+    item:{type:String},
 		column: {type: Number, default: 1},
 		limits: {type: Number, default: 4},
 		loadMore: {type: Boolean, default: false}
@@ -97,7 +97,7 @@ export default {
 	methods: {
 		async getPosts(item) {
 			this.posts = await FirebaseService.getPosts(item)
-			
+			console.log(this.posts)
 		},
 	}
 }

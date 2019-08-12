@@ -8,6 +8,7 @@ import NewPostPage from './views/NewPostPage.vue'
 import PostDetailPage from './views/PostDetailPage.vue'
 import PortfolioPage from './views/PortfolioPage.vue'
 import NewPortfolioPage from './views/NewPortfolioPage.vue'
+import TagSearch from './views/TagSearch.vue'
 
 import chatbot from './components/chatbot'
 
@@ -15,8 +16,6 @@ import Main from './views/Main.vue'
 import UserProfile from './views/UserProfile.vue'
 
 import AdminPage from './views/AdminPage.vue'
-
-
 
 Vue.use(VueRouter);
 
@@ -74,6 +73,11 @@ export const router = new VueRouter({
   {
     path: '/chatbot',
     component: chatbot,
+  },
+  {
+    path: '/search/:item',
+    name: 'TagSearch',
+    component: TagSearch,
   }
   ]
 })

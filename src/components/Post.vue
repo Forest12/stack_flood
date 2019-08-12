@@ -38,9 +38,10 @@
           <div class="post-content-content">{{ removetag }}</div>
           <div class="post-content-tags">
             <span
-              class="post-content-tag blue lighten-4 mr-2 mb-1"
+              class="post-content-tag lighten-4 mr-2 mb-1"
               v-for="tag in tags"
               :key="tag.index"
+              @click="goSearch(tag)"
             >{{ tag }}</span>
           </div>
         </div>
@@ -130,22 +131,30 @@
 }
 
 .post-content-tags{
+  
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   height:85px;
-
 }
 
+
 .post-content-tag {
+  cursor:pointer;
   display: inline-block;
   padding: 5px;
   border-radius: 5px;
   color: #0d47a1;
   position: relative;
   top: 20px;
+  background: #90CAF9;
 }
+.post-content-tag:hover {
+  background: #E3F2FD;
+  color:#90CAF9;
+}
+
 
 .color-666 {
   color: #666;
@@ -189,7 +198,6 @@ export default {
       tempitem:"",
       answer:"",
       vote:"",
-      tags: ["블록체인", "빅데이터", "카카오톡", "집에갈래", "AI","블록체인", "빅데이터", "카카오톡", "집에갈래", "AI"]
     };
   },
 
@@ -202,6 +210,7 @@ export default {
     imgSrc: { type: String },
     getitem: { type: String },
     view: { type: Number },
+    tags: {},
   },
 
   created(){
@@ -241,6 +250,14 @@ export default {
       FirebaseService.getVote(id)
       .then(res => {
         this.vote=res
+      })
+    },
+    goSearch(tag){
+      this.$router.push({
+        path:`/search/${tag}`,
+        query:{
+          options:tag
+        }
       })
     }
   }
