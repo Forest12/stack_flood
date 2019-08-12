@@ -9,7 +9,8 @@
        :hide-header="true"
        bar-color="#ffffff"
        text-color="#ffffff"
- 
+       language="en"
+       units="uk" 
        style="margin-top:30px">
    </weather>
    <div style="font-family: 'Do Hyeon', sans-serif; margin-top:-35px;">
