@@ -8,8 +8,8 @@
         v-model="imageUrl"
         prepend-icon="attach_file"
     ></v-text-field>
-    <v-btn class="ma-2" tile outlined color="success">
-      <v-icon left>mdi-pencil</v-icon> Copy
+    <v-btn class="ma-2" tile outlined dark color="#f27e35">
+      <v-icon left>fas fa-copy</v-icon> Copy
     </v-btn>
     </v-layout>
     
