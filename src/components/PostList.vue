@@ -97,7 +97,7 @@ export default {
 	methods: {
 		async getPosts(item) {
 			this.posts = await FirebaseService.getPosts(item)
-			console.log(this.posts)
+			console.log(this.posts,'나오냐나오냐아노')
 		},
 	}
 }

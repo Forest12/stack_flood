@@ -120,6 +120,7 @@ export default {
           res = res1.id
         }
         const res3 = await FirebaseService.addTag(item, res)
+        // const res4 = await FirebaseService.addTitle(this.title,res)
       })
       this.$router.go(-1)
     },

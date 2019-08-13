@@ -10,8 +10,6 @@ export const store = new Vuex.Store({
     isAdmin:false,
     user_authority: '',
     alarm : 0,
-
-
   },
   mutations: {
     //

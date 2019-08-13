@@ -56,12 +56,7 @@ export default {
           FirebaseService.getNumOfAlarms(this.$store.state.user.email).then(res=>{
             this.$store.commit('setAlarm',res)
             console.log("-----------------------------------",this.$store.state.alarm)
-
           })
-
-         
-
-
       }
      
     }
