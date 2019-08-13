@@ -510,6 +510,7 @@ export default {
 		return docRef.get().then((docSnapshots) => {
 			return docSnapshots.docs.map((doc) => {
 				let data = doc.data()
+				data.id = doc.id
 				return data
 			})
 		})
@@ -522,9 +523,15 @@ export default {
 
 		})
 	},
+	chRead(doc_id,user_email){
+		console.log("doc_id:", doc_id, "user_email:", user_email)
+		let alarmDoc = firestore.collection("member").doc(user_email).collection("Notice").doc(doc_id)
+			alarmDoc.update(
+				{
+					read: true,
 
-	getAllPosts() {
+				})
 
 	}
-
+	
 }

@@ -68,8 +68,6 @@
     </v-dialog>
 
     <!-- modal -->
-  
-
     <v-btn  v-if="$store.state.user !== null"
       color="#070f35"
       depressed
@@ -86,35 +84,34 @@
 
     <v-dialog
       v-model="dialog"
-      max-width="290"
-    >
+      max-width="400">
       <v-card>
         <v-card-title class="headline">Check your Alarms</v-card-title>
-        <v-list two-line>
-      <template v-for="item in alarms">
+
+      <v-list subheader>
+      
+
         <v-list-item
-          :key="item.content"
-          @click="item.link"
+          v-for="item in alarms"
+          :key="item.link"
+          @click="goMypostPage(item.link, item.id)"
         >
-          <v-list-item-content>
-            <v-list-item-title v-html="item.content"></v-list-item-title>
-            <v-list-item-subtitle v-html="item.content"></v-list-item-subtitle>
+          <v-list-item-content class="ma-3">
+            <v-list-item-title m1 v-text="item.content"></v-list-item-title>
           </v-list-item-content>
+          <v-list-item-icon>
+            <v-icon :color="item.read ? 'grey' : 'deep-purple accent-4'">chat_bubble</v-icon>
+          </v-list-item-icon>
         </v-list-item>
-      </template>
-    </v-list>
-
-    
+      
+        </v-list>
         <v-card-actions>
-          <v-spacer></v-spacer>
+        <v-spacer></v-spacer>
 
-          <v-btn
-            color="green darken-1"
-            text
-            @click="dialog = false"
-          >
-            OK
-          </v-btn>
+        <v-btn
+          color="green darken-1"
+          text
+          @click="dialog = false">OK</v-btn>
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -245,11 +242,15 @@ export default {
       else{
           FirebaseService.getAlarms(this.$store.state.user.email).then(res =>{
                 this.alarms = res
-                console.log("+++++++++++++++++++++++++++++++++++++++++++++++++++++++",res)
-
                 }
           )
       }
+    },
+    goMypostPage(link, doc_id){
+      this.dialog = false
+      FirebaseService.chRead(doc_id,this.$store.state.user.email)
+      this.$router.push(link)
+
     }
   }
 };
