@@ -51,23 +51,35 @@
         </v-toolbar-title>
       </v-toolbar>
       <span class="hr-line"></span>
-    </nav>
+      <div>
+      <infinite-slide-bar>
+      <div class="columns" >
+        <div class="column" v-for="coin in developer" :key="coin.key" style="display:inline-block; margin-right:70px;">
+          <div class="f-left pd-t-8px mg-r-10px" style="display:inline-block;">
 
-     <infinite-slide-bar>
-      <div class="columns">
-        <div class="column" v-for="coin in coins" :key="coin.key">
-          <div class="f-left pd-t-8px mg-r-10px">
-            <v-img :src="this.user.img"></v-img>
+            <div style="display:inline-block;">
+            <v-responsive class="pt-1">
+             <v-avatar size="50">
+               <v-img :src="coin.key" alt=""></v-img>
+             </v-avatar>
+            </v-responsive>
           </div>
           <div class="f-left">
-            <div class="f-w-bold">{{this.user.email}}</div>
+            <div class="f-w-bold">{{coin.name}}</div>
             <div>
-              {{this.user.giturl}}
+              {{coin.giturl}}
             </div>
           </div>
+          </div>
+
         </div>
       </div>
     </infinite-slide-bar>
+      </div>
+
+    </nav>
+
+     
 
   </v-container>
 </template>
@@ -85,8 +97,7 @@ export default {
     questionCom,
     PostList,
     InfiniteSlideBar,
-  },
-  created:function(){
+  },created:function(){
     FirebaseService.logging('main..');
     this.getUser()
   },
@@ -96,6 +107,21 @@ export default {
     return {
       text: "AI",
       postitem:"AI",
+      
+      developer: [{
+          name: "임현철",
+          giturl:"https://i.imgur.com/BQZtKiI.jpg",
+          key:"https://i.imgur.com/BQZtKiI.jpg",
+        },
+        {
+          name: "정상영",
+          giturl:"https://i.imgur.com/BQZtKiI.jpg",
+          key:"https://i.imgur.com/cQ284rc.jpg",
+        },{
+          name: "유승주",
+          giturl:"https://i.imgur.com/BQZtKiI.jpg",
+          key:"https://i.imgur.com/PJpHPNO.jpg",
+        },]
     };
   },
   methods: {
