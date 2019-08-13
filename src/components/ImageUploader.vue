@@ -8,7 +8,7 @@
         v-model="imageUrl"
         prepend-icon="attach_file"
     ></v-text-field>
-    <v-btn class="ma-2" tile outlined dark color="#f27e35">
+    <v-btn @click="copyURL" class="ma-2" tile outlined dark color="#f27e35">
       <v-icon left>fas fa-copy</v-icon> Copy
     </v-btn>
     </v-layout>
@@ -54,10 +54,10 @@ export default {
                     if (xmlHttpRequest.status == 200) {
                         var result = JSON.parse(xmlHttpRequest.responseText)
                         this.imageUrl = result.data.link    
-                        alert("업로드 성공")
+                       
                     }
                     else {
-                        alert("업로드 실패")
+                        alert("이미지 업로드 실패")
                     }
                 }
             }
@@ -76,6 +76,15 @@ export default {
                 })
             }
         },
+        copyURL(){
+            var tempElem = document.createElement('textarea');
+            tempElem.value = this.imageUrl
+            document.body.appendChild(tempElem);
+            tempElem.select();
+            document.execCommand("copy")
+            document.body.removeChild(tempElem)
+
+        }
     },
 
 }

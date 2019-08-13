@@ -24,10 +24,6 @@
 
       <markdown-editor v-model="content" ref="markdownEditor"></markdown-editor>
 
-
-    
-    
-
     <h2 class="mt-5"><v-icon class="mx-3" color="#FFA500">fas fa-check-circle</v-icon>어떤 언어, 기술 및 / 또는 프레임 워크에 대한 질문이 있습니까?</h2>
     <template>
       <blockquote class="blockquote">태그는 사람들이 귀하의 질문을 찾고 답변하는 데 도움이됩니다.</blockquote>
@@ -115,7 +111,6 @@ export default {
           res = res1.id
         }
         const res3 = await FirebaseService.addTag(item, res)
-        // const res4 = await FirebaseService.addTitle(this.title,res)
       })
       this.$router.go(-1)
     },
