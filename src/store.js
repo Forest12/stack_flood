@@ -9,7 +9,7 @@ export const store = new Vuex.Store({
     title : 'original',
     isAdmin:false,
     user_authority: '',
-    alarm : -1,
+    alarm : 0,
     email:"undefine",
   },
   mutations: {
@@ -30,8 +30,6 @@ export const store = new Vuex.Store({
     },
     setLogOut(state){
       state.isAdmin = false
-      state.alarm=-1
-      state.email="undefine"
     },
 
     setalarm(state,x){

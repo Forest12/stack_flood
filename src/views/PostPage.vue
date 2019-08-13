@@ -14,7 +14,7 @@
       </v-layout>
       
     </v-container> -->
-    <v-btn v-if="user_check" @click="newPost"  color="#FFA500" dark ><v-icon dark left small>fas fa-plus</v-icon>New</v-btn>
+    <v-btn v-if="user_check" @click="newPost"  color="#FFA500" >Ask Question</v-btn>
     <v-container class="post-container">
       <div class="post-box">
         <div class="post-left">
