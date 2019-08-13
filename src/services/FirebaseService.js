@@ -463,7 +463,7 @@ export default {
 =======
 >>>>>>> 50375039b4ff8b53a63a0348ed8c9537502bac79
 				})
-			})
+		
 	},
 
 	async vote(post_token, email, check) {
