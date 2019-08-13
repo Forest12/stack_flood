@@ -29,6 +29,7 @@
           single-line
           solo
           append-icon="search"
+          
         ></v-text-field>
 
         <!-- 카테고리 -->
