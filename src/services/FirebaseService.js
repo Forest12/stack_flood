@@ -23,6 +23,26 @@ var firebaseConfig = {
     messagingSenderId: "934123234328",
     appId: "1:934123234328:web:fda8318efc0bd997"
   };
+// var firebaseConfig = {
+//     apiKey: "AIzaSyAoads3zhGQPzwvR8GUbThM-QBuhCiQ4eQ",
+//     authDomain: "webmobile-sub2-64e94.firebaseapp.com",
+//     databaseURL: "https://webmobile-sub2-64e94.firebaseio.com",
+//     projectId: "webmobile-sub2-64e94",
+//     storageBucket: "webmobile-sub2-64e94.appspot.com",
+//     messagingSenderId: "101203511109",
+//     appId: "1:101203511109:web:d97956e58e2fa496"
+//   };
+
+// var firebaseConfig = {
+// 	apiKey: "AIzaSyD1m81RrkwZ1V-ezgYwhLP88DhProUoPqk",
+// 	authDomain: "webmobile-test-5d2a4.firebaseapp.com",
+// 	databaseURL: "https://webmobile-test-5d2a4.firebaseio.com",
+// 	projectId: "webmobile-test-5d2a4",
+// 	storageBucket: "webmobile-test-5d2a4.appspot.com",
+// 	messagingSenderId: "521659857765",
+// 	appId: "1:521659857765:web:5ee55d1098c002c8"
+// };
+
 firebase.initializeApp(firebaseConfig);
 var email;
 var created_time = ""
@@ -360,15 +380,19 @@ export default {
 				let id = docSnapshotsDown.docs[0].id
 				firestore.collection("VOTE_DOWN").doc(id).delete()
 				//flase가 return 되면 num_vote가 줄어든다.
+				console.log("이전에 싫어요를 눌렀어")
 				return true
 			} else {
 				let docSnapshotsUP = await updocRef.get()
 				if (docSnapshotsUP.empty) {
 					//이전에 좋아요를 한번도 누른적이 없으면
+
 					firestore.collection("VOTE_UP").add({
 						post_token,
 						"user": email,
 					})
+					console.log("이전에 싫어요를 누른적 없어")
+
 					return true
 				} else {
 					//이전에 좋아요를 눌렀으면
@@ -383,6 +407,8 @@ export default {
 				let id = docSnapshotsUP.docs[0].id
 				firestore.collection("VOTE_UP").doc(id).delete()
 				//flase가 return 되면 num_vote가 줄어든다.
+				console.log("이전에 좋아요 누름")
+
 				return true
 			} else {
 				let docSnapshotsDOWN = await downdocRef.get()
@@ -392,6 +418,8 @@ export default {
 						post_token,
 						"user": email,
 					})
+					console.log("이전에 좋아요 누른적 없어")
+
 					return true
 				} else {
 					//이전에 싫어요를 눌렀으면ddd
@@ -486,62 +514,4 @@ export default {
 					})
 				})
 	}
-	// getPosts(item) {
-	// 	let postsCollection = firestore.collection(item)
-	// 	return postsCollection
-	// 		.orderBy('created_at', 'desc')
-	// 		.get()
-	// 		.then((docSnapshots) => {
-	// 			return docSnapshots.docs.map((doc) => {
-	// 				let data = doc.data()
-	// 				if (!data.view) {
-	// 					data.view = 0;
-	// 				}
-	// 				data.level = "0"
-	// 				data.userImg = "https://i.imgur.com/PJpHPNO.jpg"
-	// 				data.giturl = "I'm visiter"
-	// 				data.vote = 0
-	// 				if (data.email == null) {
-	// 					data.email = 'visiter'
-	// 				}
-	// 				else {
-	// 					this.get_user_info(data.email)
-	// 						.then(res => {
-	// 							if (res[0] != null && res[0].level != null) {
-	// 								data.level = res[0].level
-	// 								data.userImg = res[0].img
-	// 								data.giturl = res[0].giturl
-	// 							} else {
-	// 								data.level = "0"
-	// 								data.userImg = "https://i.imgur.com/PJpHPNO.jpg"
-	// 								data.giturl = "no have giturl"
-	// 							}
-	// 						})
-	// 				}
-	// 				data.id = doc.id
-	// 				let arr = new Array();
-	// 				this.getPostTag().then(
-	// 					res => {
-	// 						for (let i = 0; i < res.length; i++) {
-	// 							// console.log("======================")
-	// 							// console.log(doc.id)
-	// 							// console.log(res[i].id, "123123123312")
-	// 							// console.log(res[i].post_token.split('#'))
-	// 							// console.log(res[i].post_token.includes(doc.id),'sibal')
-	// 							if (res[i].post_token.includes(doc.id)) {
-	// 								arr.push(res[i].id)
-	// 							}
-	// 						}
-	// 					})
-	// 				data.tags = arr
-	// 				this.getVote(data.id).then(res => {
-	// 					data.vote = res
-	// 				})
-	// 				data.postdate = new Date(data.created_at.toDate()) + ""
-	// 				data.postdate = data.postdate.substring(0, 24)
-	// 				data.created_at = new Date(data.created_at.toDate())
-	// 				return data
-	// 			})
-	// 		})
-	// },
 }
