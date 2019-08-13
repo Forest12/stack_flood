@@ -156,9 +156,13 @@ export default {
             //console.log(this.editor,'에디터에디터')
         },
         async postAnswer(){
+          if(this.$store.state.user){
             const edit = await md2.render(this.answerContent)
             FirebaseService.postAnswer(this.item, this.post_token, edit)
             location.href = `/${this.item}/detail/${this.post_token}`
+          }else{
+            alert("댓글을 남기시려면 먼저 로그인 해 주세요 ε=ε=(っ* ´□` )っ")
+          }
         },
         editPost(){
             FirebaseService.editPost(this.item,this.post_token, this.editTitle,this.editContent)
@@ -177,6 +181,7 @@ export default {
             
         },
         vote(check){
+            if(this.$store.state.user){
             FirebaseService.vote(this.post_token, this.$store.state.email,check).then(res=>{
               //console.log(res)
               if(res){
@@ -188,6 +193,9 @@ export default {
                 }
               }
             })
+            }else{
+            alert("먼저 로그인 해 주세요 ε=ε=(っ* ´□` )っ")
+            }
         },
         getVote(){
           FirebaseService.getVote(this.post_token).then(res => {

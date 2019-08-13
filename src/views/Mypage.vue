@@ -95,12 +95,13 @@ export default {
     
     created:function(){
     FirebaseService.logging('mypage');
-    this.getUser()
   },
-
 	components: {
     PostList,
     ImageUploader,
+  },
+  mounted(){
+    this.getUser()
   },
   methods:{
     async getUser() {
