@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container v-if="$store.state.isAdmin">
+    <v-container fluid >
       <v-layout row wrap>
         <v-flex xs12 class="pink lighten-1">
           <div class="admin-header">
@@ -67,9 +67,14 @@
     <div>웹 로그 확인하러 가기</div>
     <a href="https://analytics.google.com/analytics/web/#/report-home/a144982861w206594667p199451962">클릭</a>
 
-    <div>전체 게시글 태그항목 추가하기</div>
-    <v-btn @click="addtag">한번만 클릭해야함</v-btn>
 
+        <v-textarea
+          outlined
+          label="Outlined textarea"
+          value=""
+          height="500"
+        ></v-textarea>
+        <v-btn>모든 유저에게 보내기</v-btn>
     </v-container>
   </div>
 </template>
