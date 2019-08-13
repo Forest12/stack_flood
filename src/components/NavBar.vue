@@ -29,7 +29,9 @@
           single-line
           solo
           append-icon="search"
-          
+          @click:append="gotoSearch"
+          v-model="searcher"
+          @keyup.enter="gotoSearch"
         ></v-text-field>
 
         <!-- 카테고리 -->
@@ -70,10 +72,12 @@ export default {
         { title: "AI", item: "AI" },
         { title: "BigData", item: "Bigdata" },
         { title: "BlockChain", item: "Blockchain" },
-        { title: "Web&Mobile", item: "Webmobile" }
+        { title: "Web&Mobile", item: "Webmobile" },
+        { title: "Q & A", item: "QnA" }
       ],
       path_item: "",
-      isAdmin: false
+      isAdmin: false,
+      searcher:'',
     };
   },
   computed: {},
@@ -86,10 +90,22 @@ export default {
 
     },
     go_path(item) {
-      this.$router.push(`/post/${item}`);
+      if (item === "QnA"){
+        this.$router.push('/chatbot');
+      } else {
+        this.$router.push(`/post/${item}`);
+      }
     },
     gohome() {
       this.$router.push("/");
+    },
+    gotoSearch(){
+      this.$router.push({
+        path:`/search/${this.searcher}`,
+        query:{
+          options:'title'
+        }
+      })
     }
   }
 };

@@ -23,6 +23,7 @@ var firebaseConfig = {
 	messagingSenderId: "521659857765",
 	appId: "1:521659857765:web:5ee55d1098c002c8"
 };
+
 firebase.initializeApp(firebaseConfig);
 var email;
 var created_time = ""

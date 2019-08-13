@@ -11,7 +11,7 @@
 
       </template>
       
-       <v-text-field v-model="title" :counter="30" label="Title" required></v-text-field>
+       <v-text-field maxlength="30" v-model="title" :counter="30" label="Title" required></v-text-field>
       
       
       <h2 class="mt-5"><v-icon class="mx-3" color="#FFA500">fas fa-check-circle</v-icon>귀하의 질문에 대해 더 알려주십시오</h2>
@@ -44,7 +44,7 @@
               v-bind="attrs"
               :input-value="selected"
               close
-              @click:close="tagDelete(item)"
+              @click:close="remove(item)"
             >
               <strong>{{ item }}</strong>&nbsp;
             </v-chip>
@@ -100,23 +100,30 @@ export default {
       
       // 작성한 포스트의 토큰값을 가져옴
       const res1 = await FirebaseService.postPost(this.itemz, this.title, edit);
-      // tag = ['aaa','bbb','ccc'] 일 때
-      await this.tag.forEach(async (item) => {
 
-        // 'aaa' 태그의 post_token값을 읽어온다. (다른 게시글에도 태그가 있는경우)
-        let res = await FirebaseService.getTag(item)
-
-        // (태그가 있다면 내 토큰과 더함 ) 
-        if (res) {
-          res += `#${res1.id}`
-        }
-        else {
-          res = res1.id
-        }
-        const res3 = await FirebaseService.addTag(item, res)
-      })
+      if (this.tag){
+        // tag = ['aaa','bbb','ccc'] 일 때
+        await this.tag.forEach(async (item) => {
+  
+          // 'aaa' 태그의 post_token값을 읽어온다. (다른 게시글에도 태그가 있는경우)
+          let res = await FirebaseService.getTag(item)
+  
+          // (태그가 있다면 내 토큰과 더함 ) 
+          if (res) {
+            res += `#${res1.id}`
+          }
+          else {
+            res = res1.id
+          }
+          const res3 = await FirebaseService.addTag(item, res)
+        })
+      }
       this.$router.go(-1)
-    },
+    }
+  },
+  remove(item){
+    this.tag.splice(this.tag.indexOf(item), 1)
+    this.tag = [...this.tag]
   }
 };
 </script>
