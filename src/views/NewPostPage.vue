@@ -3,14 +3,37 @@
     <h2 class="headline my-5 text-xs-center">New Post</h2>
 
     <v-form>
-      <v-text-field v-model="title" :counter="30" label="Title" required></v-text-field>
+     
+      
+      <h2 class="mt-5"><v-icon class="mx-3" color="#FFA500">fas fa-check-circle</v-icon>귀하의 질문 제목이 무엇입니까?</h2>
+      <template>
+      <blockquote class="blockquote">제목은 사람들이 질문에 대한 답변을 빨리 이해할 수 있도록 도와줍니다.</blockquote>
+
+      </template>
+      
+       <v-text-field v-model="title" :counter="30" label="Title" required></v-text-field>
+      
+      
+      <h2 class="mt-5"><v-icon class="mx-3" color="#FFA500">fas fa-check-circle</v-icon>귀하의 질문에 대해 더 알려주십시오</h2>
+      <template>
+      <blockquote class="blockquote">귀하의 설명은 사람들이 귀하의 질문에 답변하는 데 필요한 정보를 제공합니다.</blockquote>
+      </template>
+      
 
       <ImageUploader></ImageUploader>
 
       <markdown-editor v-model="content" ref="markdownEditor"></markdown-editor>
 
 
-      <v-combobox
+    
+    
+
+    <h2 class="mt-5"><v-icon class="mx-3" color="#FFA500">fas fa-check-circle</v-icon>어떤 언어, 기술 및 / 또는 프레임 워크에 대한 질문이 있습니까?</h2>
+    <template>
+      <blockquote class="blockquote">태그는 사람들이 귀하의 질문을 찾고 답변하는 데 도움이됩니다.</blockquote>
+    </template>
+    <v-combobox
+          background-color ="#FAAC58"
           flat
           v-model="tag"
           :items="tags"
@@ -28,37 +51,9 @@
               @click:close="tagDelete(item)"
             >
               <strong>{{ item }}</strong>&nbsp;
-
             </v-chip>
           </template>
         </v-combobox>
-        {{ tag }}
-
-        {{ tags }}
-      <!-- <v-tooltip bottom> -->
-
-        <!-- <v-text-field
-          width="200px"
-          ref="tag"
-          slot="activator"
-          @input="checktag"
-          v-model="tag"
-          :counter="100"
-          label="# Add Tags"
-          @keyup.enter="addtag"
-        ></v-text-field>
-
-
-        <span>{{ message }}</span>
-      </v-tooltip> -->
-
-      <!-- <div class="tag-body">
-        <div v-for="(t,index) in tags" :key="t" class="tag-content">
-          <v-chip class="ma-2" close @click:close="tagDelete(index)"> {{ t }}</v-chip> -->
-
-          <!-- {{ t }} <v-icon class="tag-delete" @click="tagDelete(index)">close</v-icon> -->
-        <!-- </div> -->
-      <!-- </div> -->
 
       <v-btn @click="postPost" color="pink darken-2" dark>
         <v-icon dark left>fas fa-edit</v-icon>Post
