@@ -34,6 +34,7 @@
     "vue-carousel-3d": "^0.2.0",
     "vue-cookie": "^1.1.4",
     "vue-coverflow": "^2.2.0",
+    "vue-infinite-slide-bar": "^1.0.8",
     "vue-router": "^3.1.2",
     "vue-simplemde": "^0.5.2",
     "vue-tags": "^1.0.4",

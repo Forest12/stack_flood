@@ -89,6 +89,9 @@ export default {
     this.itemz = this.$route.params.item;
     FirebaseService.logging("new " + this.itemzz + " post");
   },
+  mounted(){
+    this.tag = [this.itemz]
+  },
 
   methods: {
     async postPost() {

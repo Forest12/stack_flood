@@ -2,51 +2,19 @@
   <v-layout py-4 h-100>
     <v-flex>
       <div row class="post-body-box">
-        <!-- <div class="caption ">{{formatedDate}}</div>
-        <h2 class="color-333 headline font-weight-light cutoneline">{{title}}</h2>
-        <p class="mb-1 color-666 font-weight-light subheading cutfourline">{{content}}</p>
-        </div>-->
-        <!-- <div class="post-body-box"> -->
-        <div class="post-score-box">
-          <div class="post-score-votes">
-            <div class="center">
-              <span class="post-score-num">{{ vote }}</span>
-              <span> votes</span>
-            </div>
-          </div>
-
-          <!-- answer box -->
-          <div class="post-score-answer">
-            <div class="center">
-              <span class="post-score-num">{{answer}}</span>
-              <span> answers</span>
-              <!-- 답변 완료시 체크모양 표시 -->
-              <ssafy  v-if="answer > 0" class="ssafy"></ssafy>
-            </div>
-          </div>
-
-          <div class="post-score-views">
-            <div class="center">
-              <span class="post-score-num">{{view}}</span>
-              <span> views</span>
-            </div>
-          </div>
-        </div>
         <div class="post-content-box pa-3">
-          <div class="post-content-title title blue--text mb-2" @click="moveDetail">{{ title }}</div>
-
+          <div class="post-content-title title blue--text mb-2" @click="moveDetail">
+            <v-chip
+              class="ma-2"
+              :color="color"
+              text-color="white"
+            >
+            {{ subject }}
+            </v-chip>
+            {{ title }}
+            </div>
           <div class="post-content-content">{{ removetag }}</div>
-          <div class="post-content-tags">
-            <span
-              class="post-content-tag lighten-4 mr-2 mb-1"
-              v-for="(tag, index) in tags"
-              :key="index"
-              @click="goSearch(tag)"
-            >{{ tag }}</span>
-          </div>
         </div>
-
-        <!-- </div> -->
       </div>
     </v-flex>
   </v-layout>
@@ -198,6 +166,7 @@ export default {
       tempitem:"",
       answer:"",
       vote:"",
+      color:"",
     };
   },
 
@@ -211,17 +180,29 @@ export default {
     getitem: { type: String },
     view: { type: Number },
     tags: {},
+    subject: { type:String },
   },
 
   created(){
+      if(this.subject === 'AI'){
+        this.color = 'indigo'
+      } else if (this.subject === 'Bigdata'){
+        this.color = 'red'
+      } else if (this.subject === 'Blockchain'){
+        this.color = 'blue'
+      } else {
+        this.color = 'green'
+      }
+
       this.tempitem=this.getitem
       this.item = this.$route.params.item
       if(this.item==null&&this.tempitem!=null){
         this.item=this.tempitem
       }
-      this.user_email = this.$store.state.email
+      this.user_email = this.$store.state.user.email
       this.getAnswerCount(this.id,this.item)
       this.getvoteCount(this.id)
+
   },
 
 
@@ -234,11 +215,11 @@ export default {
       let ta = this.content.replace(/<br\/>/ig, "\n"); 
       ta = ta.replace(/<(\/)?([a-zA-Z]*)(\s[a-zA-Z]*=[^>]*)?(\s)*(\/)?>/ig, "");
       return ta
-    }
+    },
   },
   methods: {
     moveDetail() {
-      this.$router.push(`/${this.item}/detail/${this.id}`);
+      this.$router.push(`../${this.subject}/detail/${this.id}`);
     },
     getAnswerCount(id,item){
       FirebaseService.getAnswers(item, id)
