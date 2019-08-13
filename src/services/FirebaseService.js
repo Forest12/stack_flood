@@ -370,15 +370,19 @@ export default {
 				let id = docSnapshotsDown.docs[0].id
 				firestore.collection("VOTE_DOWN").doc(id).delete()
 				//flase가 return 되면 num_vote가 줄어든다.
+				console.log("이전에 싫어요를 눌렀어")
 				return true
 			} else {
 				let docSnapshotsUP = await updocRef.get()
 				if (docSnapshotsUP.empty) {
 					//이전에 좋아요를 한번도 누른적이 없으면
+
 					firestore.collection("VOTE_UP").add({
 						post_token,
 						"user": email,
 					})
+					console.log("이전에 싫어요를 누른적 없어")
+
 					return true
 				} else {
 					//이전에 좋아요를 눌렀으면
@@ -393,6 +397,8 @@ export default {
 				let id = docSnapshotsUP.docs[0].id
 				firestore.collection("VOTE_UP").doc(id).delete()
 				//flase가 return 되면 num_vote가 줄어든다.
+				console.log("이전에 좋아요 누름")
+
 				return true
 			} else {
 				let docSnapshotsDOWN = await downdocRef.get()
@@ -402,6 +408,8 @@ export default {
 						post_token,
 						"user": email,
 					})
+					console.log("이전에 좋아요 누른적 없어")
+
 					return true
 				} else {
 					//이전에 싫어요를 눌렀으면ddd

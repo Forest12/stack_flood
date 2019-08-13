@@ -67,14 +67,16 @@
     <div>웹 로그 확인하러 가기</div>
     <a href="https://analytics.google.com/analytics/web/#/report-home/a144982861w206594667p199451962">클릭</a>
 
-
-        <v-textarea
-          outlined
-          label="Outlined textarea"
-          value=""
-          height="500"
-        ></v-textarea>
-        <v-btn>모든 유저에게 보내기</v-btn>
+    <div class="my-5">
+       <v-col cols="12" sm="6">
+          <v-text-field
+            v-model="content"
+            label="공지 내용을 적어주세요"
+            solo-inverted
+          ></v-text-field>
+          <v-btn color="green">모든 유저에게 보내기</v-btn>
+        </v-col>
+    </div>
     </v-container>
   </div>
 </template>
@@ -93,6 +95,7 @@ export default {
       email:'',
       created_at:'',
       img:'',
+      content:""
     }
   },
   methods: {
@@ -128,7 +131,6 @@ export default {
         })
         // console.log(this.userlist)
         })
-
 }
 }
 </script>
