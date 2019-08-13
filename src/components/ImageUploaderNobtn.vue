@@ -8,9 +8,6 @@
         v-model="imageUrl"
         prepend-icon="attach_file"
     ></v-text-field>
-    <v-btn class="ma-2" tile outlined dark color="#f27e35">
-      <v-icon left>fas fa-copy</v-icon> Copy
-    </v-btn>
     </v-layout>
     
 
@@ -55,6 +52,7 @@ export default {
                         var result = JSON.parse(xmlHttpRequest.responseText)
                         this.imageUrl = result.data.link    
                         alert("업로드 성공")
+                        this.$emit('get_imgURL', this.imageUrl)
                     }
                     else {
                         alert("업로드 실패")

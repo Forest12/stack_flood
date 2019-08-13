@@ -5,6 +5,7 @@ import Vue from 'vue'
 import { store } from '../store.js'
 import { Cookie, CookieJar } from 'tough-cookie';
 
+<<<<<<< HEAD
 var firebaseConfig = {
 	apiKey: "AIzaSyD1m81RrkwZ1V-ezgYwhLP88DhProUoPqk",
 	authDomain: "webmobile-test-5d2a4.firebaseapp.com",
@@ -34,6 +35,49 @@ firebase.auth().onAuthStateChanged(() => {
 	}
 })
 
+=======
+
+
+// var firebaseConfig = {
+//     apiKey: "AIzaSyAoads3zhGQPzwvR8GUbThM-QBuhCiQ4eQ",
+//     authDomain: "webmobile-sub2-64e94.firebaseapp.com",
+//     databaseURL: "https://webmobile-sub2-64e94.firebaseio.com",
+//     projectId: "webmobile-sub2-64e94",
+//     storageBucket: "webmobile-sub2-64e94.appspot.com",
+//     messagingSenderId: "101203511109",
+//     appId: "1:101203511109:web:d97956e58e2fa496"
+//   };
+
+  var firebaseConfig = {
+    apiKey: "AIzaSyAOaxPMUrFVZmtPhk945-pku0Vr1_9TkGs",
+    authDomain: "webmobile-5.firebaseapp.com",
+    databaseURL: "https://webmobile-5.firebaseio.com",
+    projectId: "webmobile-5",
+    storageBucket: "",
+    messagingSenderId: "934123234328",
+    appId: "1:934123234328:web:0932bbb6042d5da3"
+  };
+
+	firebase.initializeApp(firebaseConfig);
+	var email;
+	var created_time=""
+	var user;
+  
+	firebase.auth().onAuthStateChanged(() => {
+		user = firebase.auth().currentUser;
+		if (user != null) {
+			console.log("hi!!!!!!!!!!!!!")
+			email = user.email
+			store.commit('setUser', user)
+			store.commit('setAdmin', user)
+			store.commit('setEmail', email)
+		}else {
+			email = "undefine"
+			store.commit('setUser', user)
+			store.commit('setEmail', email)
+		}})
+	
+>>>>>>> 37703a9152812a309a26322309875ca07ebe3799
 
 const firestore = firebase.firestore()
 
@@ -311,6 +355,7 @@ export default {
 		})
 	},
 	logging(item) {
+<<<<<<< HEAD
 		created_time = firebase.firestore.Timestamp.now().toDate() + " "
 		created_time = created_time.substring(0, 24)
 		return firestore.collection('LOG').doc(email + " " + created_time).set({
@@ -318,6 +363,15 @@ export default {
 			item,
 			time: firebase.firestore.FieldValue.serverTimestamp()
 		})
+=======
+		// created_time = firebase.firestore.Timestamp.now().toDate() + " "
+		// created_time = created_time.substring(0, 24)
+		// return firestore.collection('LOG').doc(email + " " + created_time).set({
+		// 	email,
+		// 	item,
+		// 	time: firebase.firestore.FieldValue.serverTimestamp() 
+		// })
+>>>>>>> 37703a9152812a309a26322309875ca07ebe3799
 	},
 
 
@@ -373,6 +427,7 @@ export default {
 	getUser() {
 		const user_info = firestore.collection("member").where("email", "==", email);
 		return user_info
+<<<<<<< HEAD
 			.orderBy('user_authority')
 			.get()
 			.then((docSnapshots) => {
@@ -380,6 +435,15 @@ export default {
 					let data = doc.data()
 					data.created_at = new Date(data.created_at.toDate())
 					return data
+=======
+				.get()
+				.then((docSnapshots) => {
+					return docSnapshots.docs.map((doc) => {
+						let data = doc.data()
+						data.created_at = new Date(data.created_at.toDate())
+						return data
+					})
+>>>>>>> 37703a9152812a309a26322309875ca07ebe3799
 				})
 			})
 	},
@@ -457,6 +521,7 @@ export default {
 	// },
 
 	// 태그추가
+<<<<<<< HEAD
 	addTag(tag, id) { // tags = ['aaa','bbb','ccc]
 		return firestore.collection('Tags').doc(tag).set({
 			post_token: id,
@@ -466,6 +531,12 @@ export default {
 		return firestore.collection('Tags').doc(title).set({
 			post_token: id_all,
 		})
+=======
+	addTag(tag, id){ 
+			return firestore.collection('Tags').doc(tag).set({
+				post_token:id,
+			})
+>>>>>>> 37703a9152812a309a26322309875ca07ebe3799
 	},
 
 	async getTag(item) {
@@ -498,6 +569,7 @@ export default {
 		return docRef.get().then((docSnapshots) => {
 			return docSnapshots.docs.map((doc) => {
 				let data = doc.data()
+				data.id = doc.id
 				return data
 			})
 		})
@@ -510,9 +582,23 @@ export default {
 
 		})
 	},
+<<<<<<< HEAD
 
 	getAllPosts() {
 
 	}
 
+=======
+	chRead(doc_id,user_email){
+		console.log("doc_id:", doc_id, "user_email:", user_email)
+		let alarmDoc = firestore.collection("member").doc(user_email).collection("Notice").doc(doc_id)
+			alarmDoc.update(
+				{
+					read: true,
+
+				})
+
+	}
+	
+>>>>>>> 37703a9152812a309a26322309875ca07ebe3799
 }
