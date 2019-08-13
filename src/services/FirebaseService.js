@@ -393,7 +393,7 @@ export default {
 						return data
 					})
 				})
-			})
+		
 	},
 
 	async vote(post_token, email, check) {
