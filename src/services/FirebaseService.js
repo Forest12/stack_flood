@@ -5,14 +5,23 @@ import Vue from 'vue'
 import { store } from '../store.js'
 import { Cookie, CookieJar } from 'tough-cookie';
 var firebaseConfig = {
-    apiKey: "AIzaSyAoads3zhGQPzwvR8GUbThM-QBuhCiQ4eQ",
-    authDomain: "webmobile-sub2-64e94.firebaseapp.com",
-    databaseURL: "https://webmobile-sub2-64e94.firebaseio.com",
-    projectId: "webmobile-sub2-64e94",
-    storageBucket: "webmobile-sub2-64e94.appspot.com",
-    messagingSenderId: "101203511109",
-    appId: "1:101203511109:web:d97956e58e2fa496"
+    apiKey: "AIzaSyAOaxPMUrFVZmtPhk945-pku0Vr1_9TkGs",
+    authDomain: "webmobile-5.firebaseapp.com",
+    databaseURL: "https://webmobile-5.firebaseio.com",
+    projectId: "webmobile-5",
+    storageBucket: "webmobile-5.appspot.com",
+    messagingSenderId: "934123234328",
+    appId: "1:934123234328:web:fda8318efc0bd997"
   };
+// var firebaseConfig = {
+//     apiKey: "AIzaSyAoads3zhGQPzwvR8GUbThM-QBuhCiQ4eQ",
+//     authDomain: "webmobile-sub2-64e94.firebaseapp.com",
+//     databaseURL: "https://webmobile-sub2-64e94.firebaseio.com",
+//     projectId: "webmobile-sub2-64e94",
+//     storageBucket: "webmobile-sub2-64e94.appspot.com",
+//     messagingSenderId: "101203511109",
+//     appId: "1:101203511109:web:d97956e58e2fa496"
+//   };
 
 // var firebaseConfig = {
 // 	apiKey: "AIzaSyD1m81RrkwZ1V-ezgYwhLP88DhProUoPqk",
@@ -23,6 +32,7 @@ var firebaseConfig = {
 // 	messagingSenderId: "521659857765",
 // 	appId: "1:521659857765:web:5ee55d1098c002c8"
 // };
+
 firebase.initializeApp(firebaseConfig);
 var email;
 var created_time = ""
@@ -486,62 +496,4 @@ export default {
 					})
 				})
 	}
-	// getPosts(item) {
-	// 	let postsCollection = firestore.collection(item)
-	// 	return postsCollection
-	// 		.orderBy('created_at', 'desc')
-	// 		.get()
-	// 		.then((docSnapshots) => {
-	// 			return docSnapshots.docs.map((doc) => {
-	// 				let data = doc.data()
-	// 				if (!data.view) {
-	// 					data.view = 0;
-	// 				}
-	// 				data.level = "0"
-	// 				data.userImg = "https://i.imgur.com/PJpHPNO.jpg"
-	// 				data.giturl = "I'm visiter"
-	// 				data.vote = 0
-	// 				if (data.email == null) {
-	// 					data.email = 'visiter'
-	// 				}
-	// 				else {
-	// 					this.get_user_info(data.email)
-	// 						.then(res => {
-	// 							if (res[0] != null && res[0].level != null) {
-	// 								data.level = res[0].level
-	// 								data.userImg = res[0].img
-	// 								data.giturl = res[0].giturl
-	// 							} else {
-	// 								data.level = "0"
-	// 								data.userImg = "https://i.imgur.com/PJpHPNO.jpg"
-	// 								data.giturl = "no have giturl"
-	// 							}
-	// 						})
-	// 				}
-	// 				data.id = doc.id
-	// 				let arr = new Array();
-	// 				this.getPostTag().then(
-	// 					res => {
-	// 						for (let i = 0; i < res.length; i++) {
-	// 							// console.log("======================")
-	// 							// console.log(doc.id)
-	// 							// console.log(res[i].id, "123123123312")
-	// 							// console.log(res[i].post_token.split('#'))
-	// 							// console.log(res[i].post_token.includes(doc.id),'sibal')
-	// 							if (res[i].post_token.includes(doc.id)) {
-	// 								arr.push(res[i].id)
-	// 							}
-	// 						}
-	// 					})
-	// 				data.tags = arr
-	// 				this.getVote(data.id).then(res => {
-	// 					data.vote = res
-	// 				})
-	// 				data.postdate = new Date(data.created_at.toDate()) + ""
-	// 				data.postdate = data.postdate.substring(0, 24)
-	// 				data.created_at = new Date(data.created_at.toDate())
-	// 				return data
-	// 			})
-	// 		})
-	// },
 }

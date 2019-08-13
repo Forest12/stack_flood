@@ -33,7 +33,7 @@ export const store = new Vuex.Store({
       state.email="undefine"
     },
 
-    setalarm(state,x){
+    setAlarm(state,x){
       state.alarm=x;
     }
 
