@@ -7,7 +7,17 @@ import { Cookie, CookieJar } from 'tough-cookie';
 
 
 
-var firebaseConfig = {
+// var firebaseConfig = {
+//     apiKey: "AIzaSyAoads3zhGQPzwvR8GUbThM-QBuhCiQ4eQ",
+//     authDomain: "webmobile-sub2-64e94.firebaseapp.com",
+//     databaseURL: "https://webmobile-sub2-64e94.firebaseio.com",
+//     projectId: "webmobile-sub2-64e94",
+//     storageBucket: "webmobile-sub2-64e94.appspot.com",
+//     messagingSenderId: "101203511109",
+//     appId: "1:101203511109:web:d97956e58e2fa496"
+//   };
+
+  var firebaseConfig = {
     apiKey: "AIzaSyAOaxPMUrFVZmtPhk945-pku0Vr1_9TkGs",
     authDomain: "webmobile-5.firebaseapp.com",
     databaseURL: "https://webmobile-5.firebaseio.com",
@@ -25,6 +35,7 @@ var firebaseConfig = {
 	firebase.auth().onAuthStateChanged(() => {
 		user = firebase.auth().currentUser;
 		if (user != null) {
+			console.log("hi!!!!!!!!!!!!!")
 			email = user.email
 			store.commit('setUser', user)
 			store.commit('setAdmin', user)
@@ -300,13 +311,13 @@ export default {
 		})
 	},
 	logging(item) {
-		created_time = firebase.firestore.Timestamp.now().toDate() + " "
-		created_time = created_time.substring(0, 24)
-		return firestore.collection('LOG').doc(email + " " + created_time).set({
-			email,
-			item,
-			time: firebase.firestore.FieldValue.serverTimestamp() 
-		})
+		// created_time = firebase.firestore.Timestamp.now().toDate() + " "
+		// created_time = created_time.substring(0, 24)
+		// return firestore.collection('LOG').doc(email + " " + created_time).set({
+		// 	email,
+		// 	item,
+		// 	time: firebase.firestore.FieldValue.serverTimestamp() 
+		// })
 	},
 
 
@@ -361,7 +372,6 @@ export default {
 	getUser() {
 		const user_info = firestore.collection("member").where("email","==",email);
 		return user_info
-				.orderBy('user_authority')
 				.get()
 				.then((docSnapshots) => {
 					return docSnapshots.docs.map((doc) => {
