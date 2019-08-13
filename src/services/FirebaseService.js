@@ -445,7 +445,7 @@ export default {
 	// },
 
 	// 태그추가
-	addTag(tag, id){ // tags = ['aaa','bbb','ccc]
+	addTag(tag, id){ 
 			return firestore.collection('Tags').doc(tag).set({
 				post_token:id,
 			})
