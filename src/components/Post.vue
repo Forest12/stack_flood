@@ -219,7 +219,7 @@ export default {
       if(this.item==null&&this.tempitem!=null){
         this.item=this.tempitem
       }
-      this.user_email = this.$store.state.user.email
+      this.user_email = this.$store.state.email
       this.getAnswerCount(this.id,this.item)
       this.getvoteCount(this.id)
   },

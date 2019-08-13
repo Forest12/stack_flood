@@ -22,7 +22,7 @@
             <div class="markdown-body">
               <div v-html="content"></div>
             </div>
-            <v-layout v-if="email == $store.state.user.email">
+            <v-layout v-if="email == $store.state.email">
               <v-dialog v-model="dialog" persistent max-width="600px">
                 <template v-slot:activator="{ on }">
                     <v-btn outlined color="green" dark v-on="on" @click="initedit"><v-icon left small>fas fa-edit</v-icon>Edit</v-btn>
@@ -141,7 +141,7 @@ export default {
     },
 
     vote(check){
-          FirebaseService.vote(this.answer_token, this.$store.state.user.email,check).then(res=>{
+          FirebaseService.vote(this.answer_token, this.$store.state.email,check).then(res=>{
           if(res){
             if(check){
               this.num_vote += 1

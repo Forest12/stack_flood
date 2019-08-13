@@ -17,30 +17,58 @@
       <span class="hr-line"></span>
     </nav>
             <div v-show="postitem=='AI'">    
-            <PostList :item="'AI'" :limits="3" :load-more="true"></PostList>
+            <PostList 
+            :item="'AI'" 
+            :limits="3" 
+            :load-more="true"></PostList>
             </div>
 
             <div v-show="postitem=='Bigdata'">
-            <PostList :item="'Bigdata'" :limits="3" :load-more="true"></PostList>
+            <PostList 
+            :item="'Bigdata'" 
+            :limits="3" 
+            :load-more="true"></PostList>
             </div>
 
             <div v-show="postitem=='Blockchain'">
-            <PostList :item="'Blockchain'" :limits="3" :load-more="true"></PostList>
+            <PostList 
+            :item="'Blockchain'" 
+            :limits="3" 
+            :load-more="true"></PostList>
             </div>
 
             <div v-show="postitem=='Webmobile'">
-            <PostList :item="'Webmobile'" :limits="3" :load-more="true"></PostList>
+            <PostList 
+            :item="'Webmobile'" 
+            :limits="3" 
+            :load-more="true"></PostList>
             </div>
 
     <nav>
       <v-toolbar flat color="#FAFAFA" height="50">
         <v-toolbar-title>
-          <span class="title">Best Post</span>
+          <span class="title">developer</span>
         </v-toolbar-title>
       </v-toolbar>
       <span class="hr-line"></span>
     </nav>
-    <questionCom></questionCom>
+
+     <infinite-slide-bar>
+      <div class="columns">
+        <div class="column" v-for="coin in coins" :key="coin.key">
+          <div class="f-left pd-t-8px mg-r-10px">
+            <v-img :src="this.user.img"></v-img>
+          </div>
+          <div class="f-left">
+            <div class="f-w-bold">{{this.user.email}}</div>
+            <div>
+              {{this.user.giturl}}
+            </div>
+          </div>
+        </div>
+      </div>
+    </infinite-slide-bar>
+
   </v-container>
 </template>
 
@@ -50,11 +78,15 @@ import PostList from '../components/MainPostList .vue'
 
 import FirebaseService from '@/services/FirebaseService'
 import questionCom from "./questionCom";
+import InfiniteSlideBar from 'vue-infinite-slide-bar'
+
 export default {
   components: {
     questionCom,
     PostList,
-  },created:function(){
+    InfiniteSlideBar,
+  },
+  created:function(){
     FirebaseService.logging('main..');
     this.getUser()
   },

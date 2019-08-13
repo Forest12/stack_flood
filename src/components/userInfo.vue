@@ -43,7 +43,7 @@ export default {
   props: {
     email: { type: String },
     giturl: { type: String },
-    level: { type: String },
+    level: { type: Number },
     userImg: { type: String },
   },
 }

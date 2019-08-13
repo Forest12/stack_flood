@@ -150,7 +150,7 @@ export default {
 					if (!data.view) {
 						data.view = 0;
 					}
-					data.level = "0"
+					data.level = 0
 					data.userImg = "https://i.imgur.com/PJpHPNO.jpg"
 					data.giturl = "I'm visiter"
 					data.item = item

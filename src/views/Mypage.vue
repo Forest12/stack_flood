@@ -101,7 +101,7 @@ export default {
     },
     
     created:function(){
-    //FirebaseService.logging('mypage');
+    FirebaseService.logging('mypage');
   },
 	components: {
     PostList,
@@ -114,7 +114,7 @@ export default {
      getUser() {
              FirebaseService.getUser().then
             (res=>{
-              this.user=res[0]
+            this.user=res[0]
             this.giturl=this.user.giturl
             this.userimg=this.user.img
             })
