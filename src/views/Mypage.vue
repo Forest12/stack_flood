@@ -4,7 +4,7 @@
 
 
     <!-- Post list -->
-    <v-container>
+    <v-container v-if="$store.state.user.email">
         <v-layout>
         <v-flex xs12>
             <h2>MY Page</h2>

@@ -29,7 +29,7 @@
               <div v-html="editor"></div>
             </div>
 
-             <v-layout mx-5 v-if="post.email == $store.state.user.email">
+             <v-layout mx-5 v-if="post.email == $store.state.email">
 
       <v-dialog v-model="dialog" persistent max-width="600px">
         <template v-slot:activator="{ on }">
@@ -131,10 +131,8 @@ export default {
         }
     },
 	created(){
+        FirebaseService.logging(this.post_token);
         this.item = this.$route.params.item
-        if(this.item==null){
-
-        }
         this.post_token = this.$route.params.post_token
         this.getPost(this.post_token,  this.item)
         this.getVote()
@@ -179,7 +177,7 @@ export default {
             
         },
         vote(check){
-            FirebaseService.vote(this.post_token, this.$store.state.user.email,check).then(res=>{
+            FirebaseService.vote(this.post_token, this.$store.state.email,check).then(res=>{
               //console.log(res)
               if(res){
                 if(check){

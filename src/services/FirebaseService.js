@@ -28,11 +28,11 @@ var firebaseConfig = {
 			email = user.email
 			store.commit('setUser', user)
 			store.commit('setAdmin', user)
-	
-
+			store.commit('setEmail', email)
 		}else {
 			email = "undefine"
 			store.commit('setUser', user)
+			store.commit('setEmail', email)
 		}})
 	
 
