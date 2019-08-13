@@ -6,6 +6,7 @@ import { store } from '../store.js'
 import { Cookie, CookieJar } from 'tough-cookie';
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 var firebaseConfig = {
 	apiKey: "AIzaSyD1m81RrkwZ1V-ezgYwhLP88DhProUoPqk",
 	authDomain: "webmobile-test-5d2a4.firebaseapp.com",
@@ -36,6 +37,8 @@ firebase.auth().onAuthStateChanged(() => {
 })
 
 =======
+=======
+>>>>>>> 50375039b4ff8b53a63a0348ed8c9537502bac79
 
 
 // var firebaseConfig = {
@@ -77,7 +80,10 @@ firebase.auth().onAuthStateChanged(() => {
 			store.commit('setEmail', email)
 		}})
 	
+<<<<<<< HEAD
 >>>>>>> 37703a9152812a309a26322309875ca07ebe3799
+=======
+>>>>>>> 50375039b4ff8b53a63a0348ed8c9537502bac79
 
 const firestore = firebase.firestore()
 
@@ -356,6 +362,7 @@ export default {
 	},
 	logging(item) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		created_time = firebase.firestore.Timestamp.now().toDate() + " "
 		created_time = created_time.substring(0, 24)
 		return firestore.collection('LOG').doc(email + " " + created_time).set({
@@ -364,6 +371,8 @@ export default {
 			time: firebase.firestore.FieldValue.serverTimestamp()
 		})
 =======
+=======
+>>>>>>> 50375039b4ff8b53a63a0348ed8c9537502bac79
 		// created_time = firebase.firestore.Timestamp.now().toDate() + " "
 		// created_time = created_time.substring(0, 24)
 		// return firestore.collection('LOG').doc(email + " " + created_time).set({
@@ -371,7 +380,10 @@ export default {
 		// 	item,
 		// 	time: firebase.firestore.FieldValue.serverTimestamp() 
 		// })
+<<<<<<< HEAD
 >>>>>>> 37703a9152812a309a26322309875ca07ebe3799
+=======
+>>>>>>> 50375039b4ff8b53a63a0348ed8c9537502bac79
 	},
 
 
@@ -428,6 +440,7 @@ export default {
 		const user_info = firestore.collection("member").where("email", "==", email);
 		return user_info
 <<<<<<< HEAD
+<<<<<<< HEAD
 			.orderBy('user_authority')
 			.get()
 			.then((docSnapshots) => {
@@ -436,6 +449,8 @@ export default {
 					data.created_at = new Date(data.created_at.toDate())
 					return data
 =======
+=======
+>>>>>>> 50375039b4ff8b53a63a0348ed8c9537502bac79
 				.get()
 				.then((docSnapshots) => {
 					return docSnapshots.docs.map((doc) => {
@@ -443,7 +458,10 @@ export default {
 						data.created_at = new Date(data.created_at.toDate())
 						return data
 					})
+<<<<<<< HEAD
 >>>>>>> 37703a9152812a309a26322309875ca07ebe3799
+=======
+>>>>>>> 50375039b4ff8b53a63a0348ed8c9537502bac79
 				})
 			})
 	},
@@ -522,6 +540,9 @@ export default {
 
 	// 태그추가
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 50375039b4ff8b53a63a0348ed8c9537502bac79
 	addTag(tag, id) { // tags = ['aaa','bbb','ccc]
 		return firestore.collection('Tags').doc(tag).set({
 			post_token: id,
@@ -531,12 +552,15 @@ export default {
 		return firestore.collection('Tags').doc(title).set({
 			post_token: id_all,
 		})
+<<<<<<< HEAD
 =======
 	addTag(tag, id){ 
 			return firestore.collection('Tags').doc(tag).set({
 				post_token:id,
 			})
 >>>>>>> 37703a9152812a309a26322309875ca07ebe3799
+=======
+>>>>>>> 50375039b4ff8b53a63a0348ed8c9537502bac79
 	},
 
 	async getTag(item) {
@@ -583,12 +607,15 @@ export default {
 		})
 	},
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 	getAllPosts() {
 
 	}
 
 =======
+=======
+>>>>>>> 50375039b4ff8b53a63a0348ed8c9537502bac79
 	chRead(doc_id,user_email){
 		console.log("doc_id:", doc_id, "user_email:", user_email)
 		let alarmDoc = firestore.collection("member").doc(user_email).collection("Notice").doc(doc_id)
@@ -600,5 +627,8 @@ export default {
 
 	}
 	
+<<<<<<< HEAD
 >>>>>>> 37703a9152812a309a26322309875ca07ebe3799
+=======
+>>>>>>> 50375039b4ff8b53a63a0348ed8c9537502bac79
 }

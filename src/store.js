@@ -10,11 +10,16 @@ export const store = new Vuex.Store({
     isAdmin:false,
     user_authority: '',
 <<<<<<< HEAD
+<<<<<<< HEAD
     alarm : 0,
 =======
     alarm : -1,
     email:"undefine",
 >>>>>>> 37703a9152812a309a26322309875ca07ebe3799
+=======
+    alarm : -1,
+    email:"undefine",
+>>>>>>> 50375039b4ff8b53a63a0348ed8c9537502bac79
   },
   mutations: {
     setTitle(state, p){
