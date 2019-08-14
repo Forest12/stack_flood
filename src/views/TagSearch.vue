@@ -9,6 +9,7 @@
     </v-btn-toggle>
     <div class="mt-3 headline">
     {{ msg }}
+    
     </div>
     <v-flex v-for="i in posts.length" v-bind:key='i' class="xs" px-3>
 			<div class="post-con">
