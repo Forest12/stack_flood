@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-container fluid >
+    <v-container fluid v-if="isAdmin">
       <v-layout row wrap>
         <v-flex xs12 class="pink lighten-1">
           <div class="admin-header">
@@ -74,7 +74,7 @@
             label="공지 내용을 적어주세요"
             solo-inverted
           ></v-text-field>
-          <v-btn color="green">모든 유저에게 보내기</v-btn>
+          <v-btn @click="postNotice" color="green">모든 사용자에게 공지 보내기</v-btn>
         </v-col>
     </div>
     </v-container>
@@ -99,6 +99,14 @@ export default {
     }
   },
   methods: {
+    postNotice(){
+      if(this.content != ""){
+        for(let i=0; i<this.userlist.length;i++){
+          FirebaseService.postNotice(this.userlist[i].email, this.content)
+        }
+        this.content = ""
+        }
+    },
     authth(e,ee,eee,eeee){
       this.email = e
       this.created_at = ee
@@ -131,7 +139,7 @@ export default {
         })
         // console.log(this.userlist)
         })
-}
+    }
 }
 </script>
 
