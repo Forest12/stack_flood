@@ -1,12 +1,22 @@
 <template>
 <v-container>
-    <v-layout my-5>
+    <v-layout mt-5>
         <v-flex>
             <h1>{{post.title}}</h1>
-            <div class="font-weight-light  subheading cutfourline">ASKED {{post.postdate}}</div>
+            <div class="font-weight-light  subheading cutfourline">WRITER {{post.email}}</div>
+            <div class="font-weight-light grey--text cutfourline">ASKED {{post.postdate}}</div>
             <hr>
         </v-flex>
     </v-layout>
+    <div class="post-content-tags mt-3">
+      <span
+        class="post-content-tag lighten-4 mr-2 mb-1"
+        v-for="(tag, index) in post.tags"
+        :key="index"
+        @click="goSearch(tag)"
+      ><v-chip class="white--text" color="#E67933">{{ tag }}</v-chip></span>
+      
+    </div>
 
     <v-layout xs1 my-5>
         <v-flex px-12 mx-3 >
@@ -128,6 +138,7 @@ export default {
             editTitle: "",
             editContent: "",
             editor:"",
+
         }
     },
 	created(){
@@ -205,10 +216,14 @@ export default {
         getTeg(){
 
         },
-      
-        
-
-
+        goSearch(tag){
+          this.$router.push({
+            path:`/search/${tag}`,
+            query:{
+              options:'tag'
+            }
+          })
+        }
     }
 }
 </script>
@@ -217,6 +232,9 @@ export default {
 
 Editor {
     display:none;
+}
+.mychip{
+  cursor:pointer;
 }
 
 </style>

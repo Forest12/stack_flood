@@ -11,6 +11,7 @@ export const store = new Vuex.Store({
     user_authority: '',
     alarm : 0,
     email:"undefine",
+    curtag:[],
   },
   mutations: {
     setTitle(state, p){
@@ -35,8 +36,7 @@ export const store = new Vuex.Store({
 
     setAlarm(state,x){
       state.alarm=x;
-    }
-
+    },
   },
   actions: {
   },
