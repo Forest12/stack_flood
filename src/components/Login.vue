@@ -66,6 +66,63 @@
         </v-card-actions>
       </v-card>
     </v-dialog>
+
+    <!-- modal -->
+    <v-btn  v-if="$store.state.user !== null"
+      color="#070f35"
+      depressed
+      @click="getAlarmlist"
+      @click.stop="dialog = true"
+      dark
+      ><v-icon dark left>fas fa-bell</v-icon> <v-avatar
+          size="25"
+          right
+          class="red darken-2">
+          {{$store.state.alarm}}
+        </v-avatar>
+    </v-btn>
+
+    <v-dialog
+      v-model="dialog"
+      max-width="400">
+      <v-card>
+        <v-card-title class="headline">Check your Alarms</v-card-title>
+
+      <v-list subheader>
+      
+
+        <v-list-item
+          v-for="item in alarms"
+          :key="item.link"
+          @click="goMypostPage(item.link, item.id)"
+        >
+        <div>
+          <v-list-item-content class="ma-3">
+            <v-list-item-title m1 v-text="item.content"></v-list-item-title>
+          </v-list-item-content>
+
+          <v-list-item-icon>
+            <v-icon :color="item.read ? 'grey' : 'deep-purple accent-4'">chat_bubble</v-icon>
+          </v-list-item-icon>
+
+
+        </div>
+          
+
+        </v-list-item>
+      
+        </v-list>
+        <v-card-actions>
+        <v-spacer></v-spacer>
+
+        <v-btn
+          color="green darken-1"
+          text
+          @click="dialog = false">OK</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
     <v-btn router to="/Mypage" 
     v-if="$store.state.user !== null" 
     color="#070f35"
@@ -102,9 +159,14 @@ export default {
       singin_password: "",
       dialog_singin: false,
       dialog_singup: false,
+      dialog: false,
       title: "",
-      content: ""
+      content: "",
+      alarms:[]
     };
+  },
+  mounted(){
+    this.getAlarm()
   },
   methods: {
     login() {
@@ -114,16 +176,16 @@ export default {
       this.$router.push(Mypage);
     },
     signUp() {
-      FirebaseService.signup_database(this.singup_email, "visitor", 0,"https://i.imgur.com/PJpHPNO.jpg","--");
+      FirebaseService.signup_database(this.singup_email, "visitor", "0","https://i.imgur.com/PJpHPNO.jpg","--");
 
       firebase
         .auth()
         .createUserWithEmailAndPassword(this.singup_email, this.singup_password)
         .then(user => {
           user = firebase.auth().currentUser;
-          //console.log(user.email);
+          console.log(user.email);
           if (user) {
-            //console.log("왜안들아가져?");
+            console.log("왜안들아가져?");
             user
               .updateProfile({
                 displayName: "visitor",
@@ -175,9 +237,28 @@ export default {
     async signOut() {
       const r = await this.$firebase.auth().signOut();
       this.$store.commit("setLogOut");
+      this.$router.push("/")
+
       alert("로그아웃 성공");
+    },
+
+    getAlarmlist(){
+      if(this.$store.state.user.email == 'undefine'){
+        return
+      }
+      else{
+          FirebaseService.getAlarms(this.$store.state.user.email).then(res =>{
+                this.alarms = res
+                }
+          )
+      }
+    },
+    goMypostPage(link, doc_id){
+      this.dialog = false
+      FirebaseService.chRead(doc_id,this.$store.state.user.email)
+      this.$router.push(link)
+
     }
   }
 };
 </script>
-

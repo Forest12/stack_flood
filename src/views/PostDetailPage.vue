@@ -183,7 +183,7 @@ export default {
         vote(check){
             if(this.$store.state.user){
             FirebaseService.vote(this.post_token, this.$store.state.email,check).then(res=>{
-              //console.log(res)
+              console.log(res, check)
               if(res){
                 if(check){
                   this.num_vote += 1
