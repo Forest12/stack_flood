@@ -68,7 +68,7 @@
     </v-dialog>
 
     <!-- modal -->
-    <v-btn  v-if="$store.state.user !== null"
+    <v-btn v-if="$store.state.user !== null"
       color="#070f35"
       depressed
       @click="getAlarmlist"
@@ -166,6 +166,7 @@ export default {
     };
   },
   mounted(){
+    this.getAlarm()
   },
   methods: {
     login() {

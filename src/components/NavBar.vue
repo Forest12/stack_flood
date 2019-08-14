@@ -3,7 +3,7 @@
     <div class="nav-line">
       <span class="line"></span>
     </div>
-    <v-toolbar color="#070F35" height="50" min-width="960px"> 
+    <v-toolbar color="#070F35" height="50" > 
       <!-- 툴바 타이틀 -->
       <v-toolbar-title class="white--text gohome" @click="gohome">
         <span class="font-weight-light title">Stack </span>
@@ -11,7 +11,7 @@
         <span class="font-weight-regular title mr-3">lood</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-toolbar-items class="hidden-sm-and-down">
+      <v-toolbar-items>
         <!-- 어드민페이지 -->
         <v-btn
           router
