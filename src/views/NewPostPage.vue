@@ -3,7 +3,7 @@
     <h2 class="headline my-5 text-xs-center">New Post</h2>
 
     <v-form>
-     
+    
       
       <h2 class="mt-5"><v-icon class="mx-3" color="#FFA500">fas fa-check-circle</v-icon>귀하의 질문 제목이 무엇입니까?</h2>
       <template>
