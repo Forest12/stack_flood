@@ -68,14 +68,26 @@ Vue.prototype.$firebase = firebase
 export default {
 	getPost(post_token, item) {
 		var docRef = firestore.collection(item).doc(post_token)
-		return docRef.get().then(function (doc) {
+		return docRef.get().then( (doc) => {
 			if (doc.exists) {
 				let data = doc.data()
 				data.postdate = new Date(data.created_at.toDate()) + ""
 				data.postdate = data.postdate.substring(3, 24)
 				data.created_at = new Date(data.created_at.toDate())
-				//console.log(data, '데이타확인')
-				return data
+				let tarr = new Array();
+				// var cop = this
+				this.getPostTag().then(
+					res => {
+						for (let i = 0; i < res.length; i++) {
+							if (res[i].post_token.includes(doc.id)) {
+								tarr.push(res[i].id)
+							}
+						}
+					})
+					data.tags = tarr
+					return data
+					// data.tags = tarr;
+
 			} else {
 				// doc.data() will be undefined in this case
 				console.log("No such document!");
