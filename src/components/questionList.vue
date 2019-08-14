@@ -44,7 +44,7 @@
             :load-more="true"></PostList>
             </div>
 
-    <nav>
+    <nav style="margin-top:50px; margin-bottom:50px!important;">
       <v-toolbar flat color="#FAFAFA" height="50">
         <v-toolbar-title>
           <span class="title">developer</span>
