@@ -39,7 +39,6 @@ export default {
 	},
 	mounted() {
 		this.getMainPosts(this.item)
-		console.log(limits,"!@##!@#!@#@#!!@#!@#")
 	},
 	methods: {
 		async getMainPosts(item) {
