@@ -17,11 +17,14 @@
 
         <v-flex xs11>
             <div class="font-weight-light  subheading cutfourline">ASKED {{formatedDate}}</div>
+            
 
             <!-- <MarkdownViewer :content="content"></MarkdownViewer> -->
             <div class="markdown-body">
               <div v-html="content"></div>
             </div>
+            <hr>
+            <div class="font-weight-light  subheading cutfourline">WRITER {{email}}</div>
             <v-layout v-if="email == $store.state.email">
               <v-dialog v-model="dialog" persistent max-width="600px">
                 <template v-slot:activator="{ on }">
