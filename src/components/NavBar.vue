@@ -6,7 +6,8 @@
     <v-toolbar color="#070F35" height="50" > 
       <!-- 툴바 타이틀 -->
       <v-toolbar-title class="white--text gohome" @click="gohome">
-        <span class="font-weight-light title">Stack </span>
+        <img src="https://i.imgur.com/JSMJH07.png" width="30px">
+        <span class="font-weight-light title"> Stack </span>
         <span class="font-weight-medium headline Flood-title">F</span>
         <span class="font-weight-regular title mr-3">lood</span>
       </v-toolbar-title>
