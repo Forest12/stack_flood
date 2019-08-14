@@ -21,7 +21,7 @@
           color="pink"
           dark
           v-on="on"
-          :class="{notAdmin: $store.state.isAdmin}"
+          :class="{notAdmin: !$store.state.isAdmin}"
         >Admin Page</v-btn>
 
         <!-- 검색기능 -->

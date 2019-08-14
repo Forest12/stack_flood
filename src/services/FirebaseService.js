@@ -3,26 +3,25 @@ import 'firebase/firestore'
 import 'firebase/auth'
 import Vue from 'vue'
 import { store } from '../store.js'
-import { Cookie, CookieJar } from 'tough-cookie';
-// var firebaseConfig = {
-//     apiKey: "AIzaSyAoads3zhGQPzwvR8GUbThM-QBuhCiQ4eQ",
-//     authDomain: "webmobile-sub2-64e94.firebaseapp.com",
-//     databaseURL: "https://webmobile-sub2-64e94.firebaseio.com",
-//     projectId: "webmobile-sub2-64e94",
-//     storageBucket: "webmobile-sub2-64e94.appspot.com",
-//     messagingSenderId: "101203511109",
-//     appId: "1:101203511109:web:d97956e58e2fa496"
-//   };
-
 var firebaseConfig = {
-    apiKey: "AIzaSyAOaxPMUrFVZmtPhk945-pku0Vr1_9TkGs",
-    authDomain: "webmobile-5.firebaseapp.com",
-    databaseURL: "https://webmobile-5.firebaseio.com",
-    projectId: "webmobile-5",
-    storageBucket: "webmobile-5.appspot.com",
-    messagingSenderId: "934123234328",
-    appId: "1:934123234328:web:fda8318efc0bd997"
+    apiKey: "AIzaSyAoads3zhGQPzwvR8GUbThM-QBuhCiQ4eQ",
+    authDomain: "webmobile-sub2-64e94.firebaseapp.com",
+    databaseURL: "https://webmobile-sub2-64e94.firebaseio.com",
+    projectId: "webmobile-sub2-64e94",
+    storageBucket: "webmobile-sub2-64e94.appspot.com",
+    messagingSenderId: "101203511109",
+    appId: "1:101203511109:web:d97956e58e2fa496"
   };
+
+// var firebaseConfig = {
+//     apiKey: "AIzaSyAOaxPMUrFVZmtPhk945-pku0Vr1_9TkGs",
+//     authDomain: "webmobile-5.firebaseapp.com",
+//     databaseURL: "https://webmobile-5.firebaseio.com",
+//     projectId: "webmobile-5",
+//     storageBucket: "webmobile-5.appspot.com",
+//     messagingSenderId: "934123234328",
+//     appId: "1:934123234328:web:fda8318efc0bd997"
+//   };
 // var firebaseConfig = {
 //     apiKey: "AIzaSyAoads3zhGQPzwvR8GUbThM-QBuhCiQ4eQ",
 //     authDomain: "webmobile-sub2-64e94.firebaseapp.com",
