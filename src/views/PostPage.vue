@@ -14,8 +14,8 @@
       </v-layout>
       
     </v-container> -->
-    <v-btn v-if="user_check" @click="newPost"  color="#FFA500" >Ask Question</v-btn>
     <v-container class="post-container">
+    <v-btn v-if="user_check" @click="newPost"  color="#FFA500" >Ask Question</v-btn>
       <div class="post-box">
         <div class="post-left">
           <h2 class="white--text">{{item}}</h2>
