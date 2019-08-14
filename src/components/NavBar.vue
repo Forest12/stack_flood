@@ -3,7 +3,7 @@
     <div class="nav-line">
       <span class="line"></span>
     </div>
-    <v-toolbar color="#070F35" height="50">
+    <v-toolbar color="#070F35" height="50" min-width="960px"> 
       <!-- 툴바 타이틀 -->
       <v-toolbar-title class="white--text gohome" @click="gohome">
         <span class="font-weight-light title">Stack </span>

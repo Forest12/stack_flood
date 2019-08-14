@@ -12,7 +12,7 @@
     <div class="img-banner"></div>
 
     <!-- 카드 -->
-    <introduce-card> </introduce-card> 
+    <introduce-card></introduce-card>
 
     <!-- 질문목록 -->
     <question-list></question-list>
