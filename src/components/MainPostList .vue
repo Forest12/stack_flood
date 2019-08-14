@@ -1,6 +1,6 @@
 <template>
   <v-layout row wrap>
-    <v-flex v-for="i in posts.length" v-bind:key='i.title' xs>
+    <v-flex v-for="i in posts.length > limits ? limits : posts.length" v-bind:key='i.title' :class="'xs' + 12 / 1" px-3>
       <questionCom
 	  			:email="posts[i-1].email"
 	  			:id="posts[i - 1].id"
@@ -28,7 +28,11 @@ import questionCom from './questionCom'
 
 export default {
 	name: 'MainPostList',
-	
+	props: {
+        item:{type:String},
+		limits: {type: Number, default: 3},
+		loadMore: {type: Boolean, default: false}
+	},
 	data() {
 		return {
 			posts: []
