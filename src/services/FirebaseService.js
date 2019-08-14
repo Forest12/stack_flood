@@ -51,7 +51,7 @@ var user;
 firebase.auth().onAuthStateChanged(() => {
 	user = firebase.auth().currentUser;
 	if (user != null) {
-		console.log("hi!!!!!!!!!!!!!")
+		//console.log("hi!!!!!!!!!!!!!")
 		email = user.email
 		store.commit('setUser', user)
 		store.commit('setAdmin', user)
@@ -74,7 +74,7 @@ export default {
 				data.postdate = new Date(data.created_at.toDate()) + ""
 				data.postdate = data.postdate.substring(3, 24)
 				data.created_at = new Date(data.created_at.toDate())
-				console.log(data, '데이타확인')
+				//console.log(data, '데이타확인')
 				return data
 			} else {
 				// doc.data() will be undefined in this case
@@ -380,7 +380,7 @@ export default {
 				let id = docSnapshotsDown.docs[0].id
 				firestore.collection("VOTE_DOWN").doc(id).delete()
 				//flase가 return 되면 num_vote가 줄어든다.
-				console.log("이전에 싫어요를 눌렀어")
+				//console.log("이전에 싫어요를 눌렀어")
 				return true
 			} else {
 				let docSnapshotsUP = await updocRef.get()
@@ -391,7 +391,7 @@ export default {
 						post_token,
 						"user": email,
 					})
-					console.log("이전에 싫어요를 누른적 없어")
+					//console.log("이전에 싫어요를 누른적 없어")
 
 					return true
 				} else {
@@ -407,7 +407,7 @@ export default {
 				let id = docSnapshotsUP.docs[0].id
 				firestore.collection("VOTE_UP").doc(id).delete()
 				//flase가 return 되면 num_vote가 줄어든다.
-				console.log("이전에 좋아요 누름")
+				//console.log("이전에 좋아요 누름")
 
 				return true
 			} else {
@@ -418,7 +418,7 @@ export default {
 						post_token,
 						"user": email,
 					})
-					console.log("이전에 좋아요 누른적 없어")
+					//console.log("이전에 좋아요 누른적 없어")
 
 					return true
 				} else {
@@ -493,7 +493,7 @@ export default {
 		})
 	},
 	chRead(doc_id, user_email) {
-		console.log("doc_id:", doc_id, "user_email:", user_email)
+		//console.log("doc_id:", doc_id, "user_email:", user_email)
 		let alarmDoc = firestore.collection("member").doc(user_email).collection("Notice").doc(doc_id)
 		alarmDoc.update(
 			{

@@ -39,13 +39,9 @@
 
 
     </v-flex>
-
-	<!--<div v-for="i in (posts.length/10 + 1)" v-bind:key='i.title' :class="'xs' + 12 / column" px-3 style="display:inline-block;">
-		<div class="my-2" style="display:inline-block; margin-left:10px;">
-			<v-btn text small color="primary"
-				v-on:click="viewpost('Blockchain')">{{i}}</v-btn>
-		</div>
-	</div>-->
+<!-- <div class="text-xs-center">
+    <v-pagination :length="pagelimit" v-model="page"></v-pagination>
+  </div> -->
   </v-layout>
 
   
@@ -93,7 +89,9 @@ export default {
 	},
 	data() {
 		return {
-			posts: []
+			posts: [],
+			page:1,
+			//pagelimit:3,
 		}
 	},
 	components: {
@@ -106,7 +104,8 @@ export default {
 	methods: {
 		async getPosts(item) {
 			this.posts = await FirebaseService.getPosts(item)
-			console.log(this.posts,'나오냐나오냐아노')
+			//this.pagelimit=Math.floor(posts.length/10)
+			//console.log(this.posts,'나오냐나오냐아노')
 		},
 	}
 }
