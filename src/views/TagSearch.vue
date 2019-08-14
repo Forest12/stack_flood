@@ -9,6 +9,7 @@
     </v-btn-toggle>
     <div class="mt-3 headline">
     {{ msg }}
+    
     </div>
     <v-flex v-for="i in posts.length" v-bind:key='i' class="xs" px-3>
 			<div class="post-con">
@@ -69,6 +70,8 @@ export default {
       this.setTag()
     } else if (this.option === "title") {
       this.text = "title";
+      this.msg = "해당 태그가 등록된 게시글을 보여드립니다.";
+      this.setTitle()
     }
   },
   methods: {

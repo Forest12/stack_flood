@@ -1,6 +1,6 @@
 <template>
   <v-layout row wrap class="ml-3">
-    <v-flex v-for="i in posts.length > limits ? limits : posts.length" v-bind:key='i.title' :class="'xs' + 12 / column" px-3>
+    <v-flex v-for="i in posts.length" v-bind:key='i.title' xs12 px-3>
 			<div class="post-con">
 
 			<!-- 포스트 내용 -->
@@ -29,7 +29,6 @@
 					<user-info
 					:email="posts[i-1].email"
 					:giturl="posts[i-1].giturl"
-					:level="posts[i-1].level"
 					:userImg="posts[i-1].userImg"
 					
 					></user-info>
@@ -82,10 +81,7 @@ export default {
 	FirebaseService.logging(this.item);
   },
 	props: {
-    item:{type:String},
-		column: {type: Number, default: 1},
-		limits: {type: Number, default: 4},
-		loadMore: {type: Boolean, default: false}
+    
 	},
 	data() {
 		return {

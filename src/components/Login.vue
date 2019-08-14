@@ -166,7 +166,6 @@ export default {
     };
   },
   mounted(){
-    this.getAlarm()
   },
   methods: {
     login() {

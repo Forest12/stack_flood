@@ -52,24 +52,25 @@ font-family: 'Heebo', sans-serif;
 color:#f27e35;
 margin-bottom:20px;
 }
-.card-img{
-  height:190px;
-}
-.card-content{
-  height:180px;
-}
-.card-title{
-  text-align:center;
-}
-.cg{
-  margin:0px auto;
-}
 .card-border{
   /* background:black; */
   border:3px solid rgb(39,52,139);
   border-radius:15px;
   padding:15px;
   width:260px;
-  margin:10px 10px;
+  margin:0 auto;
+}
+.card-img{
+  height:190px;
+}
+.card-content p{
+  height:180px;
+  word-wrap: break-all;
+}
+.card-title{
+  text-align:center;
+}
+.cg{
+  margin:0px auto;
 }
 </style>
