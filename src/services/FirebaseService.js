@@ -513,5 +513,14 @@ export default {
 					return data
 					})
 				})
+	},
+	postNotice(user_email, content){
+        firestore.collection("member").doc(user_email).collection("Notice").add(
+            {
+            "content": `< 공지사항 > ${content}`,
+            "link":``,
+            "read":false,
+            }
+        )
 	}
 }
