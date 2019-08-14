@@ -3,7 +3,7 @@
     <div class="nav-line">
       <span class="line"></span>
     </div>
-    <v-toolbar color="#070F35" height="50">
+    <v-toolbar color="#070F35" height="50" min-width="960px"> 
       <!-- 툴바 타이틀 -->
       <v-toolbar-title class="white--text gohome" @click="gohome">
         <span class="font-weight-light title">Stack </span>
@@ -20,7 +20,7 @@
           color="pink"
           dark
           v-on="on"
-          :class="{notAdmin: !$store.state.isAdmin}"
+          :class="{notAdmin: $store.state.isAdmin}"
         >Admin Page</v-btn>
 
         <!-- 검색기능 -->

@@ -38,27 +38,7 @@
                         <v-flex xs12>
                             <markdown-editor label="Content" v-model="editContent" ref="markdownEditor"></markdown-editor>
                         </v-flex>
-                        <v-flex class="blue">
-                          <VueTags v-model="tags">
-                          <div class="tags-input"
-                             slot-scope="{tag,removeTag,inputEventHandlers,inputBindings }">
-
-                            <span v-for="tag in tags" class="tags-input-tag" >
-                              <span>{{ tag }}</span>
-
-                              <button type="button" class="tags-input-remove"
-                                  v-on:click="removeTag(tag)">&times;
-                              </button>
-
-                            </span>
-                            <input
-                              class="tags-input-text"  placeholder="Add tag..."
-                              v-on="inputEventHandlers"
-                              v-bind="inputBindings"
-                            >
-                            </div>
-                          </VueTags>
-                        </v-flex>
+                        
                       </v-layout>
                      
                       
@@ -91,7 +71,6 @@
 import FirebaseService from '@/services/FirebaseService'
 import MarkdownViewer from './MarkdownViewer'
 import { functions } from 'firebase';
-import VueTags from "vue-tags"
 
 export default {
   name: 'Answer',
@@ -113,7 +92,6 @@ export default {
   },
   components:{
     MarkdownViewer,
-    VueTags
   },
  
   computed: {

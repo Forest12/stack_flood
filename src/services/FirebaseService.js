@@ -51,7 +51,7 @@ var user;
 firebase.auth().onAuthStateChanged(() => {
 	user = firebase.auth().currentUser;
 	if (user != null) {
-		console.log("hi!!!!!!!!!!!!!")
+		//console.log("hi!!!!!!!!!!!!!")
 		email = user.email
 		store.commit('setUser', user)
 		store.commit('setAdmin', user)
@@ -392,7 +392,7 @@ export default {
 				let id = docSnapshotsDown.docs[0].id
 				firestore.collection("VOTE_DOWN").doc(id).delete()
 				//flase가 return 되면 num_vote가 줄어든다.
-				console.log("이전에 싫어요를 눌렀어")
+				//console.log("이전에 싫어요를 눌렀어")
 				return true
 			} else {
 				let docSnapshotsUP = await updocRef.get()
@@ -403,7 +403,7 @@ export default {
 						post_token,
 						"user": email,
 					})
-					console.log("이전에 싫어요를 누른적 없어")
+					//console.log("이전에 싫어요를 누른적 없어")
 
 					return true
 				} else {
@@ -419,7 +419,7 @@ export default {
 				let id = docSnapshotsUP.docs[0].id
 				firestore.collection("VOTE_UP").doc(id).delete()
 				//flase가 return 되면 num_vote가 줄어든다.
-				console.log("이전에 좋아요 누름")
+				//console.log("이전에 좋아요 누름")
 
 				return true
 			} else {
@@ -430,7 +430,7 @@ export default {
 						post_token,
 						"user": email,
 					})
-					console.log("이전에 좋아요 누른적 없어")
+					//console.log("이전에 좋아요 누른적 없어")
 
 					return true
 				} else {
@@ -505,7 +505,7 @@ export default {
 		})
 	},
 	chRead(doc_id, user_email) {
-		console.log("doc_id:", doc_id, "user_email:", user_email)
+		//console.log("doc_id:", doc_id, "user_email:", user_email)
 		let alarmDoc = firestore.collection("member").doc(user_email).collection("Notice").doc(doc_id)
 		alarmDoc.update(
 			{
@@ -526,16 +526,13 @@ export default {
 					})
 				})
 	},
-	async getTagOne(){
-		let postsCollection = await firestore.collection('Tags')
-		return postsCollection
-			.get()
-			.then((docSnapshots) => {
-				return docSnapshots.docs.map((doc) => {
-					let data = doc.data()
-					data.id = doc.id
-					return data
-				})
-			})
+	postNotice(user_email, content){
+        firestore.collection("member").doc(user_email).collection("Notice").add(
+            {
+            "content": `< 공지사항 > ${content}`,
+            "link":``,
+            "read":false,
+            }
+        )
 	}
 }

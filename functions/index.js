@@ -16,7 +16,7 @@ exports.sendMassage = functions.firestore.document('{item}/{post_token}/Answer/{
               admin.firestore().collection("member").doc(email).collection("Notice").add(
                 {
                   "content": `귀하의 Post에 새로운 댓글이 등록되었습니다.`,
-                  "link":`/${item}/${post_token}`,
+                  "link":`/${item}/detail/${post_token}`,
                   "read":false,
                 }
               )

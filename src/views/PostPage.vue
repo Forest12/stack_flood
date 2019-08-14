@@ -24,7 +24,7 @@
         <div class="post-right">
           <v-layout>
           <v-flex xs12>
-              <PostList :item="item" :limits="10" :load-more="true"></PostList>
+              <PostList :item="item" ></PostList>
           </v-flex>
         </v-layout>
         </div>
