@@ -1,16 +1,21 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 
+import Mypage from './views/Mypage.vue'
+
 import PostPage from './views/PostPage.vue'
 import NewPostPage from './views/NewPostPage.vue'
-
+import PostDetailPage from './views/PostDetailPage.vue'
 import PortfolioPage from './views/PortfolioPage.vue'
 import NewPortfolioPage from './views/NewPortfolioPage.vue'
+import TagSearch from './views/TagSearch.vue'
+
+import chatbot from './components/chatbot'
 
 import Main from './views/Main.vue'
 import UserProfile from './views/UserProfile.vue'
 
-
+import AdminPage from './views/AdminPage.vue'
 
 Vue.use(VueRouter);
 
@@ -21,6 +26,11 @@ export const router = new VueRouter({
     path: '/',
     name: 'Main',
     component: Main,
+  },
+  {
+    path: '/Mypage',
+    name: 'Mypage',
+    component: Mypage,
   },
 
   {
@@ -33,6 +43,12 @@ export const router = new VueRouter({
     name: 'Newpost',
     component: NewPostPage,
   },
+  {
+    path: "/:item/detail/:post_token",
+    name: 'Detailpost',
+    component: PostDetailPage,
+  },
+
   {
     path: '/userProfile',
     name: 'UserProfile',
@@ -48,8 +64,20 @@ export const router = new VueRouter({
     path: '/portfolio',
     name: 'Portfolio',
     component: PortfolioPage,
-
   },
- 
+  {
+    path: '/admin',
+    name: 'Admin',
+    component: AdminPage,
+  },
+  {
+    path: '/chatbot',
+    component: chatbot,
+  },
+  {
+    path: '/search/:item',
+    name: 'TagSearch',
+    component: TagSearch,
+  }
   ]
 })

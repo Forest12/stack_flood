@@ -4,7 +4,7 @@
       </Navbar>
     </div>
 </template>
-
+ 
 <script>
 import Login from './Login'
 import Navbar from './NavBar'

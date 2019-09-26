@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 23.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns:svg="http://www.w3.org/2000/svg"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 640 480"
+	 style="enable-background:new 0 0 640 480;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#D3FF20;stroke-width:20;stroke-miterlimit:10;}
+	.st1{clip-path:url(#SVGID_2_);}
+	.st2{fill:#05FF18;}
+</style>
+<circle class="st0" cx="261.8" cy="290.6" r="144"/>
+<title>Check mark</title>
+<g>
+	<defs>
+		<path id="SVGID_1_" d="M147.4,253.9l110.1,151.5c0,0,79.7-219.3,235.1-378.8"/>
+	</defs>
+	<clipPath id="SVGID_2_">
+		<use xlink:href="#SVGID_1_"  style="overflow:visible;"/>
+	</clipPath>
+	<g class="st1">
+		<title>Layer 1</title>
+		<g id="layer1">
+			<g id="layer1-2">
+				<path id="path4068" class="st2" d="M147.4,253.9l110.1,151.5C313.6,269.8,382.2,145,492.6,26.6C410,81.9,319,186.8,241.2,316.8
+					L147.4,253.9L147.4,253.9z"/>
+			</g>
+		</g>
+	</g>
+</g>
+</svg>

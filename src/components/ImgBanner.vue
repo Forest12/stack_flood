@@ -104,7 +104,7 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
 
 .carousel-3d-slide{
   padding: 5px;
