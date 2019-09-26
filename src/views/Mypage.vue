@@ -115,6 +115,7 @@ export default {
              FirebaseService.getUser().then
             (res=>{
             this.user=res[0]
+            console.log(this.user,"!@#!@#!!!!!!!!!!!!!!!!!!!!!!!")
             this.giturl=this.user.giturl
             this.userimg=this.user.img
             })
