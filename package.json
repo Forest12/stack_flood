@@ -23,7 +23,7 @@
     "firebase-tools": "^7.2.2",
     "github-markdown-css": "^3.0.1",
     "highlight.js": "^9.15.9",
-    "markdown-it": "^9.1.0",
+    "markdown-it": "^12.3.2",
     "marked": "^0.7.0",
     "moment": "^2.24.0",
     "momentjs": "^2.0.0",
