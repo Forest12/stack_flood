@@ -24,7 +24,7 @@
     "github-markdown-css": "^3.0.1",
     "highlight.js": "^9.15.9",
     "markdown-it": "^9.1.0",
-    "marked": "^0.7.0",
+    "marked": "^4.0.10",
     "moment": "^2.24.0",
     "momentjs": "^2.0.0",
     "vue": "^2.6.10",
